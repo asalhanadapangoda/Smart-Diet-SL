@@ -13,10 +13,16 @@ import Calculator from './pages/calculator/Calculator';
 import DietPlans from './pages/diet-plans/DietPlans';
 import Profile from './pages/profile/Profile';
 import ImageUploadTest from './pages/test/ImageUploadTest';
+import AIPersonalizedPlan from './pages/diet-plans/AIPersonalizedPlan';
 
 function App() {
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true,
+      }}
+    >
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
@@ -30,6 +36,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/diet-plans" element={<DietPlans />} />
+            <Route path="/ai-plan" element={<AIPersonalizedPlan />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/test/upload" element={<ImageUploadTest />} />
           </Routes>

@@ -9,6 +9,7 @@ import productRoutes from './routes/productRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import dietPlanRoutes from './routes/dietPlanRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -36,6 +37,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/diet-plans', dietPlanRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Health check route
 app.get('/api/health', (req, res) => {
