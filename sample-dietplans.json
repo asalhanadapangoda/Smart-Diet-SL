@@ -1,0 +1,236 @@
+[
+  {
+    "title": "7-Day Weight Loss Plan",
+    "description": "A balanced 7-day meal plan designed for healthy weight loss with nutrient-dense foods and controlled calorie intake.",
+    "category": "weight-loss",
+    "duration": 7,
+    "totalCalories": 1500,
+    "isActive": true,
+    "meals": {
+      "breakfast": {
+        "name": "Oatmeal with Berries",
+        "description": "A bowl of steel-cut oats topped with fresh blueberries and strawberries",
+        "ingredients": ["Oats", "Blueberries", "Strawberries", "Almond milk", "Honey"],
+        "calories": 350,
+        "image": ""
+      },
+      "lunch": {
+        "name": "Grilled Chicken Salad",
+        "description": "Mixed greens with grilled chicken breast, cherry tomatoes, and light vinaigrette",
+        "ingredients": ["Chicken breast", "Mixed greens", "Cherry tomatoes", "Cucumber", "Olive oil", "Lemon"],
+        "calories": 450,
+        "image": ""
+      },
+      "dinner": {
+        "name": "Baked Salmon with Vegetables",
+        "description": "Oven-baked salmon fillet with roasted broccoli and sweet potato",
+        "ingredients": ["Salmon", "Broccoli", "Sweet potato", "Olive oil", "Garlic", "Lemon"],
+        "calories": 550,
+        "image": ""
+      },
+      "snacks": [
+        {
+          "name": "Greek Yogurt with Nuts",
+          "description": "Plain Greek yogurt with a handful of almonds",
+          "ingredients": ["Greek yogurt", "Almonds"],
+          "calories": 150,
+          "image": ""
+        }
+      ]
+    },
+    "image": ""
+  },
+  {
+    "title": "Muscle Gain Athletic Plan",
+    "description": "High-protein meal plan designed for athletes and individuals looking to build muscle mass.",
+    "category": "athletic",
+    "duration": 14,
+    "totalCalories": 2800,
+    "isActive": true,
+    "meals": {
+      "breakfast": {
+        "name": "Protein Pancakes with Eggs",
+        "description": "Whole grain pancakes with scrambled eggs and turkey bacon",
+        "ingredients": ["Whole grain flour", "Protein powder", "Eggs", "Turkey bacon", "Banana"],
+        "calories": 650,
+        "image": ""
+      },
+      "lunch": {
+        "name": "Beef and Quinoa Bowl",
+        "description": "Lean beef strips with quinoa, black beans, and mixed vegetables",
+        "ingredients": ["Lean beef", "Quinoa", "Black beans", "Bell peppers", "Onions", "Avocado"],
+        "calories": 750,
+        "image": ""
+      },
+      "dinner": {
+        "name": "Grilled Chicken with Rice",
+        "description": "Large grilled chicken breast with brown rice and steamed vegetables",
+        "ingredients": ["Chicken breast", "Brown rice", "Broccoli", "Carrots", "Green beans"],
+        "calories": 800,
+        "image": ""
+      },
+      "snacks": [
+        {
+          "name": "Protein Shake",
+          "description": "Whey protein shake with banana and peanut butter",
+          "ingredients": ["Whey protein", "Banana", "Peanut butter", "Milk"],
+          "calories": 400,
+          "image": ""
+        },
+        {
+          "name": "Trail Mix",
+          "description": "Mixed nuts, dried fruits, and dark chocolate",
+          "ingredients": ["Almonds", "Walnuts", "Raisins", "Dark chocolate"],
+          "calories": 200,
+          "image": ""
+        }
+      ]
+    },
+    "image": ""
+  },
+  {
+    "title": "Diabetic-Friendly Meal Plan",
+    "description": "Low glycemic index meal plan designed to help manage blood sugar levels effectively.",
+    "category": "diabetic",
+    "duration": 7,
+    "totalCalories": 1800,
+    "isActive": true,
+    "meals": {
+      "breakfast": {
+        "name": "Whole Grain Toast with Avocado",
+        "description": "Whole grain bread with mashed avocado and poached eggs",
+        "ingredients": ["Whole grain bread", "Avocado", "Eggs", "Cherry tomatoes", "Black pepper"],
+        "calories": 400,
+        "image": ""
+      },
+      "lunch": {
+        "name": "Lentil Soup with Salad",
+        "description": "Hearty lentil soup served with a side of mixed green salad",
+        "ingredients": ["Lentils", "Carrots", "Celery", "Onions", "Mixed greens", "Olive oil"],
+        "calories": 500,
+        "image": ""
+      },
+      "dinner": {
+        "name": "Baked Cod with Quinoa",
+        "description": "Baked cod fillet with quinoa and roasted asparagus",
+        "ingredients": ["Cod", "Quinoa", "Asparagus", "Lemon", "Olive oil", "Herbs"],
+        "calories": 600,
+        "image": ""
+      },
+      "snacks": [
+        {
+          "name": "Apple with Almond Butter",
+          "description": "Fresh apple slices with a tablespoon of almond butter",
+          "ingredients": ["Apple", "Almond butter"],
+          "calories": 150,
+          "image": ""
+        },
+        {
+          "name": "Greek Yogurt",
+          "description": "Plain Greek yogurt with a few berries",
+          "ingredients": ["Greek yogurt", "Blueberries"],
+          "calories": 150,
+          "image": ""
+        }
+      ]
+    },
+    "image": ""
+  },
+  {
+    "title": "Vegetarian Balanced Diet",
+    "description": "Complete vegetarian meal plan with all essential nutrients from plant-based sources.",
+    "category": "vegetarian",
+    "duration": 7,
+    "totalCalories": 2000,
+    "isActive": true,
+    "meals": {
+      "breakfast": {
+        "name": "Smoothie Bowl",
+        "description": "Acai smoothie bowl topped with granola, fruits, and seeds",
+        "ingredients": ["Acai", "Banana", "Spinach", "Granola", "Chia seeds", "Berries"],
+        "calories": 450,
+        "image": ""
+      },
+      "lunch": {
+        "name": "Chickpea Curry with Rice",
+        "description": "Spiced chickpea curry served with basmati rice and naan",
+        "ingredients": ["Chickpeas", "Tomatoes", "Onions", "Garlic", "Basmati rice", "Naan", "Spices"],
+        "calories": 600,
+        "image": ""
+      },
+      "dinner": {
+        "name": "Stuffed Bell Peppers",
+        "description": "Bell peppers stuffed with quinoa, black beans, and vegetables",
+        "ingredients": ["Bell peppers", "Quinoa", "Black beans", "Corn", "Cheese", "Herbs"],
+        "calories": 550,
+        "image": ""
+      },
+      "snacks": [
+        {
+          "name": "Hummus with Vegetables",
+          "description": "Fresh hummus with carrot sticks and cucumber",
+          "ingredients": ["Hummus", "Carrots", "Cucumber", "Bell peppers"],
+          "calories": 200,
+          "image": ""
+        },
+        {
+          "name": "Mixed Nuts",
+          "description": "A handful of mixed unsalted nuts",
+          "ingredients": ["Almonds", "Walnuts", "Cashews"],
+          "calories": 200,
+          "image": ""
+        }
+      ]
+    },
+    "image": ""
+  },
+  {
+    "title": "General Healthy Eating Plan",
+    "description": "A well-rounded meal plan for maintaining a healthy lifestyle with balanced nutrition.",
+    "category": "general",
+    "duration": 7,
+    "totalCalories": 2200,
+    "isActive": true,
+    "meals": {
+      "breakfast": {
+        "name": "Scrambled Eggs with Whole Grain Toast",
+        "description": "Scrambled eggs with whole grain toast and fresh fruit",
+        "ingredients": ["Eggs", "Whole grain bread", "Butter", "Orange", "Berries"],
+        "calories": 500,
+        "image": ""
+      },
+      "lunch": {
+        "name": "Turkey and Vegetable Wrap",
+        "description": "Whole wheat wrap with lean turkey, vegetables, and hummus",
+        "ingredients": ["Whole wheat wrap", "Turkey", "Lettuce", "Tomatoes", "Hummus", "Cucumber"],
+        "calories": 550,
+        "image": ""
+      },
+      "dinner": {
+        "name": "Pasta Primavera",
+        "description": "Whole grain pasta with mixed vegetables in a light tomato sauce",
+        "ingredients": ["Whole grain pasta", "Zucchini", "Bell peppers", "Tomatoes", "Olive oil", "Parmesan"],
+        "calories": 650,
+        "image": ""
+      },
+      "snacks": [
+        {
+          "name": "Fruit and Yogurt",
+          "description": "Mixed fruits with Greek yogurt",
+          "ingredients": ["Greek yogurt", "Strawberries", "Blueberries", "Honey"],
+          "calories": 250,
+          "image": ""
+        },
+        {
+          "name": "Rice Cakes with Peanut Butter",
+          "description": "Brown rice cakes with natural peanut butter",
+          "ingredients": ["Rice cakes", "Peanut butter"],
+          "calories": 250,
+          "image": ""
+        }
+      ]
+    },
+    "image": ""
+  }
+]
+

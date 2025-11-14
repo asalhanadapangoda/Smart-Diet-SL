@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import mongoose from 'mongoose';
 import connectDB from './config/database.js';
 
 // Import routes
@@ -16,12 +17,30 @@ dotenv.config();
 
 const app = express();
 
-// Connect to database (with error handling)
-connectDB().catch((error) => {
-  console.error('Failed to connect to database:', error);
-  console.error('Server will continue but database operations will fail');
-  console.error('Please check your MONGODB_URI in .env file');
-});
+// Connect to database (with error handling and retry logic)
+let dbConnected = false;
+
+const initializeDB = async () => {
+  try {
+    await connectDB();
+    dbConnected = true;
+    console.log('✅ Database initialization complete');
+  } catch (error) {
+    console.error('❌ Failed to connect to database:', error.message);
+    console.error('⚠️  Server will continue but database operations will fail');
+    console.error('💡 The server will attempt to reconnect automatically');
+    dbConnected = false;
+    
+    // Retry connection after 5 seconds
+    setTimeout(() => {
+      console.log('🔄 Retrying database connection...');
+      initializeDB();
+    }, 5000);
+  }
+};
+
+// Start database connection
+initializeDB();
 
 // Middleware
 app.use(cors({
@@ -42,6 +61,50 @@ app.use('/api/ai', aiRoutes);
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ message: 'Server is running!' });
+});
+
+// Database health check route
+app.get('/api/health/db', async (req, res) => {
+  try {
+    const dbState = mongoose.connection.readyState;
+    
+    const states = {
+      0: 'disconnected',
+      1: 'connected',
+      2: 'connecting',
+      3: 'disconnecting'
+    };
+
+    if (dbState === 1) {
+      const dbName = mongoose.connection.db?.databaseName || mongoose.connection.name;
+      const host = mongoose.connection.host;
+      const collections = await mongoose.connection.db?.listCollections().toArray();
+      
+      res.json({
+        status: 'connected',
+        message: 'Database is connected successfully',
+        database: dbName,
+        host: host,
+        readyState: states[dbState],
+        collections: collections?.map(c => c.name) || [],
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(503).json({
+        status: 'disconnected',
+        message: 'Database is not connected',
+        readyState: states[dbState] || 'unknown',
+        timestamp: new Date().toISOString()
+      });
+    }
+  } catch (error) {
+    res.status(503).json({
+      status: 'error',
+      message: 'Failed to check database connection',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
 });
 
 // 404 handler

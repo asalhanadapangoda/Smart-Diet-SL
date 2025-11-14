@@ -1,0 +1,32 @@
+{
+  "name": "smart-diet-sl",
+  "version": "1.0.0",
+  "description": "MERN Stack Nutrition Advisor Application",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix Client && npm install --prefix Server",
+    "install:client": "npm install --prefix Client",
+    "install:server": "npm install --prefix Server",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "npm run dev --prefix Client",
+    "dev:server": "npm run dev --prefix Server",
+    "build": "npm run build --prefix Client",
+    "start": "npm start --prefix Server",
+    "start:server": "npm start --prefix Server",
+    "start:client": "npm run preview --prefix Client"
+  },
+  "keywords": [
+    "mern",
+    "nutrition",
+    "diet",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
+

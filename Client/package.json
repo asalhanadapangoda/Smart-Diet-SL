@@ -18,6 +18,7 @@
     "react-hot-toast": "^2.4.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.26.1",
+    "smart-diet-sl": "file:..",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
