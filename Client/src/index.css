@@ -1,1 +1,255 @@
 @import "tailwindcss";
+
+/* Liquid Glass UI - Apple-inspired Design System */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.3);
+}
+
+* {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 20%, #6ee7b7 40%, #34d399 60%, #10b981 80%, #059669 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(209, 250, 229, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(167, 243, 208, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(110, 231, 183, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 60% 70%, rgba(52, 211, 153, 0.3) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-20px) rotate(1deg); }
+  66% { transform: translateY(20px) rotate(-1deg); }
+}
+
+/* Glass Morphism Utility Classes - Green Theme (Darker for contrast) */
+.glass {
+  background: rgba(5, 150, 105, 0.4);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 
+    0 8px 32px 0 rgba(4, 120, 87, 0.4),
+    inset 0 1px 0 rgba(34, 197, 94, 0.3);
+}
+
+.glass-dark {
+  background: rgba(4, 120, 87, 0.5);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 
+    0 8px 32px 0 rgba(6, 95, 70, 0.5),
+    inset 0 1px 0 rgba(34, 197, 94, 0.3);
+}
+
+.glass-card {
+  background: rgba(5, 150, 105, 0.45);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 
+    0 8px 32px 0 rgba(4, 120, 87, 0.35),
+    inset 0 1px 0 rgba(34, 197, 94, 0.4),
+    0 0 0 1px rgba(16, 185, 129, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px 0 rgba(4, 120, 87, 0.5),
+    inset 0 1px 0 rgba(34, 197, 94, 0.5),
+    0 0 0 1px rgba(16, 185, 129, 0.4);
+  border-color: rgba(34, 197, 94, 0.6);
+  background: rgba(5, 150, 105, 0.55);
+}
+
+.glass-button {
+  background: rgba(5, 150, 105, 0.5);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  box-shadow: 
+    0 4px 16px 0 rgba(4, 120, 87, 0.4),
+    inset 0 1px 0 rgba(34, 197, 94, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-button:hover {
+  background: rgba(16, 185, 129, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 24px 0 rgba(4, 120, 87, 0.5),
+    inset 0 1px 0 rgba(34, 197, 94, 0.4);
+  border-color: rgba(34, 197, 94, 0.7);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+.glass-input {
+  background: rgba(5, 150, 105, 0.4);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(4, 120, 87, 0.3),
+    0 0 0 1px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-input:focus {
+  background: rgba(5, 150, 105, 0.5);
+  border-color: rgba(34, 197, 94, 0.7);
+  box-shadow: 
+    inset 0 2px 4px 0 rgba(4, 120, 87, 0.3),
+    0 0 0 3px rgba(16, 185, 129, 0.4),
+    0 0 20px rgba(5, 150, 105, 0.3);
+  outline: none;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(16, 185, 129, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.4);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 222, 128, 0.6);
+}
+
+/* Text shadows for better readability on glass */
+.text-glass {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Fluid animations */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 185, 129, 0) 0%,
+    rgba(74, 222, 128, 0.3) 50%,
+    rgba(16, 185, 129, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+/* Toast Notifications - Glass UI Styling */
+.react-hot-toast {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 12px !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(4, 120, 87, 0.4),
+    inset 0 1px 0 rgba(34, 197, 94, 0.3) !important;
+  border: 1px solid rgba(16, 185, 129, 0.5) !important;
+  padding: 12px 16px !important;
+}
+
+/* Success Toast */
+.react-hot-toast[data-type="success"] {
+  background: rgba(5, 150, 105, 0.5) !important;
+  color: white !important;
+  border-color: rgba(34, 197, 94, 0.6) !important;
+}
+
+.react-hot-toast[data-type="success"] .react-hot-toast-icon {
+  color: rgba(74, 222, 128, 1) !important;
+}
+
+/* Error Toast */
+.react-hot-toast[data-type="error"] {
+  background: rgba(220, 38, 38, 0.5) !important;
+  color: white !important;
+  border-color: rgba(248, 113, 113, 0.6) !important;
+}
+
+.react-hot-toast[data-type="error"] .react-hot-toast-icon {
+  color: rgba(248, 113, 113, 1) !important;
+}
+
+/* Loading Toast */
+.react-hot-toast[data-type="loading"] {
+  background: rgba(5, 150, 105, 0.5) !important;
+  color: white !important;
+  border-color: rgba(34, 197, 94, 0.6) !important;
+}
+
+/* Default Toast */
+.react-hot-toast:not([data-type]) {
+  background: rgba(5, 150, 105, 0.5) !important;
+  color: white !important;
+  border-color: rgba(16, 185, 129, 0.5) !important;
+}
+
+/* Toast Message Text */
+.react-hot-toast-message {
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  font-weight: 500 !important;
+}
+
+/* Toast Close Button */
+.react-hot-toast-close {
+  color: rgba(255, 255, 255, 0.8) !important;
+  opacity: 0.8 !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-hot-toast-close:hover {
+  color: white !important;
+  opacity: 1 !important;
+  transform: scale(1.1) !important;
+}

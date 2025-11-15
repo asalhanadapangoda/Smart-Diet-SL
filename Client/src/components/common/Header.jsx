@@ -18,13 +18,13 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-green-600 text-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3">
+    <header className="glass-dark text-white sticky top-0 z-50 backdrop-blur-xl">
+      <div className="container mx-auto px-4 py-3 relative">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="text-xl md:text-2xl font-bold flex items-center">
-            <span>🥗</span>
-            <span className="ml-2">Smart Diet SL</span>
+          <Link to="/" className="text-xl md:text-2xl font-bold flex items-center text-glass hover:scale-105 transition-transform duration-300">
+            <span className="text-2xl md:text-3xl">🥗</span>
+            <span className="ml-2 bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">Smart Diet SL</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -32,20 +32,20 @@ const Header = () => {
             {/* Main Links */}
             <Link
               to="/"
-              className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium"
+              className="px-3 py-2 rounded-lg glass-button text-sm font-medium text-white hover:scale-105"
             >
               {t('home')}
             </Link>
             <Link
               to="/diet-plans"
-              className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium"
+              className="px-3 py-2 rounded-lg glass-button text-sm font-medium text-white hover:scale-105"
             >
               {t('dietPlans')}
             </Link>
             {isAuthenticated && (
               <Link
                 to="/diet-planner"
-                className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-semibold"
+                className="px-3 py-2 rounded-lg glass-button text-sm font-semibold text-white hover:scale-105 bg-gradient-to-r from-green-400 to-emerald-500"
               >
                 AI Diet Planner
               </Link>
@@ -53,24 +53,24 @@ const Header = () => {
 
             {/* Tools Dropdown */}
             <div className="relative group">
-              <button className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium flex items-center">
+              <button className="px-3 py-2 rounded-lg glass-button text-sm font-medium flex items-center text-white hover:scale-105">
                 Tools
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <div className="py-1">
+              <div className="absolute left-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                <div className="py-2">
                   <Link
                     to="/calculator"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('calculator')}
                   </Link>
                   <Link
                     to="/sri-lankan-plates"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('generatePlate')}
@@ -80,13 +80,13 @@ const Header = () => {
             </div>
 
             {/* Language Switcher */}
-            <div className="flex items-center space-x-1 border-l border-green-500 pl-3 ml-2">
+            <div className="flex items-center space-x-1 border-l border-white/20 pl-3 ml-2">
               <button
                 onClick={() => changeLanguage('en')}
-                className={`px-2 py-1 rounded text-xs font-medium transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   language === 'en'
-                    ? 'bg-white text-green-600'
-                    : 'hover:bg-green-700'
+                    ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                    : 'glass-button text-white/80 hover:text-white hover:scale-105'
                 }`}
                 title="English"
               >
@@ -94,10 +94,10 @@ const Header = () => {
               </button>
               <button
                 onClick={() => changeLanguage('si')}
-                className={`px-2 py-1 rounded text-xs font-medium transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   language === 'si'
-                    ? 'bg-white text-green-600'
-                    : 'hover:bg-green-700'
+                    ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                    : 'glass-button text-white/80 hover:text-white hover:scale-105'
                 }`}
                 title="සිංහල"
               >
@@ -105,10 +105,10 @@ const Header = () => {
               </button>
               <button
                 onClick={() => changeLanguage('ta')}
-                className={`px-2 py-1 rounded text-xs font-medium transition ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                   language === 'ta'
-                    ? 'bg-white text-green-600'
-                    : 'hover:bg-green-700'
+                    ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                    : 'glass-button text-white/80 hover:text-white hover:scale-105'
                 }`}
                 title="தமிழ்"
               >
@@ -118,11 +118,11 @@ const Header = () => {
 
             {/* User Menu / Auth */}
             {isAuthenticated ? (
-              <div className="flex items-center space-x-2 border-l border-green-500 pl-3 ml-2">
+              <div className="flex items-center space-x-2 border-l border-white/20 pl-3 ml-2">
                 {/* Cart Link */}
                 <Link 
                   to="/cart" 
-                  className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium relative"
+                  className="px-3 py-2 rounded-lg glass-button text-sm font-medium relative text-white hover:scale-105"
                 >
                   <svg
                     className="w-5 h-5"
@@ -138,14 +138,14 @@ const Header = () => {
                     />
                   </svg>
                   {cartItems.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                       {cartItems.length}
                     </span>
                   )}
                 </Link>
                 {/* User Dropdown */}
                 <div className="relative group">
-                  <button className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium flex items-center">
+                  <button className="px-3 py-2 rounded-lg glass-button text-sm font-medium flex items-center text-white hover:scale-105">
                     <svg
                       className="w-5 h-5 mr-1"
                       fill="none"
@@ -164,36 +164,36 @@ const Header = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    <div className="py-1">
+                  <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                    <div className="py-2">
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
                       >
                         {t('profile')}
                       </Link>
                       <Link
                         to="/meal-logging"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
                       >
                         {t('logMeal')}
                       </Link>
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
                         <>
-                          <hr className="my-1" />
+                          <hr className="my-2 border-white/20 mx-2" />
                           <Link
                             to="/admin"
-                            className="block px-4 py-2 text-sm text-yellow-600 hover:bg-gray-100 font-semibold"
+                            className="block px-4 py-2 text-sm text-yellow-300 hover:bg-white/20 rounded-lg mx-2 font-semibold transition-all"
                           >
                             Admin Dashboard
                           </Link>
                         </>
                       )}
-                      <hr className="my-1" />
+                      <hr className="my-2 border-white/20 mx-2" />
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-white/20 rounded-lg mx-2 transition-all"
                       >
                         Logout
                       </button>
@@ -202,16 +202,16 @@ const Header = () => {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center space-x-2 border-l border-green-500 pl-3 ml-2">
+              <div className="flex items-center space-x-2 border-l border-white/20 pl-3 ml-2">
                 <Link
                   to="/login"
-                  className="px-3 py-2 rounded hover:bg-green-700 transition text-sm font-medium"
+                  className="px-3 py-2 rounded-lg glass-button text-sm font-medium text-white hover:scale-105"
                 >
                   {t('login')}
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 rounded bg-white text-green-600 hover:bg-green-50 transition text-sm font-medium"
+                  className="px-4 py-2 rounded-lg glass-button bg-white/30 text-white hover:bg-white/40 text-sm font-medium hover:scale-105"
                 >
                   {t('register')}
                 </Link>
@@ -222,7 +222,7 @@ const Header = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded hover:bg-green-700 transition"
+            className="lg:hidden p-2 rounded-lg glass-button text-white hover:scale-105 transition"
             aria-label="Toggle menu"
           >
             <svg
@@ -252,18 +252,18 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-green-500 pt-4">
+          <div className="lg:hidden mt-4 pb-4 border-t border-white/20 pt-4 glass-card rounded-xl p-4">
             <div className="flex flex-col space-y-2">
               <Link
                 to="/"
-                className="px-3 py-2 rounded hover:bg-green-700 transition"
+                className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t('home')}
               </Link>
               <Link
                 to="/diet-plans"
-                className="px-3 py-2 rounded hover:bg-green-700 transition"
+                className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t('dietPlans')}
@@ -271,7 +271,7 @@ const Header = () => {
               {isAuthenticated && (
                 <Link
                   to="/diet-planner"
-                  className="px-3 py-2 rounded hover:bg-green-700 transition font-semibold"
+                  className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition font-semibold bg-gradient-to-r from-green-400 to-emerald-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   AI Diet Planner
@@ -282,7 +282,7 @@ const Header = () => {
               <div>
                 <button
                   onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
-                  className="w-full text-left px-3 py-2 rounded hover:bg-green-700 transition flex items-center justify-between"
+                  className="w-full text-left px-3 py-2 rounded-lg glass-button text-white transition flex items-center justify-between hover:scale-105"
                 >
                   <span>Tools</span>
                   <svg
@@ -305,7 +305,7 @@ const Header = () => {
                   <div className="pl-4 mt-1 space-y-1">
                     <Link
                       to="/calculator"
-                      className="block px-3 py-2 rounded hover:bg-green-700 transition"
+                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         setToolsMenuOpen(false);
@@ -315,7 +315,7 @@ const Header = () => {
                     </Link>
                     <Link
                       to="/sri-lankan-plates"
-                      className="block px-3 py-2 rounded hover:bg-green-700 transition"
+                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         setToolsMenuOpen(false);
@@ -328,34 +328,34 @@ const Header = () => {
               </div>
 
               {/* Mobile Language Switcher */}
-              <div className="flex items-center space-x-2 pt-2 border-t border-green-500">
-                <span className="px-3 py-2 text-sm">Language:</span>
+              <div className="flex items-center space-x-2 pt-2 border-t border-white/20">
+                <span className="px-3 py-2 text-sm text-white/80">Language:</span>
                 <button
                   onClick={() => changeLanguage('en')}
-                  className={`px-3 py-1 rounded text-sm ${
+                  className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
                     language === 'en'
-                      ? 'bg-white text-green-600'
-                      : 'bg-green-700 hover:bg-green-800'
+                      ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                      : 'glass-button text-white/80 hover:text-white hover:scale-105'
                   }`}
                 >
                   EN
                 </button>
                 <button
                   onClick={() => changeLanguage('si')}
-                  className={`px-3 py-1 rounded text-sm ${
+                  className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
                     language === 'si'
-                      ? 'bg-white text-green-600'
-                      : 'bg-green-700 hover:bg-green-800'
+                      ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                      : 'glass-button text-white/80 hover:text-white hover:scale-105'
                   }`}
                 >
                   සිං
                 </button>
                 <button
                   onClick={() => changeLanguage('ta')}
-                  className={`px-3 py-1 rounded text-sm ${
+                  className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
                     language === 'ta'
-                      ? 'bg-white text-green-600'
-                      : 'bg-green-700 hover:bg-green-800'
+                      ? 'glass-button bg-white/30 text-white shadow-lg scale-105'
+                      : 'glass-button text-white/80 hover:text-white hover:scale-105'
                   }`}
                 >
                   தமிழ்
@@ -364,29 +364,29 @@ const Header = () => {
 
               {/* Mobile User Menu */}
               {isAuthenticated ? (
-                <div className="pt-2 border-t border-green-500">
+                <div className="pt-2 border-t border-white/20">
                   <Link
                     to="/cart"
-                    className="block px-3 py-2 rounded hover:bg-green-700 transition flex items-center justify-between"
+                    className="block px-3 py-2 rounded-lg glass-button text-white transition flex items-center justify-between hover:scale-105"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <span>Cart</span>
                     {cartItems.length > 0 && (
-                      <span className="bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                      <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                         {cartItems.length}
                       </span>
                     )}
                   </Link>
                   <Link
                     to="/profile"
-                    className="block px-3 py-2 rounded hover:bg-green-700 transition"
+                    className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('profile')}
                   </Link>
                   <Link
                     to="/meal-logging"
-                    className="block px-3 py-2 rounded hover:bg-green-700 transition"
+                    className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('logMeal')}
@@ -394,7 +394,7 @@ const Header = () => {
                   {user?.role === 'admin' && (
                     <Link
                       to="/admin"
-                      className="block px-3 py-2 rounded hover:bg-green-700 transition bg-yellow-500 text-white font-semibold"
+                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition bg-gradient-to-r from-yellow-400 to-orange-500 font-semibold"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       Admin Dashboard
@@ -402,23 +402,23 @@ const Header = () => {
                   )}
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left px-3 py-2 rounded hover:bg-green-700 transition text-red-200"
+                    className="w-full text-left px-3 py-2 rounded-lg glass-button text-red-300 hover:bg-white/20 transition"
                   >
                     Logout
                   </button>
                 </div>
               ) : (
-                <div className="pt-2 border-t border-green-500 space-y-2">
+                <div className="pt-2 border-t border-white/20 space-y-2">
                   <Link
                     to="/login"
-                    className="block px-3 py-2 rounded hover:bg-green-700 transition text-center"
+                    className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition text-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('login')}
                   </Link>
                   <Link
                     to="/register"
-                    className="block px-3 py-2 rounded bg-white text-green-600 hover:bg-green-50 transition text-center font-medium"
+                    className="block px-3 py-2 rounded-lg glass-button bg-white/30 text-white hover:bg-white/40 transition text-center font-medium hover:scale-105"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('register')}

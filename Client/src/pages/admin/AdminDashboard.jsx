@@ -50,15 +50,17 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 relative">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Admin Dashboard</h1>
-        <p className="text-gray-600">Manage your ecommerce platform</p>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+          Admin Dashboard
+        </h1>
+        <p className="text-white/80 text-glass text-lg">Manage your ecommerce platform</p>
       </div>
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
         </div>
       ) : (
         <>
@@ -68,16 +70,16 @@ const AdminDashboard = () => {
               <Link
                 key={stat.name}
                 to={stat.link}
-                className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
+                className="glass-card rounded-2xl p-6 hover:scale-105 transition-all backdrop-blur-xl"
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm">{stat.name}</p>
-                    <p className="text-3xl font-bold text-gray-800 mt-2">
+                    <p className="text-white/80 text-sm text-glass">{stat.name}</p>
+                    <p className="text-3xl font-bold text-white mt-2 text-glass">
                       {stat.value}
                     </p>
                   </div>
-                  <div className={`${stat.color} rounded-full p-4 text-3xl`}>
+                  <div className={`glass-button ${stat.color} rounded-full p-4 text-3xl bg-opacity-30`}>
                     {stat.icon}
                   </div>
                 </div>
@@ -86,24 +88,24 @@ const AdminDashboard = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Quick Actions</h2>
+          <div className="glass-card rounded-2xl p-6 mb-8 backdrop-blur-xl">
+            <h2 className="text-2xl font-bold text-white mb-4 text-glass">Quick Actions</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link
                 to="/admin/products/new"
-                className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition text-center"
+                className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all text-center font-medium bg-green-500/40"
               >
                 ➕ Add New Product
               </Link>
               <Link
                 to="/admin/orders"
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition text-center"
+                className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all text-center font-medium bg-blue-500/40"
               >
                 📋 View All Orders
               </Link>
               <Link
                 to="/admin/users"
-                className="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition text-center"
+                className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all text-center font-medium bg-purple-500/40"
               >
                 👥 Manage Users
               </Link>
@@ -111,52 +113,52 @@ const AdminDashboard = () => {
           </div>
 
           {/* Recent Orders */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Orders</h2>
+          <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
+            <h2 className="text-2xl font-bold text-white mb-4 text-glass">Recent Orders</h2>
             {orders.length === 0 ? (
-              <p className="text-gray-600">No orders yet</p>
+              <p className="text-white/80 text-glass">No orders yet</p>
             ) : (
               <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+                <table className="min-w-full divide-y divide-white/20">
+                  <thead className="glass-card bg-white/10">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
                         Order ID
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
                         User
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
                         Total
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
                         Date
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="divide-y divide-white/20">
                     {orders.slice(0, 5).map((order) => (
-                      <tr key={order._id}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <tr key={order._id} className="hover:bg-white/5 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/90 text-glass">
                           {order._id.substring(0, 8)}...
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/90 text-glass">
                           {order.user?.name || 'N/A'}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/90 text-glass">
                           Rs. {order.totalPrice?.toFixed(2)}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
-                            className={`px-2 py-1 text-xs rounded-full ${
+                            className={`px-3 py-1 text-xs rounded-full text-glass ${
                               order.isDelivered
-                                ? 'bg-green-100 text-green-800'
+                                ? 'glass-button bg-green-500/30 text-green-200'
                                 : order.isPaid
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-red-100 text-red-800'
+                                ? 'glass-button bg-yellow-500/30 text-yellow-200'
+                                : 'glass-button bg-red-500/30 text-red-200'
                             }`}
                           >
                             {order.isDelivered
@@ -166,7 +168,7 @@ const AdminDashboard = () => {
                               : 'Pending'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-white/70 text-glass">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </td>
                       </tr>

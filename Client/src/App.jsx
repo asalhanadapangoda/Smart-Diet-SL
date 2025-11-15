@@ -30,9 +30,9 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen relative">
           <Header />
-          <main className="flex-grow">
+          <main className="flex-grow relative z-10">
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />
@@ -101,7 +101,52 @@ function App() {
             </Routes>
           </main>
           <Footer />
-          <Toaster position="top-right" />
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'rgba(5, 150, 105, 0.5)',
+                backdropFilter: 'blur(20px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                color: 'white',
+                border: '1px solid rgba(16, 185, 129, 0.5)',
+                borderRadius: '12px',
+                boxShadow: '0 8px 32px 0 rgba(4, 120, 87, 0.4), inset 0 1px 0 rgba(34, 197, 94, 0.3)',
+                padding: '12px 16px',
+              },
+              success: {
+                iconTheme: {
+                  primary: 'rgba(74, 222, 128, 1)',
+                  secondary: 'white',
+                },
+                style: {
+                  background: 'rgba(5, 150, 105, 0.5)',
+                  borderColor: 'rgba(34, 197, 94, 0.6)',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: 'rgba(248, 113, 113, 1)',
+                  secondary: 'white',
+                },
+                style: {
+                  background: 'rgba(220, 38, 38, 0.5)',
+                  borderColor: 'rgba(248, 113, 113, 0.6)',
+                },
+              },
+              loading: {
+                iconTheme: {
+                  primary: 'rgba(74, 222, 128, 1)',
+                  secondary: 'white',
+                },
+                style: {
+                  background: 'rgba(5, 150, 105, 0.5)',
+                  borderColor: 'rgba(34, 197, 94, 0.6)',
+                },
+              },
+            }}
+          />
         </div>
       </Router>
     </LanguageProvider>

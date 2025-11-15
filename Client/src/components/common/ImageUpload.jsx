@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 
-const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/*' }) => {
+const ImageUpload = ({ onUploadSuccess, onImageChange, preview: externalPreview, label = 'Upload Image', accept = 'image/*' }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(externalPreview || null);
   const [uploading, setUploading] = useState(false);
   const [uploadedUrl, setUploadedUrl] = useState(null);
+
+  // Update preview when external preview changes
+  useEffect(() => {
+    if (externalPreview) {
+      setPreview(externalPreview);
+    }
+  }, [externalPreview]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,7 +36,12 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
       // Create preview
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result);
+        const previewUrl = reader.result;
+        setPreview(previewUrl);
+        // If onImageChange is provided (EditProduct), call it
+        if (onImageChange) {
+          onImageChange(file, previewUrl);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -73,22 +85,22 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold mb-4">{label}</h3>
+    <div className="w-full max-w-md mx-auto p-6 glass-card rounded-2xl backdrop-blur-xl">
+      <h3 className="text-lg font-semibold mb-4 text-white text-glass">{label}</h3>
 
       {/* File Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+        <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
           Select Image
         </label>
         <input
           type="file"
           accept={accept}
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
+          className="block w-full text-sm text-white/80 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:glass-button file:text-white hover:file:scale-105 cursor-pointer"
           disabled={uploading}
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-white/60 text-glass">
           PNG, JPG, GIF up to 5MB
         </p>
       </div>
@@ -96,17 +108,17 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
       {/* Preview */}
       {preview && (
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
             Preview
           </label>
           <div className="relative">
             <img
               src={preview}
               alt="Preview"
-              className="w-full h-48 object-cover rounded-md border border-gray-300"
+              className="w-full h-48 object-cover rounded-xl border-2 border-white/30"
             />
             {uploadedUrl && (
-              <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded text-xs">
+              <div className="absolute top-2 right-2 glass-button bg-green-500/40 text-white px-3 py-1 rounded-xl text-xs">
                 Uploaded!
               </div>
             )}
@@ -116,15 +128,15 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
 
       {/* Uploaded URL */}
       {uploadedUrl && (
-        <div className="mb-4 p-3 bg-green-50 rounded-md">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+        <div className="mb-4 p-3 glass-card bg-green-500/20 rounded-xl border border-green-300/30">
+          <label className="block text-sm font-medium text-white/90 mb-1 text-glass">
             Uploaded URL:
           </label>
           <input
             type="text"
             value={uploadedUrl}
             readOnly
-            className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white"
+            className="glass-input w-full px-3 py-2 text-sm rounded-xl text-white"
             onClick={(e) => e.target.select()}
           />
           <button
@@ -132,7 +144,7 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
               navigator.clipboard.writeText(uploadedUrl);
               toast.success('URL copied to clipboard!');
             }}
-            className="mt-2 text-sm text-green-600 hover:text-green-700"
+            className="mt-2 text-sm text-green-300 hover:text-green-200 transition-colors text-glass"
           >
             Copy URL
           </button>
@@ -144,7 +156,7 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
         <button
           onClick={handleUpload}
           disabled={!selectedFile || uploading}
-          className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 glass-button text-white py-2 px-4 rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
         >
           {uploading ? 'Uploading...' : 'Upload Image'}
         </button>
@@ -152,7 +164,7 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
           <button
             onClick={handleClear}
             disabled={uploading}
-            className="bg-gray-200 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-300 transition disabled:opacity-50"
+            className="glass-button text-white py-2 px-4 rounded-xl hover:scale-105 transition-all font-medium bg-white/20"
           >
             Clear
           </button>
@@ -161,10 +173,10 @@ const ImageUpload = ({ onUploadSuccess, label = 'Upload Image', accept = 'image/
 
       {/* File Info */}
       {selectedFile && (
-        <div className="mt-4 p-3 bg-gray-50 rounded-md text-sm">
-          <p><strong>File Name:</strong> {selectedFile.name}</p>
-          <p><strong>File Size:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
-          <p><strong>File Type:</strong> {selectedFile.type}</p>
+        <div className="mt-4 p-3 glass-card bg-white/10 rounded-xl text-sm">
+          <p className="text-white/90 text-glass"><strong>File Name:</strong> {selectedFile.name}</p>
+          <p className="text-white/90 text-glass"><strong>File Size:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
+          <p className="text-white/90 text-glass"><strong>File Type:</strong> {selectedFile.type}</p>
         </div>
       )}
     </div>

@@ -40,25 +40,27 @@ const SriLankanPlates = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">{t('generatePlate')}</h1>
-      <p className="text-gray-600 mb-6">
+    <div className="container mx-auto px-4 py-8 relative">
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white text-glass text-center">
+        {t('generatePlate')}
+      </h1>
+      <p className="text-white/80 mb-6 text-glass text-center text-lg">
         Get personalized Sri Lankan meal plates based on your health goals
       </p>
 
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div className="glass-card rounded-2xl p-6 mb-6 backdrop-blur-xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Health Goal
             </label>
             <select
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
             >
               {goals.map((g) => (
-                <option key={g.value} value={g.value}>
+                <option key={g.value} value={g.value} className="bg-gray-800">
                   {g.label}
                 </option>
               ))}
@@ -66,14 +68,14 @@ const SriLankanPlates = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Target Calories
             </label>
             <input
               type="number"
               value={calories}
               onChange={(e) => setCalories(parseInt(e.target.value) || 2000)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
               min="1000"
               max="4000"
               step="100"
@@ -81,14 +83,14 @@ const SriLankanPlates = () => {
           </div>
 
           <div className="flex items-end">
-            <label className="flex items-center">
+            <label className="flex items-center cursor-pointer">
               <input
                 type="checkbox"
                 checked={busyLifeOnly}
                 onChange={(e) => setBusyLifeOnly(e.target.checked)}
-                className="mr-2"
+                className="mr-2 w-5 h-5 rounded glass-input"
               />
-              <span className="text-sm text-gray-700">{t('busyLifeHack')}</span>
+              <span className="text-sm text-white/90 text-glass">{t('busyLifeHack')}</span>
             </label>
           </div>
         </div>
@@ -96,44 +98,44 @@ const SriLankanPlates = () => {
         <button
           onClick={generatePlate}
           disabled={loading}
-          className="mt-4 w-full md:w-auto px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-400"
+          className="glass-button mt-4 w-full md:w-auto px-6 py-3 text-white rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
         >
           {loading ? 'Generating...' : 'Generate New Plate'}
         </button>
       </div>
 
       {plate && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-semibold">
+            <h2 className="text-2xl font-semibold text-white text-glass">
               {plate.displayName || plate.name?.en || plate.name}
             </h2>
             {plate.isBusyLifeFriendly && (
-              <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+              <span className="glass-button bg-blue-400/30 text-blue-200 text-xs px-3 py-1 rounded-full">
                 {t('busyLifeHack')}
               </span>
             )}
           </div>
 
           {plate.displayDescription && (
-            <p className="text-gray-600 mb-4">{plate.displayDescription}</p>
+            <p className="text-white/80 mb-4 text-glass">{plate.displayDescription}</p>
           )}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Plate Items */}
             <div>
-              <h3 className="font-semibold mb-3">Plate Contents:</h3>
+              <h3 className="font-semibold mb-3 text-white text-glass">Plate Contents:</h3>
               <div className="space-y-2">
                 {plate.items?.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 p-3 rounded flex justify-between items-center"
+                    className="glass-card bg-white/10 p-3 rounded-xl flex justify-between items-center hover:scale-105 transition-all"
                   >
                     <div>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="text-sm text-gray-500">{item.portion}</div>
+                      <div className="font-medium text-white text-glass">{item.name}</div>
+                      <div className="text-sm text-white/70 text-glass">{item.portion}</div>
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-white/90 text-glass font-semibold">
                       {Math.round(item.nutrition?.calories || 0)} cal
                     </div>
                   </div>
@@ -143,42 +145,42 @@ const SriLankanPlates = () => {
 
             {/* Nutrition Summary */}
             <div>
-              <h3 className="font-semibold mb-3">Nutrition Summary:</h3>
-              <div className="bg-green-50 p-4 rounded space-y-2">
+              <h3 className="font-semibold mb-3 text-white text-glass">Nutrition Summary:</h3>
+              <div className="glass-card bg-green-500/20 p-4 rounded-xl space-y-2 border border-green-300/30">
                 <div className="flex justify-between">
-                  <span>Total Calories:</span>
-                  <span className="font-semibold">
+                  <span className="text-white/90 text-glass">Total Calories:</span>
+                  <span className="font-semibold text-green-300 text-glass">
                     {Math.round(plate.totalNutrition?.calories || 0)} cal
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Protein:</span>
-                  <span>{Math.round(plate.totalNutrition?.protein || 0)}g</span>
+                  <span className="text-white/80 text-glass">Protein:</span>
+                  <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.protein || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Carbs:</span>
-                  <span>{Math.round(plate.totalNutrition?.carbs || 0)}g</span>
+                  <span className="text-white/80 text-glass">Carbs:</span>
+                  <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.carbs || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Fat:</span>
-                  <span>{Math.round(plate.totalNutrition?.fat || 0)}g</span>
+                  <span className="text-white/80 text-glass">Fat:</span>
+                  <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.fat || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span>Fiber:</span>
-                  <span>{Math.round(plate.totalNutrition?.fiber || 0)}g</span>
+                  <span className="text-white/80 text-glass">Fiber:</span>
+                  <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.fiber || 0)}g</span>
                 </div>
               </div>
 
               {plate.substitutions && plate.substitutions.length > 0 && (
                 <div className="mt-4">
-                  <h4 className="font-semibold mb-2">Suggested Substitutions:</h4>
+                  <h4 className="font-semibold mb-2 text-white text-glass">Suggested Substitutions:</h4>
                   <ul className="space-y-1 text-sm">
                     {plate.substitutions.map((sub, index) => (
-                      <li key={index} className="text-gray-600">
+                      <li key={index} className="text-white/80 text-glass">
                         <span className="font-medium">{sub.original}</span> →{' '}
-                        <span className="font-medium text-green-600">{sub.substitute}</span>
+                        <span className="font-medium text-green-300">{sub.substitute}</span>
                         {sub.reason && (
-                          <span className="text-gray-500 ml-2">({sub.reason})</span>
+                          <span className="text-white/60 ml-2">({sub.reason})</span>
                         )}
                       </li>
                     ))}
@@ -187,7 +189,7 @@ const SriLankanPlates = () => {
               )}
 
               {plate.prepTime > 0 && (
-                <div className="mt-4 text-sm text-gray-600">
+                <div className="mt-4 text-sm text-white/80 text-glass">
                   <span className="font-medium">Prep Time:</span> {plate.prepTime} minutes
                 </div>
               )}

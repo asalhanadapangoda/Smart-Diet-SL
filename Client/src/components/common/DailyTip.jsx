@@ -40,8 +40,8 @@ const DailyTip = () => {
 
   if (loading) {
     return (
-      <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded">
-        <div className="animate-pulse">Loading tip...</div>
+      <div className="glass-card border-l-4 border-green-300/50 p-4 rounded-xl backdrop-blur-xl">
+        <div className="animate-pulse text-white/80 text-glass">Loading tip...</div>
       </div>
     );
   }
@@ -53,20 +53,20 @@ const DailyTip = () => {
   const displayTip = tip.displayTip || tip.tip?.en || tip.tip;
 
   return (
-    <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 p-4 rounded-lg shadow-sm">
+    <div className="glass-card border-l-4 border-green-300/50 p-4 rounded-xl shadow-sm backdrop-blur-xl">
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <span className="text-2xl">💡</span>
         </div>
         <div className="ml-3 flex-1">
-          <h3 className="text-sm font-semibold text-green-800 mb-1">
+          <h3 className="text-sm font-semibold text-white mb-1 text-glass">
             {t('oneChange')}
           </h3>
-          <p className="text-sm text-gray-700">{displayTip}</p>
+          <p className="text-sm text-white/90 text-glass">{displayTip}</p>
         </div>
         <button
           onClick={fetchTodayTip}
-          className="ml-2 text-green-600 hover:text-green-800 text-sm"
+          className="ml-2 text-white/80 hover:text-white text-sm transition-colors text-glass"
           title="Get another tip"
         >
           ↻

@@ -102,31 +102,33 @@ const MealLogging = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">{t('logMeal')}</h1>
+    <div className="container mx-auto px-4 py-8 relative">
+      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass text-center">
+        {t('logMeal')}
+      </h1>
 
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
+        <div className="glass-card rounded-2xl p-6 space-y-6 backdrop-blur-xl">
           {/* Meal Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Meal Type
             </label>
             <select
               value={mealType}
               onChange={(e) => setMealType(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
             >
-              <option value="breakfast">Breakfast</option>
-              <option value="lunch">Lunch</option>
-              <option value="dinner">Dinner</option>
-              <option value="snack">Snack</option>
+              <option value="breakfast" className="bg-gray-800">Breakfast</option>
+              <option value="lunch" className="bg-gray-800">Lunch</option>
+              <option value="dinner" className="bg-gray-800">Dinner</option>
+              <option value="snack" className="bg-gray-800">Snack</option>
             </select>
           </div>
 
           {/* Image Upload */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               {t('takePhoto')}
             </label>
             {imagePreview ? (
@@ -134,7 +136,7 @@ const MealLogging = () => {
                 <img
                   src={imagePreview}
                   alt="Meal preview"
-                  className="w-full h-64 object-cover rounded-lg"
+                  className="w-full h-64 object-cover rounded-xl"
                 />
                 <button
                   type="button"
@@ -144,7 +146,7 @@ const MealLogging = () => {
                     setImageUrl(null);
                     setRecognizedItems([]);
                   }}
-                  className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded"
+                  className="absolute top-2 right-2 glass-button bg-red-500/30 text-white px-3 py-1 rounded-xl hover:scale-105"
                 >
                   Remove
                 </button>
@@ -155,9 +157,9 @@ const MealLogging = () => {
                   type="file"
                   accept="image/*"
                   onChange={handleFileChange}
-                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
+                  className="block w-full text-sm text-white/80 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:glass-button file:text-white hover:file:scale-105 cursor-pointer"
                 />
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-white/60 text-glass">
                   PNG, JPG, GIF up to 5MB
                 </p>
               </div>
@@ -165,19 +167,19 @@ const MealLogging = () => {
 
             {/* Recognized Items */}
             {recognizedItems.length > 0 && (
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold mb-2">Recognized Items:</h3>
+              <div className="mt-4 p-4 glass-card bg-blue-500/20 rounded-xl border border-blue-300/30">
+                <h3 className="font-semibold mb-2 text-white text-glass">Recognized Items:</h3>
                 <ul className="space-y-2">
                   {recognizedItems.map((item, index) => (
-                    <li key={index} className="text-sm">
+                    <li key={index} className="text-sm text-white/90 text-glass">
                       <span className="font-medium">{item.name}</span>
-                      <span className="text-gray-600 ml-2">
+                      <span className="text-white/70 ml-2">
                         ({item.estimatedPortion}, {Math.round(item.confidence * 100)}% confidence)
                       </span>
                     </li>
                   ))}
                 </ul>
-                <p className="text-xs text-gray-500 mt-2">
+                <p className="text-xs text-white/60 mt-2 text-glass">
                   Please verify and add any missing items below
                 </p>
               </div>
@@ -187,13 +189,13 @@ const MealLogging = () => {
           {/* Manual Items */}
           <div>
             <div className="flex justify-between items-center mb-2">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-white/90 text-glass">
                 Add Items Manually
               </label>
               <button
                 type="button"
                 onClick={addManualItem}
-                className="text-sm text-green-600 hover:text-green-700"
+                className="text-sm text-green-300 hover:text-green-200 transition-colors text-glass"
               >
                 + Add Item
               </button>
@@ -205,26 +207,26 @@ const MealLogging = () => {
                   placeholder="Food name"
                   value={item.name}
                   onChange={(e) => updateManualItem(index, 'name', e.target.value)}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  className="flex-1 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
                 />
                 <input
                   type="text"
                   placeholder="Portion"
                   value={item.portion}
                   onChange={(e) => updateManualItem(index, 'portion', e.target.value)}
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  className="w-24 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
                 />
                 <input
                   type="number"
                   placeholder="Calories"
                   value={item.calories}
                   onChange={(e) => updateManualItem(index, 'calories', parseInt(e.target.value) || 0)}
-                  className="w-24 px-3 py-2 border border-gray-300 rounded-md text-sm"
+                  className="w-24 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
                 />
                 <button
                   type="button"
                   onClick={() => removeManualItem(index)}
-                  className="px-3 py-2 bg-red-100 text-red-700 rounded-md text-sm"
+                  className="px-3 py-2 glass-button bg-red-500/30 text-red-200 rounded-xl text-sm hover:scale-105"
                 >
                   ×
                 </button>
@@ -234,14 +236,14 @@ const MealLogging = () => {
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Notes (optional)
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
               placeholder="Any additional notes about your meal..."
             />
           </div>
@@ -250,7 +252,7 @@ const MealLogging = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:bg-gray-400"
+            className="glass-button w-full text-white py-3 px-4 rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
           >
             {loading ? 'Logging...' : 'Log Meal'}
           </button>

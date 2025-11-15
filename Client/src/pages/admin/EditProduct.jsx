@@ -139,16 +139,18 @@ const EditProduct = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="container mx-auto px-4 py-8 max-w-4xl relative">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Edit Product</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+          Edit Product
+        </h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
+      <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 backdrop-blur-xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Product Name *
             </label>
             <input
@@ -157,13 +159,13 @@ const EditProduct = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
             />
           </div>
 
           {/* Description */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Description *
             </label>
             <textarea
@@ -172,13 +174,13 @@ const EditProduct = () => {
               onChange={handleChange}
               required
               rows="4"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
             />
           </div>
 
           {/* Price */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Price (Rs.) *
             </label>
             <input
@@ -189,13 +191,13 @@ const EditProduct = () => {
               required
               min="0"
               step="0.01"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
             />
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Category *
             </label>
             <select
@@ -203,10 +205,10 @@ const EditProduct = () => {
               value={formData.category}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat}>
+                <option key={cat} value={cat} className="bg-gray-800">
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
                 </option>
               ))}
@@ -215,7 +217,7 @@ const EditProduct = () => {
 
           {/* Stock */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Stock *
             </label>
             <input
@@ -225,7 +227,7 @@ const EditProduct = () => {
               onChange={handleChange}
               required
               min="0"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
             />
           </div>
 
@@ -236,18 +238,27 @@ const EditProduct = () => {
               name="isAvailable"
               checked={formData.isAvailable}
               onChange={handleChange}
-              className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+              className="h-5 w-5 glass-input rounded text-green-500 focus:ring-green-500"
             />
-            <label className="ml-2 block text-sm text-gray-700">
+            <label className="ml-2 block text-sm text-white/90 text-glass">
               Product Available
             </label>
           </div>
 
           {/* Image Upload */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
               Product Image *
             </label>
+            {imagePreview && (
+              <div className="mb-4">
+                <img
+                  src={imagePreview}
+                  alt="Product preview"
+                  className="w-32 h-32 object-cover rounded-xl border-2 border-white/30"
+                />
+              </div>
+            )}
             <ImageUpload
               onImageChange={handleImageChange}
               preview={imagePreview}
@@ -256,12 +267,12 @@ const EditProduct = () => {
 
           {/* Nutrition Info */}
           <div className="md:col-span-2">
-            <h3 className="text-lg font-medium text-gray-800 mb-4">
+            <h3 className="text-lg font-medium text-white mb-4 text-glass">
               Nutrition Information (per 100g)
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
                   Calories
                 </label>
                 <input
@@ -270,11 +281,11 @@ const EditProduct = () => {
                   value={formData.nutrition.calories}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
                   Protein (g)
                 </label>
                 <input
@@ -283,11 +294,11 @@ const EditProduct = () => {
                   value={formData.nutrition.protein}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
                   Carbs (g)
                 </label>
                 <input
@@ -296,11 +307,11 @@ const EditProduct = () => {
                   value={formData.nutrition.carbs}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
                   Fat (g)
                 </label>
                 <input
@@ -309,11 +320,11 @@ const EditProduct = () => {
                   value={formData.nutrition.fat}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
                   Fiber (g)
                 </label>
                 <input
@@ -322,7 +333,7 @@ const EditProduct = () => {
                   value={formData.nutrition.fiber}
                   onChange={handleChange}
                   min="0"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
             </div>
@@ -333,14 +344,14 @@ const EditProduct = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50"
+            className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
           >
             {loading ? 'Updating...' : 'Update Product'}
           </button>
           <button
             type="button"
             onClick={() => navigate('/admin/products')}
-            className="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition"
+            className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium bg-white/20"
           >
             Cancel
           </button>

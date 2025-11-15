@@ -73,20 +73,22 @@ export default function DietPlanner() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-8 text-green-700">AI Diet Planner</h1>
-      <p className="text-gray-600 mb-6">Get a personalized 7-day diet plan based on your health profile</p>
+    <div className="container mx-auto px-4 py-8 max-w-6xl relative">
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white text-glass bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
+        AI Diet Planner
+      </h1>
+      <p className="text-white/80 mb-6 text-glass text-lg">Get a personalized 7-day diet plan based on your health profile</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Form Section */}
         <div className="lg:col-span-1">
-          <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-4">
-            <h2 className="text-xl font-semibold mb-4">Your Health Information</h2>
+          <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 space-y-4 backdrop-blur-xl">
+            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Your Health Information</h2>
 
             {/* Required Fields */}
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Weight (kg) <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
+                Weight (kg) <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -95,13 +97,13 @@ export default function DietPlanner() {
                 onChange={handleChange}
                 required
                 placeholder="e.g., 70"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Height (cm) <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
+                Height (cm) <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -110,13 +112,13 @@ export default function DietPlanner() {
                 onChange={handleChange}
                 required
                 placeholder="e.g., 170"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">
-                Age <span className="text-red-500">*</span>
+              <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
+                Age <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -125,35 +127,35 @@ export default function DietPlanner() {
                 onChange={handleChange}
                 required
                 placeholder="e.g., 30"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
               />
             </div>
 
             {/* BMI Display */}
             {bmiData && (
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+              <div className="glass-card bg-blue-500/20 border border-blue-300/30 rounded-xl p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700">Your BMI:</span>
-                  <span className={`text-lg font-bold ${
-                    bmiData.category === 'Normal' ? 'text-green-600' :
-                    bmiData.category === 'Underweight' ? 'text-yellow-600' :
-                    'text-red-600'
+                  <span className="text-sm font-medium text-white/90 text-glass">Your BMI:</span>
+                  <span className={`text-lg font-bold text-glass ${
+                    bmiData.category === 'Normal' ? 'text-green-300' :
+                    bmiData.category === 'Underweight' ? 'text-yellow-300' :
+                    'text-red-300'
                   }`}>
                     {bmiData.bmi}
                   </span>
                 </div>
-                <p className="text-xs text-gray-600 mt-1">
+                <p className="text-xs text-white/70 mt-1 text-glass">
                   Category: <span className="font-semibold">{bmiData.category}</span>
                 </p>
               </div>
             )}
 
             {/* Medical Information */}
-            <div className="border-t pt-4">
-              <h3 className="text-sm font-semibold mb-3 text-gray-700">Medical Information</h3>
+            <div className="border-t border-white/20 pt-4">
+              <h3 className="text-sm font-semibold mb-3 text-white/90 text-glass">Medical Information</h3>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
                   Blood Pressure (mmHg)
                 </label>
                 <input
@@ -162,12 +164,12 @@ export default function DietPlanner() {
                   value={form.bloodPressure}
                   onChange={handleChange}
                   placeholder="e.g., 120/80 or High/Normal"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
                   Blood Sugar Level / Diabetes
                 </label>
                 <input
@@ -176,40 +178,40 @@ export default function DietPlanner() {
                   value={form.sugar}
                   onChange={handleChange}
                   placeholder="e.g., Normal, Pre-diabetes, Type 2"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
                   Body Type
                 </label>
                 <select
                   name="bodyType"
                   value={form.bodyType}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
                 >
-                  <option value="">Select body type</option>
-                  <option value="ectomorph">Ectomorph (Naturally thin, fast metabolism)</option>
-                  <option value="mesomorph">Mesomorph (Naturally athletic, balanced)</option>
-                  <option value="endomorph">Endomorph (Naturally stocky, slower metabolism)</option>
+                  <option value="" className="bg-gray-800">Select body type</option>
+                  <option value="ectomorph" className="bg-gray-800">Ectomorph (Naturally thin, fast metabolism)</option>
+                  <option value="mesomorph" className="bg-gray-800">Mesomorph (Naturally athletic, balanced)</option>
+                  <option value="endomorph" className="bg-gray-800">Endomorph (Naturally stocky, slower metabolism)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">
+                <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
                   Activity Level
                 </label>
                 <select
                   name="activityLevel"
                   value={form.activityLevel}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
                 >
-                  <option value="low">Low (Little or no exercise)</option>
-                  <option value="moderate">Moderate (Exercise 3-5 days/week)</option>
-                  <option value="high">High (Exercise 6-7 days/week)</option>
+                  <option value="low" className="bg-gray-800">Low (Little or no exercise)</option>
+                  <option value="moderate" className="bg-gray-800">Moderate (Exercise 3-5 days/week)</option>
+                  <option value="high" className="bg-gray-800">High (Exercise 6-7 days/week)</option>
                 </select>
               </div>
             </div>
@@ -218,7 +220,7 @@ export default function DietPlanner() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                className="glass-button w-full text-white py-3 rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
                 {loading ? 'Generating Plan...' : 'Generate My Diet Plan'}
               </button>
@@ -226,7 +228,7 @@ export default function DietPlanner() {
                 <button
                   type="button"
                   onClick={() => dispatch(clearPlan())}
-                  className="w-full mt-2 px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition"
+                  className="glass-button w-full mt-2 px-4 py-2 rounded-xl text-white hover:scale-105 transition-all"
                 >
                   Clear Plan
                 </button>
@@ -238,26 +240,28 @@ export default function DietPlanner() {
         {/* Plan Display Section */}
         <div className="lg:col-span-2">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
+            <div className="glass-card bg-red-500/20 border border-red-300/30 text-red-200 px-4 py-3 rounded-xl mb-4 text-glass">
               {typeof error === 'string' ? error : error?.message || 'An error occurred'}
             </div>
           )}
 
           {loading && (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Generating your personalized diet plan...</p>
+            <div className="glass-card rounded-2xl p-8 text-center backdrop-blur-xl">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+              <p className="text-white/80 text-glass">Generating your personalized diet plan...</p>
             </div>
           )}
 
           {!loading && currentPlan && (
-            <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="glass-card rounded-2xl p-6 mb-6 backdrop-blur-xl">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-bold text-green-700">Your Personalized 7-Day Diet Plan</h2>
-                <span className="text-sm text-gray-500">Plan ID: {currentPlan.planId || 'N/A'}</span>
+                <h2 className="text-2xl font-bold text-white text-glass bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
+                  Your Personalized 7-Day Diet Plan
+                </h2>
+                <span className="text-sm text-white/60 text-glass">Plan ID: {currentPlan.planId || 'N/A'}</span>
               </div>
               <div className="prose max-w-none">
-                <pre className="whitespace-pre-wrap text-sm text-gray-700 font-sans bg-gray-50 p-4 rounded border">
+                <pre className="whitespace-pre-wrap text-sm text-white/90 font-sans glass-card bg-white/10 p-4 rounded-xl text-glass">
                   {currentPlan.planText || JSON.stringify(currentPlan, null, 2)}
                 </pre>
               </div>
@@ -265,24 +269,24 @@ export default function DietPlanner() {
           )}
 
           {!loading && !currentPlan && (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <p className="text-gray-500">Fill out the form to generate your personalized diet plan.</p>
+            <div className="glass-card rounded-2xl p-8 text-center backdrop-blur-xl">
+              <p className="text-white/80 text-glass">Fill out the form to generate your personalized diet plan.</p>
             </div>
           )}
 
           {/* Previous Plans */}
           {history && history.length > 0 && (
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-semibold mb-4">Previous Plans</h3>
+            <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
+              <h3 className="text-xl font-semibold mb-4 text-white text-glass">Previous Plans</h3>
               <div className="space-y-4">
                 {history.map((plan) => (
-                  <div key={plan._id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+                  <div key={plan._id} className="glass-card border border-white/20 rounded-xl p-4 hover:scale-105 transition-all">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700">
+                      <span className="text-sm font-medium text-white/80 text-glass">
                         Created: {new Date(plan.createdAt).toLocaleString()}
                       </span>
                     </div>
-                    <div className="text-sm text-gray-600 line-clamp-3">
+                    <div className="text-sm text-white/70 line-clamp-3 text-glass">
                       {plan.planText.substring(0, 200)}...
                     </div>
                     <button
@@ -292,7 +296,7 @@ export default function DietPlanner() {
                           dispatch(generateDietPlan(plan.input));
                         }, 100);
                       }}
-                      className="mt-2 text-sm text-green-600 hover:text-green-700"
+                      className="mt-2 text-sm text-green-300 hover:text-green-200 transition-colors text-glass"
                     >
                       View Full Plan
                     </button>
