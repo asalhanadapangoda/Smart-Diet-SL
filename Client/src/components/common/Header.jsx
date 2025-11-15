@@ -42,6 +42,12 @@ const Header = () => {
             >
               {t('dietPlans')}
             </Link>
+            <Link
+              to="/products"
+              className="px-3 py-2 rounded-lg glass-button text-sm font-medium text-white hover:scale-105"
+            >
+              Products
+            </Link>
             {isAuthenticated && (
               <Link
                 to="/diet-planner"
@@ -178,6 +184,12 @@ const Header = () => {
                       >
                         {t('logMeal')}
                       </Link>
+                      <Link
+                        to="/orders"
+                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                      >
+                        My Orders
+                      </Link>
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
                         <>
@@ -267,6 +279,13 @@ const Header = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t('dietPlans')}
+              </Link>
+              <Link
+                to="/products"
+                className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Products
               </Link>
               {isAuthenticated && (
                 <Link
@@ -390,6 +409,13 @@ const Header = () => {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('logMeal')}
+                  </Link>
+                  <Link
+                    to="/orders"
+                    className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Orders
                   </Link>
                   {user?.role === 'admin' && (
                     <Link

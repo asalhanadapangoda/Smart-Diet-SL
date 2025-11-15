@@ -18,6 +18,8 @@ import Products from './pages/products/Products';
 import ProductDetail from './pages/products/ProductDetail';
 import Cart from './pages/cart/Cart';
 import Checkout from './pages/checkout/Checkout';
+import Orders from './pages/orders/Orders';
+import OrderDetail from './pages/orders/OrderDetail';
 // Admin pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ProductsAdmin from './pages/admin/ProductsAdmin';
@@ -48,6 +50,8 @@ function App() {
               <Route path="/meal-logging" element={<ProtectedRoute><MealLogging /></ProtectedRoute>} />
               <Route path="/sri-lankan-plates" element={<SriLankanPlates />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/orders" element={<Orders />} />
+              <Route path="/orders/:id" element={<OrderDetail />} />
               
               {/* Admin Routes - Protected */}
               <Route

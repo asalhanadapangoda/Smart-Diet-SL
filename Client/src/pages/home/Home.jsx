@@ -76,13 +76,13 @@ const Home = () => {
               </p>
             </Link>
             <Link
-              to="/sri-lankan-plates"
+              to="/products"
               className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300 cursor-pointer block"
             >
-              <div className="text-5xl mb-4 transform hover:scale-110 transition-transform">🍽️</div>
-              <h3 className="text-2xl font-semibold mb-3 text-white text-glass">Traditional Foods</h3>
+              <div className="text-5xl mb-4 transform hover:scale-110 transition-transform">🛒</div>
+              <h3 className="text-2xl font-semibold mb-3 text-white text-glass">Products</h3>
               <p className="text-white/80 text-glass">
-                Discover authentic Sri Lankan traditional foods and their nutritional benefits
+                Browse our wide selection of healthy products and ingredients
               </p>
             </Link>
           </div>
