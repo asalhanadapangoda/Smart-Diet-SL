@@ -54,27 +54,36 @@ const Home = () => {
             Why Choose Us?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300">
+            <Link
+              to="/calculator"
+              className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300 cursor-pointer block"
+            >
               <div className="text-5xl mb-4 transform hover:scale-110 transition-transform">📊</div>
               <h3 className="text-2xl font-semibold mb-3 text-white text-glass">Nutrition Calculator</h3>
               <p className="text-white/80 text-glass">
                 Calculate your daily nutrition intake with our easy-to-use calculator
               </p>
-            </div>
-            <div className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300">
+            </Link>
+            <Link
+              to="/diet-plans"
+              className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300 cursor-pointer block"
+            >
               <div className="text-5xl mb-4 transform hover:scale-110 transition-transform">📋</div>
               <h3 className="text-2xl font-semibold mb-3 text-white text-glass">Diet Plans</h3>
               <p className="text-white/80 text-glass">
                 Follow personalized diet plans designed for Sri Lankan cuisine
               </p>
-            </div>
-            <div className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300">
+            </Link>
+            <Link
+              to="/sri-lankan-plates"
+              className="glass-card p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300 cursor-pointer block"
+            >
               <div className="text-5xl mb-4 transform hover:scale-110 transition-transform">🍽️</div>
               <h3 className="text-2xl font-semibold mb-3 text-white text-glass">Traditional Foods</h3>
               <p className="text-white/80 text-glass">
                 Discover authentic Sri Lankan traditional foods and their nutritional benefits
               </p>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
