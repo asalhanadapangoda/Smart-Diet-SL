@@ -217,6 +217,11 @@ export const LanguageProvider = ({ children }) => {
       dairy: 'Dairy',
       spices: 'Spices',
       other: 'Other',
+      // Header
+      cart: 'Cart',
+      myOrders: 'My Orders',
+      adminDashboard: 'Admin Dashboard',
+      language: 'Language',
     },
     si: {
       // Common
@@ -411,6 +416,11 @@ export const LanguageProvider = ({ children }) => {
       dairy: 'කිරි නිෂ්පාදන',
       spices: 'කුළුබඩු',
       other: 'වෙනත්',
+      // Header
+      cart: 'කරත්තය',
+      myOrders: 'මගේ ඇණවුම්',
+      adminDashboard: 'පරිපාලක පුවරුව',
+      language: 'භාෂාව',
     },
     ta: {
       // Common
@@ -605,6 +615,11 @@ export const LanguageProvider = ({ children }) => {
       dairy: 'பால் பொருட்கள்',
       spices: 'மசாலாப் பொருட்கள்',
       other: 'மற்றவை',
+      // Header
+      cart: 'கார்ட்',
+      myOrders: 'எனது ஆர்டர்கள்',
+      adminDashboard: 'நிர்வாக டாஷ்போர்டு',
+      language: 'மொழி',
     },
   };
 

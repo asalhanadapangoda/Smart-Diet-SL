@@ -46,21 +46,21 @@ const Header = () => {
               to="/products"
               className="px-3 py-2 rounded-lg glass-button text-sm font-medium text-white hover:scale-105"
             >
-              Products
+              {t('products')}
             </Link>
             {isAuthenticated && (
               <Link
                 to="/diet-planner"
                 className="px-3 py-2 rounded-lg glass-button text-sm font-semibold text-white hover:scale-105 bg-gradient-to-r from-green-400 to-emerald-500"
               >
-                AI Diet Planner
+                {t('aiDietPlanner')}
               </Link>
             )}
 
             {/* Tools Dropdown */}
             <div className="relative group">
               <button className="px-3 py-2 rounded-lg glass-button text-sm font-medium flex items-center text-white hover:scale-105">
-                Tools
+                {t('tools')}
                 <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -188,7 +188,7 @@ const Header = () => {
                         to="/orders"
                         className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
                       >
-                        My Orders
+                        {t('myOrders')}
                       </Link>
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
@@ -198,7 +198,7 @@ const Header = () => {
                             to="/admin"
                             className="block px-4 py-2 text-sm text-yellow-300 hover:bg-white/20 rounded-lg mx-2 font-semibold transition-all"
                           >
-                            Admin Dashboard
+                            {t('adminDashboard')}
                           </Link>
                         </>
                       )}
@@ -207,7 +207,7 @@ const Header = () => {
                         onClick={handleLogout}
                         className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-white/20 rounded-lg mx-2 transition-all"
                       >
-                        Logout
+                        {t('logout')}
                       </button>
                     </div>
                   </div>
@@ -285,7 +285,7 @@ const Header = () => {
                 className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Products
+                {t('products')}
               </Link>
               {isAuthenticated && (
                 <Link
@@ -293,7 +293,7 @@ const Header = () => {
                   className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition font-semibold bg-gradient-to-r from-green-400 to-emerald-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  AI Diet Planner
+                  {t('aiDietPlanner')}
                 </Link>
               )}
 
@@ -303,7 +303,7 @@ const Header = () => {
                   onClick={() => setToolsMenuOpen(!toolsMenuOpen)}
                   className="w-full text-left px-3 py-2 rounded-lg glass-button text-white transition flex items-center justify-between hover:scale-105"
                 >
-                  <span>Tools</span>
+                  <span>{t('tools')}</span>
                   <svg
                     className={`w-4 h-4 transition-transform ${
                       toolsMenuOpen ? 'rotate-180' : ''
@@ -348,7 +348,7 @@ const Header = () => {
 
               {/* Mobile Language Switcher */}
               <div className="flex items-center space-x-2 pt-2 border-t border-white/20">
-                <span className="px-3 py-2 text-sm text-white/80">Language:</span>
+                <span className="px-3 py-2 text-sm text-white/80">{t('language')}:</span>
                 <button
                   onClick={() => changeLanguage('en')}
                   className={`px-3 py-1.5 rounded-lg text-sm transition-all ${
@@ -389,7 +389,7 @@ const Header = () => {
                     className="block px-3 py-2 rounded-lg glass-button text-white transition flex items-center justify-between hover:scale-105"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span>Cart</span>
+                    <span>{t('cart')}</span>
                     {cartItems.length > 0 && (
                       <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                         {cartItems.length}
@@ -415,7 +415,7 @@ const Header = () => {
                     className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    My Orders
+                    {t('myOrders')}
                   </Link>
                   {user?.role === 'admin' && (
                     <Link
@@ -423,14 +423,14 @@ const Header = () => {
                       className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition bg-gradient-to-r from-yellow-400 to-orange-500 font-semibold"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      Admin Dashboard
+                      {t('adminDashboard')}
                     </Link>
                   )}
                   <button
                     onClick={handleLogout}
                     className="w-full text-left px-3 py-2 rounded-lg glass-button text-red-300 hover:bg-white/20 transition"
                   >
-                    Logout
+                    {t('logout')}
                   </button>
                 </div>
               ) : (
