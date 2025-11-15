@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { generateDietPlan, fetchMyPlans, clearPlan } from '../../features/diet/dietSlice';
+import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 export default function DietPlanner() {
   const dispatch = useDispatch();
   const { loading, error, currentPlan, history } = useSelector(s => s.diet || {});
+  const { t } = useLanguage();
 
   // Debug: Log state changes
   useEffect(() => {
@@ -29,10 +31,12 @@ export default function DietPlanner() {
       const weightInKg = parseFloat(form.weight);
       if (heightInMeters > 0 && weightInKg > 0) {
         const bmi = (weightInKg / (heightInMeters * heightInMeters)).toFixed(1);
-        const bmiCategory = bmi < 18.5 ? 'Underweight' : 
-                          bmi < 25 ? 'Normal' : 
-                          bmi < 30 ? 'Overweight' : 'Obese';
-        return { bmi, category: bmiCategory };
+        let categoryKey = 'normal';
+        if (bmi < 18.5) categoryKey = 'underweight';
+        else if (bmi < 25) categoryKey = 'normal';
+        else if (bmi < 30) categoryKey = 'overweight';
+        else categoryKey = 'obese';
+        return { bmi, category: t(categoryKey), categoryKey };
       }
     }
     return null;
@@ -53,21 +57,21 @@ export default function DietPlanner() {
     
     // Validate required fields
     if (!form.weight || !form.height || !form.age) {
-      toast.error('Please fill in Weight, Height, and Age (required fields)');
+      toast.error(t('pleaseFillRequired'));
       return;
     }
 
-    toast.loading('Generating your personalized diet plan... 🤖');
+    toast.loading(t('generatingPersonalizedPlan') + ' 🤖');
     dispatch(generateDietPlan(form))
       .unwrap()
       .then((data) => {
         toast.dismiss();
-        toast.success('Your diet plan is ready!');
+        toast.success(t('dietPlanReady'));
         console.log('Diet plan response:', data);
       })
       .catch((err) => {
         toast.dismiss();
-        toast.error(err || 'Failed to generate diet plan');
+        toast.error(err || t('failedToGeneratePlan'));
         console.error('Diet plan error:', err);
       });
   };
@@ -75,20 +79,20 @@ export default function DietPlanner() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl relative">
       <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white text-glass bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
-        AI Diet Planner
+        {t('aiDietPlanner')}
       </h1>
-      <p className="text-white/80 mb-6 text-glass text-lg">Get a personalized 7-day diet plan based on your health profile</p>
+      <p className="text-white/80 mb-6 text-glass text-lg">{t('getPersonalizedPlan')}</p>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Form Section */}
         <div className="lg:col-span-1">
           <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 space-y-4 backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Your Health Information</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">{t('yourHealthInformation')}</h2>
 
             {/* Required Fields */}
             <div>
               <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                Weight (kg) <span className="text-red-300">*</span>
+                {t('weight')} <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -103,7 +107,7 @@ export default function DietPlanner() {
 
             <div>
               <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                Height (cm) <span className="text-red-300">*</span>
+                {t('height')} <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -118,7 +122,7 @@ export default function DietPlanner() {
 
             <div>
               <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                Age <span className="text-red-300">*</span>
+                {t('age')} <span className="text-red-300">*</span>
               </label>
               <input
                 type="number"
@@ -135,28 +139,28 @@ export default function DietPlanner() {
             {bmiData && (
               <div className="glass-card bg-blue-500/20 border border-blue-300/30 rounded-xl p-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-white/90 text-glass">Your BMI:</span>
+                  <span className="text-sm font-medium text-white/90 text-glass">{t('yourBMI')}:</span>
                   <span className={`text-lg font-bold text-glass ${
-                    bmiData.category === 'Normal' ? 'text-green-300' :
-                    bmiData.category === 'Underweight' ? 'text-yellow-300' :
+                    bmiData.categoryKey === 'normal' ? 'text-green-300' :
+                    bmiData.categoryKey === 'underweight' ? 'text-yellow-300' :
                     'text-red-300'
                   }`}>
                     {bmiData.bmi}
                   </span>
                 </div>
                 <p className="text-xs text-white/70 mt-1 text-glass">
-                  Category: <span className="font-semibold">{bmiData.category}</span>
+                  {t('category')}: <span className="font-semibold">{bmiData.category}</span>
                 </p>
               </div>
             )}
 
             {/* Medical Information */}
             <div className="border-t border-white/20 pt-4">
-              <h3 className="text-sm font-semibold mb-3 text-white/90 text-glass">Medical Information</h3>
+              <h3 className="text-sm font-semibold mb-3 text-white/90 text-glass">{t('medicalInformation')}</h3>
 
               <div>
                 <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                  Blood Pressure (mmHg)
+                  {t('bloodPressure')}
                 </label>
                 <input
                   type="text"
@@ -170,7 +174,7 @@ export default function DietPlanner() {
 
               <div>
                 <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                  Blood Sugar Level / Diabetes
+                  {t('bloodSugarLevel')}
                 </label>
                 <input
                   type="text"
@@ -184,7 +188,7 @@ export default function DietPlanner() {
 
               <div>
                 <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                  Body Type
+                  {t('bodyType')}
                 </label>
                 <select
                   name="bodyType"
@@ -192,16 +196,16 @@ export default function DietPlanner() {
                   onChange={handleChange}
                   className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
                 >
-                  <option value="" className="bg-gray-800">Select body type</option>
-                  <option value="ectomorph" className="bg-gray-800">Ectomorph (Naturally thin, fast metabolism)</option>
-                  <option value="mesomorph" className="bg-gray-800">Mesomorph (Naturally athletic, balanced)</option>
-                  <option value="endomorph" className="bg-gray-800">Endomorph (Naturally stocky, slower metabolism)</option>
+                  <option value="" className="bg-gray-800">{t('selectBodyType')}</option>
+                  <option value="ectomorph" className="bg-gray-800">{t('ectomorph')}</option>
+                  <option value="mesomorph" className="bg-gray-800">{t('mesomorph')}</option>
+                  <option value="endomorph" className="bg-gray-800">{t('endomorph')}</option>
                 </select>
               </div>
 
               <div>
                 <label className="block text-sm font-medium mb-1 text-white/90 text-glass">
-                  Activity Level
+                  {t('activityLevel')}
                 </label>
                 <select
                   name="activityLevel"
@@ -209,9 +213,9 @@ export default function DietPlanner() {
                   onChange={handleChange}
                   className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
                 >
-                  <option value="low" className="bg-gray-800">Low (Little or no exercise)</option>
-                  <option value="moderate" className="bg-gray-800">Moderate (Exercise 3-5 days/week)</option>
-                  <option value="high" className="bg-gray-800">High (Exercise 6-7 days/week)</option>
+                  <option value="low" className="bg-gray-800">{t('low')}</option>
+                  <option value="moderate" className="bg-gray-800">{t('moderate')}</option>
+                  <option value="high" className="bg-gray-800">{t('high')}</option>
                 </select>
               </div>
             </div>
@@ -222,7 +226,7 @@ export default function DietPlanner() {
                 disabled={loading}
                 className="glass-button w-full text-white py-3 rounded-xl hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
-                {loading ? 'Generating Plan...' : 'Generate My Diet Plan'}
+                {loading ? t('generatingPlan') : t('generateMyDietPlan')}
               </button>
               {currentPlan && (
                 <button
@@ -230,7 +234,7 @@ export default function DietPlanner() {
                   onClick={() => dispatch(clearPlan())}
                   className="glass-button w-full mt-2 px-4 py-2 rounded-xl text-white hover:scale-105 transition-all"
                 >
-                  Clear Plan
+                  {t('clearPlan')}
                 </button>
               )}
             </div>
@@ -248,7 +252,7 @@ export default function DietPlanner() {
           {loading && (
             <div className="glass-card rounded-2xl p-8 text-center backdrop-blur-xl">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-              <p className="text-white/80 text-glass">Generating your personalized diet plan...</p>
+              <p className="text-white/80 text-glass">{t('generatingPersonalizedPlan')}</p>
             </div>
           )}
 
@@ -256,9 +260,9 @@ export default function DietPlanner() {
             <div className="glass-card rounded-2xl p-6 mb-6 backdrop-blur-xl">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-2xl font-bold text-white text-glass bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
-                  Your Personalized 7-Day Diet Plan
+                  {t('yourPersonalizedPlan')}
                 </h2>
-                <span className="text-sm text-white/60 text-glass">Plan ID: {currentPlan.planId || 'N/A'}</span>
+                <span className="text-sm text-white/60 text-glass">{t('planId')}: {currentPlan.planId || 'N/A'}</span>
               </div>
               <div className="prose max-w-none">
                 <pre className="whitespace-pre-wrap text-sm text-white/90 font-sans glass-card bg-white/10 p-4 rounded-xl text-glass">
@@ -270,20 +274,20 @@ export default function DietPlanner() {
 
           {!loading && !currentPlan && (
             <div className="glass-card rounded-2xl p-8 text-center backdrop-blur-xl">
-              <p className="text-white/80 text-glass">Fill out the form to generate your personalized diet plan.</p>
+              <p className="text-white/80 text-glass">{t('fillFormToGenerate')}</p>
             </div>
           )}
 
           {/* Previous Plans */}
           {history && history.length > 0 && (
             <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
-              <h3 className="text-xl font-semibold mb-4 text-white text-glass">Previous Plans</h3>
+              <h3 className="text-xl font-semibold mb-4 text-white text-glass">{t('previousPlans')}</h3>
               <div className="space-y-4">
                 {history.map((plan) => (
                   <div key={plan._id} className="glass-card border border-white/20 rounded-xl p-4 hover:scale-105 transition-all">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-medium text-white/80 text-glass">
-                        Created: {new Date(plan.createdAt).toLocaleString()}
+                        {t('created')}: {new Date(plan.createdAt).toLocaleString()}
                       </span>
                     </div>
                     <div className="text-sm text-white/70 line-clamp-3 text-glass">
@@ -298,7 +302,7 @@ export default function DietPlanner() {
                       }}
                       className="mt-2 text-sm text-green-300 hover:text-green-200 transition-colors text-glass"
                     >
-                      View Full Plan
+                      {t('viewFullPlan')}
                     </button>
                   </div>
                 ))}

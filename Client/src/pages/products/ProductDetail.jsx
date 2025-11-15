@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductById, clearProduct } from '../../store/slices/productSlice';
 import { addToCart } from '../../store/slices/cartSlice';
+import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 const ProductDetail = () => {
@@ -11,6 +12,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const { product, loading } = useSelector((state) => state.products);
   const [quantity, setQuantity] = useState(1);
+  const { t } = useLanguage();
 
   useEffect(() => {
     dispatch(fetchProductById(id));
@@ -30,25 +32,25 @@ const ProductDetail = () => {
           quantity: quantity,
         })
       );
-      toast.success('Product added to cart');
+      toast.success(t('productAddedToCart'));
     }
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8 text-center">Loading...</div>
+      <div className="container mx-auto px-4 py-8 text-center text-white text-glass">{t('loadingProducts')}</div>
     );
   }
 
   if (!product) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <p className="text-gray-500 mb-4">Product not found</p>
+        <p className="text-white/80 mb-4 text-glass">{t('productNotFound')}</p>
         <button
           onClick={() => navigate('/products')}
-          className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+          className="glass-button text-white px-6 py-2 rounded-xl hover:scale-105 transition-all"
         >
-          Back to Products
+          {t('backToProducts')}
         </button>
       </div>
     );
@@ -58,9 +60,9 @@ const ProductDetail = () => {
     <div className="container mx-auto px-4 py-8">
       <button
         onClick={() => navigate(-1)}
-        className="mb-4 text-green-600 hover:text-green-700"
+        className="mb-4 text-green-300 hover:text-green-200 text-glass transition-colors"
       >
-        ← Back
+        {t('back')}
       </button>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -73,53 +75,53 @@ const ProductDetail = () => {
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-          <p className="text-2xl text-green-600 font-bold mb-4">
+          <h1 className="text-3xl font-bold mb-4 text-white text-glass">{product.name}</h1>
+          <p className="text-2xl text-green-300 font-bold mb-4 text-glass">
             Rs. {product.price}
           </p>
-          <p className="text-gray-600 mb-6">{product.description}</p>
+          <p className="text-white/80 mb-6 text-glass">{product.description}</p>
 
           {product.nutrition && (
-            <div className="bg-gray-50 p-4 rounded-lg mb-6">
-              <h3 className="font-semibold mb-2">Nutrition Information (per 100g)</h3>
+            <div className="glass-card bg-white/10 p-4 rounded-xl mb-6 backdrop-blur-xl">
+              <h3 className="font-semibold mb-2 text-white text-glass">{t('nutritionInformation')}</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
-                  <span className="text-gray-600">Calories:</span>{' '}
-                  <span className="font-semibold">{product.nutrition.calories} cal</span>
+                  <span className="text-white/80 text-glass">{t('calories')}:</span>{' '}
+                  <span className="font-semibold text-white text-glass">{product.nutrition.calories} cal</span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Protein:</span>{' '}
-                  <span className="font-semibold">{product.nutrition.protein}g</span>
+                  <span className="text-white/80 text-glass">{t('protein')}:</span>{' '}
+                  <span className="font-semibold text-white text-glass">{product.nutrition.protein}g</span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Carbs:</span>{' '}
-                  <span className="font-semibold">{product.nutrition.carbs}g</span>
+                  <span className="text-white/80 text-glass">{t('carbs')}:</span>{' '}
+                  <span className="font-semibold text-white text-glass">{product.nutrition.carbs}g</span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Fat:</span>{' '}
-                  <span className="font-semibold">{product.nutrition.fat}g</span>
+                  <span className="text-white/80 text-glass">{t('fat')}:</span>{' '}
+                  <span className="font-semibold text-white text-glass">{product.nutrition.fat}g</span>
                 </div>
                 <div>
-                  <span className="text-gray-600">Fiber:</span>{' '}
-                  <span className="font-semibold">{product.nutrition.fiber}g</span>
+                  <span className="text-white/80 text-glass">{t('fiber')}:</span>{' '}
+                  <span className="font-semibold text-white text-glass">{product.nutrition.fiber}g</span>
                 </div>
               </div>
             </div>
           )}
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Quantity</label>
+            <label className="block text-sm font-medium mb-2 text-white text-glass">{t('quantity')}</label>
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                className="glass-button bg-white/20 text-white px-4 py-2 rounded-xl hover:scale-110 transition-all"
               >
                 -
               </button>
-              <span className="text-lg font-semibold w-12 text-center">{quantity}</span>
+              <span className="text-lg font-semibold w-12 text-center text-white text-glass">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+                className="glass-button bg-white/20 text-white px-4 py-2 rounded-xl hover:scale-110 transition-all"
               >
                 +
               </button>
@@ -128,9 +130,9 @@ const ProductDetail = () => {
 
           <button
             onClick={handleAddToCart}
-            className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition font-semibold"
+            className="w-full glass-button text-white py-3 rounded-xl hover:scale-105 transition-all font-semibold"
           >
-            Add to Cart
+            {t('addToCart')}
           </button>
         </div>
       </div>

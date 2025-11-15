@@ -81,23 +81,23 @@ const Calculator = () => {
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass text-center">
-        Nutrition Calculator
+        {t('nutritionCalculator')}
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Food Selection */}
         <div className="lg:col-span-2">
           <div className="glass-card rounded-2xl p-6 mb-6 backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Add Traditional Foods</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">{t('addTraditionalFoods')}</h2>
             <input
               type="text"
-              placeholder="Search foods..."
+              placeholder={t('searchFoods')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass mb-4"
             />
             {loading ? (
-              <div className="text-center py-8 text-white/80 text-glass">Loading foods...</div>
+              <div className="text-center py-8 text-white/80 text-glass">{t('loadingFoods')}</div>
             ) : (
               <div className="max-h-96 overflow-y-auto space-y-2">
                 {filteredFoods.map((food) => {
@@ -119,8 +119,8 @@ const Calculator = () => {
                         className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {selectedFoods.find((f) => f._id === food._id)
-                          ? 'Added'
-                          : 'Add'}
+                          ? t('added')
+                          : t('add')}
                       </button>
                     </div>
                   );
@@ -131,9 +131,9 @@ const Calculator = () => {
 
           {/* Selected Foods */}
           <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Selected Foods</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">{t('selectedFoods')}</h2>
             {selectedFoods.length === 0 ? (
-              <p className="text-white/60 text-glass">No foods selected</p>
+              <p className="text-white/60 text-glass">{t('noFoodsSelected')}</p>
             ) : (
               <div className="space-y-4">
                 {selectedFoods.map((food) => {
@@ -149,7 +149,7 @@ const Calculator = () => {
                       </div>
                       <div className="flex items-center gap-4">
                         <div>
-                          <label className="text-sm text-white/70 text-glass">Quantity ({unit})</label>
+                          <label className="text-sm text-white/70 text-glass">{t('quantity')} ({unit})</label>
                           <input
                             type="number"
                             value={quantities[food._id] || 0}
@@ -162,7 +162,7 @@ const Calculator = () => {
                           onClick={() => removeFood(food._id)}
                           className="text-red-300 hover:text-red-200 transition-colors text-glass"
                         >
-                          Remove
+                          {t('remove')}
                         </button>
                       </div>
                     </div>
@@ -176,26 +176,26 @@ const Calculator = () => {
         {/* Nutrition Summary */}
         <div className="lg:col-span-1">
           <div className="glass-card rounded-2xl p-6 sticky top-4 backdrop-blur-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Nutrition Summary</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-white text-glass">{t('nutritionSummary')}</h2>
             <div className="space-y-4">
               <div className="glass-card p-4 bg-green-500/20 rounded-xl border border-green-300/30">
-                <div className="text-sm text-white/80 text-glass">Calories</div>
+                <div className="text-sm text-white/80 text-glass">{t('calories')}</div>
                 <div className="text-2xl font-bold text-green-300 text-glass">{nutrition.calories}</div>
               </div>
               <div className="glass-card p-4 bg-blue-500/20 rounded-xl border border-blue-300/30">
-                <div className="text-sm text-white/80 text-glass">Protein</div>
+                <div className="text-sm text-white/80 text-glass">{t('protein')}</div>
                 <div className="text-2xl font-bold text-blue-300 text-glass">{nutrition.protein}g</div>
               </div>
               <div className="glass-card p-4 bg-yellow-500/20 rounded-xl border border-yellow-300/30">
-                <div className="text-sm text-white/80 text-glass">Carbohydrates</div>
+                <div className="text-sm text-white/80 text-glass">{t('carbohydrates')}</div>
                 <div className="text-2xl font-bold text-yellow-300 text-glass">{nutrition.carbs}g</div>
               </div>
               <div className="glass-card p-4 bg-orange-500/20 rounded-xl border border-orange-300/30">
-                <div className="text-sm text-white/80 text-glass">Fat</div>
+                <div className="text-sm text-white/80 text-glass">{t('fat')}</div>
                 <div className="text-2xl font-bold text-orange-300 text-glass">{nutrition.fat}g</div>
               </div>
               <div className="glass-card p-4 bg-purple-500/20 rounded-xl border border-purple-300/30">
-                <div className="text-sm text-white/80 text-glass">Fiber</div>
+                <div className="text-sm text-white/80 text-glass">{t('fiber')}</div>
                 <div className="text-2xl font-bold text-purple-300 text-glass">{nutrition.fiber}g</div>
               </div>
             </div>

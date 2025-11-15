@@ -33,10 +33,10 @@ const SriLankanPlates = () => {
   }, [generatePlate]);
 
   const goals = [
-    { value: 'weight-loss', label: 'Weight Loss' },
-    { value: 'diabetes', label: 'Diabetes Management' },
-    { value: 'weight-gain', label: 'Weight Gain' },
-    { value: 'general-health', label: 'General Health' },
+    { value: 'weight-loss', labelKey: 'weightLoss' },
+    { value: 'diabetes', labelKey: 'diabetesManagement' },
+    { value: 'weight-gain', labelKey: 'weightGain' },
+    { value: 'general-health', labelKey: 'generalHealth' },
   ];
 
   return (
@@ -45,14 +45,14 @@ const SriLankanPlates = () => {
         {t('generatePlate')}
       </h1>
       <p className="text-white/80 mb-6 text-glass text-center text-lg">
-        Get personalized Sri Lankan meal plates based on your health goals
+        {t('getPersonalizedPlates')}
       </p>
 
       <div className="glass-card rounded-2xl p-6 mb-6 backdrop-blur-xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
-              Health Goal
+              {t('healthGoal')}
             </label>
             <select
               value={goal}
@@ -61,7 +61,7 @@ const SriLankanPlates = () => {
             >
               {goals.map((g) => (
                 <option key={g.value} value={g.value} className="bg-gray-800">
-                  {g.label}
+                  {t(g.labelKey)}
                 </option>
               ))}
             </select>
@@ -69,7 +69,7 @@ const SriLankanPlates = () => {
 
           <div>
             <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
-              Target Calories
+              {t('targetCalories')}
             </label>
             <input
               type="number"
@@ -100,7 +100,7 @@ const SriLankanPlates = () => {
           disabled={loading}
           className="glass-button mt-4 w-full md:w-auto px-6 py-3 text-white rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
         >
-          {loading ? 'Generating...' : 'Generate New Plate'}
+          {loading ? t('generating') : t('generateNewPlate')}
         </button>
       </div>
 
@@ -124,7 +124,7 @@ const SriLankanPlates = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Plate Items */}
             <div>
-              <h3 className="font-semibold mb-3 text-white text-glass">Plate Contents:</h3>
+              <h3 className="font-semibold mb-3 text-white text-glass">{t('plateContents')}:</h3>
               <div className="space-y-2">
                 {plate.items?.map((item, index) => (
                   <div
@@ -145,35 +145,35 @@ const SriLankanPlates = () => {
 
             {/* Nutrition Summary */}
             <div>
-              <h3 className="font-semibold mb-3 text-white text-glass">Nutrition Summary:</h3>
+              <h3 className="font-semibold mb-3 text-white text-glass">{t('nutritionSummary')}:</h3>
               <div className="glass-card bg-green-500/20 p-4 rounded-xl space-y-2 border border-green-300/30">
                 <div className="flex justify-between">
-                  <span className="text-white/90 text-glass">Total Calories:</span>
+                  <span className="text-white/90 text-glass">{t('totalCalories')}:</span>
                   <span className="font-semibold text-green-300 text-glass">
                     {Math.round(plate.totalNutrition?.calories || 0)} cal
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/80 text-glass">Protein:</span>
+                  <span className="text-white/80 text-glass">{t('protein')}:</span>
                   <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.protein || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/80 text-glass">Carbs:</span>
+                  <span className="text-white/80 text-glass">{t('carbs')}:</span>
                   <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.carbs || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/80 text-glass">Fat:</span>
+                  <span className="text-white/80 text-glass">{t('fat')}:</span>
                   <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.fat || 0)}g</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-white/80 text-glass">Fiber:</span>
+                  <span className="text-white/80 text-glass">{t('fiber')}:</span>
                   <span className="text-white/90 text-glass">{Math.round(plate.totalNutrition?.fiber || 0)}g</span>
                 </div>
               </div>
 
               {plate.substitutions && plate.substitutions.length > 0 && (
                 <div className="mt-4">
-                  <h4 className="font-semibold mb-2 text-white text-glass">Suggested Substitutions:</h4>
+                  <h4 className="font-semibold mb-2 text-white text-glass">{t('suggestedSubstitutions')}:</h4>
                   <ul className="space-y-1 text-sm">
                     {plate.substitutions.map((sub, index) => (
                       <li key={index} className="text-white/80 text-glass">
@@ -190,7 +190,7 @@ const SriLankanPlates = () => {
 
               {plate.prepTime > 0 && (
                 <div className="mt-4 text-sm text-white/80 text-glass">
-                  <span className="font-medium">Prep Time:</span> {plate.prepTime} minutes
+                  <span className="font-medium">{t('prepTime')}:</span> {plate.prepTime} {t('minutes')}
                 </div>
               )}
             </div>

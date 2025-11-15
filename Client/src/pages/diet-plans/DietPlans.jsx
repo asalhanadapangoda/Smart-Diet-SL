@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import api from '../../services/api';
+import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 const DietPlans = () => {
   const [dietPlans, setDietPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('');
+  const { t } = useLanguage();
 
   useEffect(() => {
     fetchDietPlans();
@@ -19,26 +21,26 @@ const DietPlans = () => {
       const { data } = await api.get(`/diet-plans${params}`);
       setDietPlans(data);
     } catch (error) {
-      toast.error('Failed to fetch diet plans');
+      toast.error(t('failedToFetchDietPlans'));
     } finally {
       setLoading(false);
     }
   };
 
   const categories = [
-    'all',
-    'weight-loss',
-    'weight-gain',
-    'diabetic',
-    'vegetarian',
-    'general',
-    'athletic',
+    { value: 'all', labelKey: 'all' },
+    { value: 'weight-loss', labelKey: 'weightLossCategory' },
+    { value: 'weight-gain', labelKey: 'weightGainCategory' },
+    { value: 'diabetic', labelKey: 'diabetic' },
+    { value: 'vegetarian', labelKey: 'vegetarian' },
+    { value: 'general', labelKey: 'general' },
+    { value: 'athletic', labelKey: 'athletic' },
   ];
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass text-center">
-        Recommended Diet Plans
+        {t('recommendedDietPlans')}
       </h1>
 
       {/* Category Filter */}
@@ -49,15 +51,15 @@ const DietPlans = () => {
           className="glass-input px-6 py-3 rounded-xl text-white focus:outline-none text-glass"
         >
           {categories.map((cat) => (
-            <option key={cat} value={cat === 'all' ? '' : cat} className="bg-gray-800">
-              {cat.charAt(0).toUpperCase() + cat.slice(1).replace('-', ' ')}
+            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-gray-800">
+              {t(cat.labelKey)}
             </option>
           ))}
         </select>
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-white text-glass text-xl">Loading diet plans...</div>
+        <div className="text-center py-12 text-white text-glass text-xl">{t('loadingDietPlans')}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dietPlans.map((plan) => (
@@ -85,31 +87,31 @@ const DietPlans = () => {
                 <p className="text-white/80 mb-4 line-clamp-3 text-glass">{plan.description}</p>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/70 text-glass">Duration:</span>
-                    <span className="font-semibold text-white text-glass">{plan.duration} days</span>
+                    <span className="text-white/70 text-glass">{t('duration')}:</span>
+                    <span className="font-semibold text-white text-glass">{plan.duration} {t('days')}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/70 text-glass">Total Calories:</span>
+                    <span className="text-white/70 text-glass">{t('totalCalories')}:</span>
                     <span className="font-semibold text-white text-glass">{plan.totalCalories} cal</span>
                   </div>
                 </div>
                 <div className="border-t border-white/20 pt-4">
-                  <h4 className="font-semibold mb-2 text-white text-glass">Meals:</h4>
+                  <h4 className="font-semibold mb-2 text-white text-glass">{t('meals')}:</h4>
                   <div className="space-y-1 text-sm">
                     {plan.meals.breakfast && (
                       <div className="text-white/80 text-glass">
-                        <span className="font-medium">Breakfast:</span>{' '}
+                        <span className="font-medium">{t('breakfast')}:</span>{' '}
                         {plan.meals.breakfast.name}
                       </div>
                     )}
                     {plan.meals.lunch && (
                       <div className="text-white/80 text-glass">
-                        <span className="font-medium">Lunch:</span> {plan.meals.lunch.name}
+                        <span className="font-medium">{t('lunch')}:</span> {plan.meals.lunch.name}
                       </div>
                     )}
                     {plan.meals.dinner && (
                       <div className="text-white/80 text-glass">
-                        <span className="font-medium">Dinner:</span> {plan.meals.dinner.name}
+                        <span className="font-medium">{t('dinner')}:</span> {plan.meals.dinner.name}
                       </div>
                     )}
                   </div>
@@ -121,7 +123,7 @@ const DietPlans = () => {
       )}
 
       {!loading && dietPlans.length === 0 && (
-        <p className="text-center text-white/80 py-12 text-glass text-xl">No diet plans available</p>
+        <p className="text-center text-white/80 py-12 text-glass text-xl">{t('noDietPlansAvailable')}</p>
       )}
     </div>
   );

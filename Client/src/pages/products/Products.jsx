@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../store/slices/productSlice';
 import { addToCart } from '../../store/slices/cartSlice';
+import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 const Products = () => {
@@ -10,20 +11,21 @@ const Products = () => {
   const { products, loading } = useSelector((state) => state.products);
   const [category, setCategory] = useState('');
   const [search, setSearch] = useState('');
+  const { t } = useLanguage();
 
   useEffect(() => {
     dispatch(fetchProducts({ category, search }));
   }, [dispatch, category, search]);
 
   const categories = [
-    'all',
-    'vegetables',
-    'fruits',
-    'grains',
-    'proteins',
-    'dairy',
-    'spices',
-    'other',
+    { value: 'all', labelKey: 'all' },
+    { value: 'vegetables', labelKey: 'vegetables' },
+    { value: 'fruits', labelKey: 'fruits' },
+    { value: 'grains', labelKey: 'grains' },
+    { value: 'proteins', labelKey: 'proteins' },
+    { value: 'dairy', labelKey: 'dairy' },
+    { value: 'spices', labelKey: 'spices' },
+    { value: 'other', labelKey: 'other' },
   ];
 
   const handleAddToCart = (product) => {
@@ -36,20 +38,20 @@ const Products = () => {
         quantity: 1,
       })
     );
-    toast.success('Product added to cart');
+    toast.success(t('productAddedToCart'));
   };
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass text-center">
-        Our Products
+        {t('ourProducts')}
       </h1>
 
       {/* Filters */}
       <div className="mb-8 flex flex-col md:flex-row gap-4">
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder={t('searchProducts')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="flex-1 glass-input px-6 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
@@ -60,8 +62,8 @@ const Products = () => {
           className="glass-input px-6 py-3 rounded-xl text-white focus:outline-none text-glass"
         >
           {categories.map((cat) => (
-            <option key={cat} value={cat === 'all' ? '' : cat} className="bg-gray-800">
-              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-gray-800">
+              {t(cat.labelKey)}
             </option>
           ))}
         </select>
@@ -69,7 +71,7 @@ const Products = () => {
 
       {/* Products Grid */}
       {loading ? (
-        <div className="text-center py-12 text-white text-glass text-xl">Loading products...</div>
+        <div className="text-center py-12 text-white text-glass text-xl">{t('loadingProducts')}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
@@ -102,7 +104,7 @@ const Products = () => {
                     onClick={() => handleAddToCart(product)}
                     className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium"
                   >
-                    Add to Cart
+                    {t('addToCart')}
                   </button>
                 </div>
               </div>
@@ -112,7 +114,7 @@ const Products = () => {
       )}
 
       {!loading && products.length === 0 && (
-        <p className="text-center text-white/80 py-12 text-glass text-xl">No products found</p>
+        <p className="text-center text-white/80 py-12 text-glass text-xl">{t('noProductsFound')}</p>
       )}
     </div>
   );

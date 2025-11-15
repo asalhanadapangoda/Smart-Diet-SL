@@ -37,7 +37,7 @@ const MealLogging = () => {
         { name: 'Dhal', confidence: 0.75, estimatedPortion: '1 cup' },
       ];
       setRecognizedItems(mockRecognitions);
-      toast.success('Meal recognized! Please verify and add any missing items.');
+      toast.success(t('mealRecognized'));
     }, 1000);
   };
 
@@ -66,7 +66,7 @@ const MealLogging = () => {
     e.preventDefault();
     
     if (!image && manualItems.length === 0) {
-      toast.error('Please add an image or manual items');
+      toast.error(t('pleaseAddImageOrItems'));
       return;
     }
 
@@ -85,7 +85,7 @@ const MealLogging = () => {
         },
       });
 
-      toast.success('Meal logged successfully!');
+      toast.success(t('mealLoggedSuccess'));
       
       // Reset form
       setImage(null);
@@ -95,7 +95,7 @@ const MealLogging = () => {
       setManualItems([]);
       setNotes('');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to log meal');
+      toast.error(error.response?.data?.message || t('failedToLogMeal'));
     } finally {
       setLoading(false);
     }
@@ -112,17 +112,17 @@ const MealLogging = () => {
           {/* Meal Type */}
           <div>
             <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
-              Meal Type
+              {t('mealType')}
             </label>
             <select
               value={mealType}
               onChange={(e) => setMealType(e.target.value)}
               className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
             >
-              <option value="breakfast" className="bg-gray-800">Breakfast</option>
-              <option value="lunch" className="bg-gray-800">Lunch</option>
-              <option value="dinner" className="bg-gray-800">Dinner</option>
-              <option value="snack" className="bg-gray-800">Snack</option>
+              <option value="breakfast" className="bg-gray-800">{t('breakfast')}</option>
+              <option value="lunch" className="bg-gray-800">{t('lunch')}</option>
+              <option value="dinner" className="bg-gray-800">{t('dinner')}</option>
+              <option value="snack" className="bg-gray-800">{t('snack')}</option>
             </select>
           </div>
 
@@ -148,7 +148,7 @@ const MealLogging = () => {
                   }}
                   className="absolute top-2 right-2 glass-button bg-red-500/30 text-white px-3 py-1 rounded-xl hover:scale-105"
                 >
-                  Remove
+                  {t('remove')}
                 </button>
               </div>
             ) : (
@@ -168,19 +168,19 @@ const MealLogging = () => {
             {/* Recognized Items */}
             {recognizedItems.length > 0 && (
               <div className="mt-4 p-4 glass-card bg-blue-500/20 rounded-xl border border-blue-300/30">
-                <h3 className="font-semibold mb-2 text-white text-glass">Recognized Items:</h3>
+                <h3 className="font-semibold mb-2 text-white text-glass">{t('recognizedItems')}:</h3>
                 <ul className="space-y-2">
                   {recognizedItems.map((item, index) => (
                     <li key={index} className="text-sm text-white/90 text-glass">
                       <span className="font-medium">{item.name}</span>
                       <span className="text-white/70 ml-2">
-                        ({item.estimatedPortion}, {Math.round(item.confidence * 100)}% confidence)
+                        ({item.estimatedPortion}, {Math.round(item.confidence * 100)}% {t('confidence')})
                       </span>
                     </li>
                   ))}
                 </ul>
                 <p className="text-xs text-white/60 mt-2 text-glass">
-                  Please verify and add any missing items below
+                  {t('pleaseVerify')}
                 </p>
               </div>
             )}
@@ -190,35 +190,35 @@ const MealLogging = () => {
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="block text-sm font-medium text-white/90 text-glass">
-                Add Items Manually
+                {t('addItemsManually')}
               </label>
               <button
                 type="button"
                 onClick={addManualItem}
                 className="text-sm text-green-300 hover:text-green-200 transition-colors text-glass"
               >
-                + Add Item
+                {t('addItem')}
               </button>
             </div>
             {manualItems.map((item, index) => (
               <div key={index} className="flex gap-2 mb-2">
                 <input
                   type="text"
-                  placeholder="Food name"
+                  placeholder={t('foodName')}
                   value={item.name}
                   onChange={(e) => updateManualItem(index, 'name', e.target.value)}
                   className="flex-1 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
                 />
                 <input
                   type="text"
-                  placeholder="Portion"
+                  placeholder={t('portion')}
                   value={item.portion}
                   onChange={(e) => updateManualItem(index, 'portion', e.target.value)}
                   className="w-24 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
                 />
                 <input
                   type="number"
-                  placeholder="Calories"
+                  placeholder={t('calories')}
                   value={item.calories}
                   onChange={(e) => updateManualItem(index, 'calories', parseInt(e.target.value) || 0)}
                   className="w-24 glass-input px-3 py-2 rounded-xl text-white placeholder-white/60 text-sm"
@@ -237,14 +237,14 @@ const MealLogging = () => {
           {/* Notes */}
           <div>
             <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
-              Notes (optional)
+              {t('notesOptional')}
             </label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
               className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
-              placeholder="Any additional notes about your meal..."
+              placeholder={t('additionalNotes')}
             />
           </div>
 
@@ -254,7 +254,7 @@ const MealLogging = () => {
             disabled={loading}
             className="glass-button w-full text-white py-3 px-4 rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
           >
-            {loading ? 'Logging...' : 'Log Meal'}
+            {loading ? t('logging') : t('logMeal')}
           </button>
         </div>
       </form>

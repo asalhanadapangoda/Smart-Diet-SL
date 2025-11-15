@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile, getProfile } from '../../store/slices/authSlice';
 import ProtectedRoute from '../../components/common/ProtectedRoute';
+import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -50,9 +52,9 @@ const Profile = () => {
 
     try {
       await dispatch(updateProfile(formData)).unwrap();
-      toast.success('Profile updated successfully');
+      toast.success(t('profileUpdatedSuccess'));
     } catch (error) {
-      toast.error(error || 'Failed to update profile');
+      toast.error(error || t('failedToUpdateProfile'));
     } finally {
       setLoading(false);
     }
@@ -62,7 +64,7 @@ const Profile = () => {
     <ProtectedRoute>
       <div className="container mx-auto px-4 py-8 relative">
         <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
-          My Profile
+          {t('myProfile')}
         </h1>
 
         <div className="max-w-2xl mx-auto">
@@ -70,7 +72,7 @@ const Profile = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Avatar */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Profile Picture</label>
+                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('profilePicture')}</label>
                 <div className="flex items-center gap-4">
                   {user?.avatar && (
                     <img
@@ -91,7 +93,7 @@ const Profile = () => {
 
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Full Name</label>
+                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('fullName')}</label>
                 <input
                   type="text"
                   name="name"
@@ -104,7 +106,7 @@ const Profile = () => {
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Email</label>
+                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('email')}</label>
                 <input
                   type="email"
                   name="email"
@@ -117,7 +119,7 @@ const Profile = () => {
 
               {/* Phone */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Phone</label>
+                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('phone')}</label>
                 <input
                   type="tel"
                   name="phone"
@@ -129,7 +131,7 @@ const Profile = () => {
 
               {/* Address */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Address</label>
+                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('address')}</label>
                 <textarea
                   name="address"
                   rows="4"
@@ -144,7 +146,7 @@ const Profile = () => {
                 disabled={loading}
                 className="glass-button w-full text-white py-3 rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
               >
-                {loading ? 'Updating...' : 'Update Profile'}
+                {loading ? t('updating') : t('updateProfile')}
               </button>
             </form>
           </div>
