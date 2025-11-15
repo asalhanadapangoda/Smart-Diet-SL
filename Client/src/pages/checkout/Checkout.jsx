@@ -83,11 +83,11 @@ const Checkout = () => {
   if (cartItems.length === 0) {
     return (
       <ProtectedRoute>
-        <div className="container mx-auto px-4 py-8 text-center">
-          <p className="text-gray-500 mb-4">Your cart is empty</p>
+        <div className="container mx-auto px-4 py-8 text-center relative">
+          <p className="text-white/80 mb-4 text-glass text-xl">Your cart is empty</p>
           <button
             onClick={() => navigate('/products')}
-            className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+            className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
           >
             Continue Shopping
           </button>
@@ -100,88 +100,90 @@ const Checkout = () => {
 
   return (
     <ProtectedRoute>
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+      <div className="container mx-auto px-4 py-8 relative">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+          Checkout
+        </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
+            <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 space-y-6 backdrop-blur-xl">
               <div>
-                <h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
+                <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Shipping Address</h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Address</label>
+                    <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Address</label>
                     <textarea
                       name="address"
                       required
                       value={formData.address}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
                       rows="3"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium mb-1">City</label>
+                      <label className="block text-sm font-medium mb-2 text-white/90 text-glass">City</label>
                       <input
                         type="text"
                         name="city"
                         required
                         value={formData.city}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-1">Postal Code</label>
+                      <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Postal Code</label>
                       <input
                         type="text"
                         name="postalCode"
                         required
                         value={formData.postalCode}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Country</label>
+                    <label className="block text-sm font-medium mb-2 text-white/90 text-glass">Country</label>
                     <input
                       type="text"
                       name="country"
                       required
                       value={formData.country}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                      className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
-                <div className="space-y-2">
-                  <label className="flex items-center">
+                <h2 className="text-2xl font-semibold mb-4 text-white text-glass">Payment Method</h2>
+                <div className="space-y-3">
+                  <label className="flex items-center cursor-pointer group">
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="cash"
                       checked={formData.paymentMethod === 'cash'}
                       onChange={handleChange}
-                      className="mr-2"
+                      className="w-5 h-5 glass-input text-green-500 focus:ring-green-500 focus:ring-2 cursor-pointer"
                     />
-                    Cash on Delivery
+                    <span className="ml-3 text-white/90 text-glass group-hover:text-white transition-colors">Cash on Delivery</span>
                   </label>
-                  <label className="flex items-center">
+                  <label className="flex items-center cursor-pointer group">
                     <input
                       type="radio"
                       name="paymentMethod"
                       value="card"
                       checked={formData.paymentMethod === 'card'}
                       onChange={handleChange}
-                      className="mr-2"
+                      className="w-5 h-5 glass-input text-green-500 focus:ring-green-500 focus:ring-2 cursor-pointer"
                     />
-                    Card Payment
+                    <span className="ml-3 text-white/90 text-glass group-hover:text-white transition-colors">Card Payment</span>
                   </label>
                 </div>
               </div>
@@ -189,7 +191,7 @@ const Checkout = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-green-600 text-white py-3 rounded hover:bg-green-700 transition disabled:opacity-50"
+                className="w-full glass-button text-white py-3 rounded-xl hover:scale-105 transition-all disabled:opacity-50 font-medium"
               >
                 {loading ? 'Placing Order...' : 'Place Order'}
               </button>
@@ -197,26 +199,26 @@ const Checkout = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6 sticky top-4">
-              <h2 className="text-xl font-bold mb-4">Order Summary</h2>
-              <div className="space-y-2 mb-4">
+            <div className="glass-card rounded-2xl p-6 sticky top-4 backdrop-blur-xl">
+              <h2 className="text-2xl font-bold mb-4 text-white text-glass">Order Summary</h2>
+              <div className="space-y-3 mb-4">
                 {cartItems.map((item) => (
-                  <div key={item.product} className="flex justify-between text-sm">
+                  <div key={item.product} className="flex justify-between text-sm text-white/90 text-glass">
                     <span>
                       {item.name} x {item.quantity}
                     </span>
                     <span>Rs. {item.price * item.quantity}</span>
                   </div>
                 ))}
-                <div className="border-t pt-2 flex justify-between">
+                <div className="border-t border-white/20 pt-3 flex justify-between text-white/90 text-glass">
                   <span>Items</span>
                   <span>Rs. {itemsPrice}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between text-white/90 text-glass">
                   <span>Shipping</span>
                   <span>Rs. {shippingPrice}</span>
                 </div>
-                <div className="border-t pt-2 flex justify-between font-bold text-lg">
+                <div className="border-t border-white/20 pt-3 flex justify-between font-bold text-lg text-white text-glass">
                   <span>Total</span>
                   <span>Rs. {totalPrice}</span>
                 </div>
