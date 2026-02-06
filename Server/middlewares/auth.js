@@ -80,3 +80,19 @@ export const admin = (req, res, next) => {
   }
 };
 
+// Farmer only middleware
+export const farmer = (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({ message: 'Not authorized, please login first' });
+  }
+
+  if (req.user.role === 'farmer') {
+    next();
+  } else {
+    res.status(403).json({
+      message: 'Not authorized as a farmer',
+      userRole: req.user.role,
+    });
+  }
+};
+

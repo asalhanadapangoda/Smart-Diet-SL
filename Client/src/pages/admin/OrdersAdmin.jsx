@@ -22,6 +22,16 @@ const OrdersAdmin = () => {
     }
   };
 
+  const handleOrderStatusChange = async (orderId, status) => {
+    try {
+      await dispatch(updateAdminOrder({ id: orderId, orderData: { status } })).unwrap();
+      toast.success('Order status updated');
+      dispatch(getAdminOrders());
+    } catch (error) {
+      toast.error(error || 'Failed to update order status');
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <div className="mb-6">
@@ -56,6 +66,9 @@ const OrdersAdmin = () => {
                     Total
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
+                    Order Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Payment
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
@@ -84,6 +97,17 @@ const OrdersAdmin = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-glass">
                       Rs. {order.totalPrice?.toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <select
+                        value={order.status || (order.isDelivered ? 'completed' : 'pending')}
+                        onChange={(e) => handleOrderStatusChange(order._id, e.target.value)}
+                        className="glass-input text-sm rounded-xl px-3 py-2 text-gray-800 focus:outline-none"
+                      >
+                        <option value="pending" className="bg-white">Pending</option>
+                        <option value="delivering" className="bg-white">Delivering</option>
+                        <option value="completed" className="bg-white">Completed</option>
+                      </select>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span

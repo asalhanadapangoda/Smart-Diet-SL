@@ -5,17 +5,20 @@ import {
   getAdminProducts,
   getAdminOrders,
   getAdminUsers,
+  getProductApprovalRequests,
+  decideProductApproval,
 } from '../../store/slices/adminSlice';
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
-  const { products, orders, users, loading } = useSelector((state) => state.admin);
+  const { products, orders, users, approvalRequests, loading } = useSelector((state) => state.admin);
 
   useEffect(() => {
     document.title = 'Smart Diet SL-Admin';
     dispatch(getAdminProducts());
     dispatch(getAdminOrders());
     dispatch(getAdminUsers());
+    dispatch(getProductApprovalRequests());
   }, [dispatch]);
 
   const stats = [
@@ -46,6 +49,13 @@ const AdminDashboard = () => {
       icon: '⏳',
       color: 'bg-yellow-500',
       link: '/admin/orders',
+    },
+    {
+      name: 'Product Approvals',
+      value: approvalRequests.length,
+      icon: '✅',
+      color: 'bg-emerald-500',
+      link: '/admin',
     },
   ];
 
@@ -110,6 +120,58 @@ const AdminDashboard = () => {
                 👥 Manage Users
               </Link>
             </div>
+          </div>
+
+          {/* Product Approval Requests */}
+          <div className="glass-card rounded-2xl p-6 mb-8 backdrop-blur-xl">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-glass">Product Approval Requests</h2>
+            {approvalRequests.length === 0 ? (
+              <p className="text-gray-600 text-glass">No pending product approvals</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Product</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Farmer</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Price</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {approvalRequests.map((p) => (
+                      <tr key={p._id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 text-sm text-gray-800">
+                          {p.name}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-700">
+                          {p.farmer?.name || 'N/A'}
+                        </td>
+                        <td className="px-6 py-4 text-sm text-gray-800">
+                          Rs. {p.price}
+                        </td>
+                        <td className="px-6 py-4 text-sm">
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => dispatch(decideProductApproval({ id: p._id, action: 'approve' }))}
+                              className="glass-button text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded-xl text-sm transition-all hover:scale-105"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => dispatch(decideProductApproval({ id: p._id, action: 'reject' }))}
+                              className="glass-button text-white bg-red-600 hover:bg-red-700 px-3 py-1 rounded-xl text-sm transition-all hover:scale-105"
+                            >
+                              Decline
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
 
           {/* Recent Orders */}

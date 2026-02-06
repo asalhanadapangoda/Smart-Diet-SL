@@ -8,6 +8,8 @@ import {
   updateAdminOrder,
   getAdminUsers,
   updateUserRole,
+  getProductApprovalRequests,
+  decideProductApproval,
 } from '../controllers/adminController.js';
 import { protect, admin } from '../middlewares/auth.js';
 import { upload } from '../config/cloudinary.js';
@@ -39,5 +41,12 @@ router.route('/users')
 
 router.route('/users/:id/role')
   .put(updateUserRole);
+
+// Product approval requests
+router.route('/product-approvals')
+  .get(getProductApprovalRequests);
+
+router.route('/product-approvals/:id')
+  .put(decideProductApproval);
 
 export default router;

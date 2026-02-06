@@ -179,17 +179,19 @@ const Header = () => {
                         {t('profile')}
                       </Link>
                       <Link
-                        to="/meal-logging"
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
-                      >
-                        {t('logMeal')}
-                      </Link>
-                      <Link
                         to="/orders"
                         className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                       >
                         {t('myOrders')}
                       </Link>
+                      {user?.role === 'farmer' && (
+                        <Link
+                          to="/farmer"
+                          className="block px-4 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg mx-2 font-semibold transition-all"
+                        >
+                          Farmer Dashboard
+                        </Link>
+                      )}
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
                         <>
@@ -404,19 +406,21 @@ const Header = () => {
                     {t('profile')}
                   </Link>
                   <Link
-                    to="/meal-logging"
-                    className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('logMeal')}
-                  </Link>
-                  <Link
                     to="/orders"
                     className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t('myOrders')}
                   </Link>
+                  {user?.role === 'farmer' && (
+                    <Link
+                      to="/farmer"
+                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition font-semibold"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Farmer Dashboard
+                    </Link>
+                  )}
                   {user?.role === 'admin' && (
                     <Link
                       to="/admin"

@@ -5,6 +5,7 @@ const initialState = {
   products: [],
   orders: [],
   users: [],
+  approvalRequests: [],
   loading: false,
   error: null,
 };
@@ -119,6 +120,39 @@ export const updateAdminOrder = createAsyncThunk(
   }
 );
 
+// ============ PRODUCT APPROVALS ============
+
+export const getProductApprovalRequests = createAsyncThunk(
+  'admin/getProductApprovalRequests',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get('/admin/product-approvals');
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to fetch approval requests'
+      );
+    }
+  }
+);
+
+export const decideProductApproval = createAsyncThunk(
+  'admin/decideProductApproval',
+  async ({ id, action, rejectionReason }, { rejectWithValue }) => {
+    try {
+      const { data } = await api.put(`/admin/product-approvals/${id}`, {
+        action,
+        rejectionReason,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to update approval status'
+      );
+    }
+  }
+);
+
 // ============ USERS ============
 
 export const getAdminUsers = createAsyncThunk(
@@ -205,6 +239,28 @@ const adminSlice = createSlice({
         );
         if (index !== -1) {
           state.orders[index] = action.payload;
+        }
+      })
+      // Product approvals
+      .addCase(getProductApprovalRequests.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getProductApprovalRequests.fulfilled, (state, action) => {
+        state.loading = false;
+        state.approvalRequests = action.payload;
+      })
+      .addCase(getProductApprovalRequests.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(decideProductApproval.fulfilled, (state, action) => {
+        state.approvalRequests = state.approvalRequests.filter(
+          (p) => p._id !== action.payload._id
+        );
+        const idx = state.products.findIndex((p) => p._id === action.payload._id);
+        if (idx !== -1) {
+          state.products[idx] = action.payload;
         }
       })
       // Users

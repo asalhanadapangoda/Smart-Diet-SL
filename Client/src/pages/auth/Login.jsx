@@ -13,18 +13,20 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
+  const { loading, error, isAuthenticated, user } = useSelector((state) => state.auth);
   const { t } = useLanguage();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
+    if (isAuthenticated && user?.role) {
+      if (user.role === 'admin') navigate('/admin');
+      else if (user.role === 'farmer') navigate('/farmer');
+      else navigate('/');
     }
     if (error) {
       toast.error(error);
       dispatch(clearError());
     }
-  }, [isAuthenticated, error, navigate, dispatch]);
+  }, [isAuthenticated, user, error, navigate, dispatch]);
 
   const handleChange = (e) => {
     setFormData({

@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
+    farmer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+      index: true,
+    },
     name: {
       type: String,
       required: [true, 'Please add a product name'],
@@ -41,6 +47,17 @@ const productSchema = new mongoose.Schema(
     isAvailable: {
       type: Boolean,
       default: true,
+    },
+    approvalStatus: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'approved', // keep existing products visible
+      index: true,
+    },
+    rejectionReason: {
+      type: String,
+      default: '',
+      trim: true,
     },
   },
   {

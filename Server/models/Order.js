@@ -6,6 +6,12 @@ const orderItemSchema = new mongoose.Schema({
     ref: 'Product',
     required: true,
   },
+  farmer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+    index: true,
+  },
   name: {
     type: String,
     required: true,
@@ -31,6 +37,12 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'delivering', 'completed'],
+      default: 'pending',
+      index: true,
     },
     orderItems: [orderItemSchema],
     shippingAddress: {

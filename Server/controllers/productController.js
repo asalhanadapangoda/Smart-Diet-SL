@@ -6,7 +6,10 @@ import Product from '../models/Product.js';
 export const getProducts = async (req, res) => {
   try {
     const { category, search } = req.query;
-    const query = { isAvailable: true };
+    const query = {
+      isAvailable: true,
+      $or: [{ approvalStatus: 'approved' }, { approvalStatus: { $exists: false } }],
+    };
 
     if (category) {
       query.category = category;
@@ -35,6 +38,10 @@ export const getProductById = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (product) {
+      // Only approved products are public
+      if (product.approvalStatus && product.approvalStatus !== 'approved') {
+        return res.status(404).json({ message: 'Product not found' });
+      }
       res.json(product);
     } else {
       res.status(404).json({ message: 'Product not found' });

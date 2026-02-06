@@ -138,6 +138,7 @@ const UsersAdmin = () => {
                             } ${hasChanges ? 'border-green-500' : ''}`}
                           >
                             <option value="user" className="bg-white">User</option>
+                            <option value="farmer" className="bg-white">Farmer</option>
                             <option value="admin" className="bg-white">Admin</option>
                           </select>
                           {hasChanges && (

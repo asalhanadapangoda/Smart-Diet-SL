@@ -5,6 +5,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AdminRoute from './components/common/AdminRoute';
 import ProtectedRoute from './components/common/ProtectedRoute';
+import FarmerRoute from './components/common/FarmerRoute';
 import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -27,6 +28,12 @@ import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import OrdersAdmin from './pages/admin/OrdersAdmin';
 import UsersAdmin from './pages/admin/UsersAdmin';
+// Farmer pages
+import FarmerDashboard from './pages/farmer/FarmerDashboard';
+import FarmerProducts from './pages/farmer/FarmerProducts';
+import FarmerAddProduct from './pages/farmer/FarmerAddProduct';
+import FarmerOrders from './pages/farmer/FarmerOrders';
+import FarmerIncome from './pages/farmer/FarmerIncome';
 
 function App() {
   return (
@@ -52,6 +59,48 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/orders" element={<Orders />} />
               <Route path="/orders/:id" element={<OrderDetail />} />
+
+              {/* Farmer Routes - Protected */}
+              <Route
+                path="/farmer"
+                element={
+                  <FarmerRoute>
+                    <FarmerDashboard />
+                  </FarmerRoute>
+                }
+              />
+              <Route
+                path="/farmer/products"
+                element={
+                  <FarmerRoute>
+                    <FarmerProducts />
+                  </FarmerRoute>
+                }
+              />
+              <Route
+                path="/farmer/products/new"
+                element={
+                  <FarmerRoute>
+                    <FarmerAddProduct />
+                  </FarmerRoute>
+                }
+              />
+              <Route
+                path="/farmer/orders"
+                element={
+                  <FarmerRoute>
+                    <FarmerOrders />
+                  </FarmerRoute>
+                }
+              />
+              <Route
+                path="/farmer/income"
+                element={
+                  <FarmerRoute>
+                    <FarmerIncome />
+                  </FarmerRoute>
+                }
+              />
               
               {/* Admin Routes - Protected */}
               <Route

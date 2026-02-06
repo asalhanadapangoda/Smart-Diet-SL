@@ -19,9 +19,36 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'No order items' });
     }
 
+    // Fetch products to determine farmer ownership and validate approvals
+    const productIds = (orderItems || []).map((i) => i.product);
+    const products = await Product.find({ _id: { $in: productIds } }).select(
+      '_id farmer approvalStatus isAvailable stock'
+    );
+    const productMap = new Map(products.map((p) => [p._id.toString(), p]));
+
+    const normalizedItems = (orderItems || []).map((item) => {
+      const p = productMap.get(item.product?.toString());
+      if (!p) {
+        throw new Error('One or more products not found');
+      }
+      if (p.approvalStatus && p.approvalStatus !== 'approved') {
+        throw new Error('One or more products are not approved');
+      }
+      if (!p.isAvailable) {
+        throw new Error('One or more products are not available');
+      }
+      if (typeof p.stock === 'number' && p.stock < item.quantity) {
+        throw new Error('Insufficient stock for one or more products');
+      }
+      return {
+        ...item,
+        farmer: p.farmer || null,
+      };
+    });
+
     const order = new Order({
       user: req.user._id,
-      orderItems,
+      orderItems: normalizedItems,
       shippingAddress,
       paymentMethod,
       itemsPrice,
@@ -33,7 +60,7 @@ export const createOrder = async (req, res) => {
     res.status(201).json(createdOrder);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: error.message || 'Server error' });
   }
 };
 

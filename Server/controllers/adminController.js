@@ -1,6 +1,7 @@
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import User from '../models/User.js';
+import FarmerIncome from '../models/FarmerIncome.js';
 import mongoose from 'mongoose';
 import cloudinary from '../config/cloudinary.js';
 // ============ PRODUCTS ============
@@ -95,6 +96,7 @@ export const createAdminProduct = async (req, res) => {
         stock: parseInt(req.body.stock) || 0,
         isAvailable: req.body.isAvailable !== undefined ? req.body.isAvailable : true,
         image: imageUrl,
+        approvalStatus: 'approved',
         nutrition: req.body.nutrition ? {
           calories: parseFloat(req.body.nutrition.calories) || 0,
           protein: parseFloat(req.body.nutrition.protein) || 0,
@@ -169,6 +171,9 @@ export const updateAdminProduct = async (req, res) => {
       product.category = req.body.category || product.category;
       product.stock = req.body.stock !== undefined ? parseInt(req.body.stock) : product.stock;
       product.isAvailable = req.body.isAvailable !== undefined ? req.body.isAvailable : product.isAvailable;
+      if (req.body.approvalStatus) {
+        product.approvalStatus = req.body.approvalStatus;
+      }
       product.image = imageUrl;
       
       if (req.body.nutrition) {
@@ -233,6 +238,32 @@ export const updateAdminOrder = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (order) {
+      if (req.body.status !== undefined) {
+        const nextStatus = String(req.body.status).toLowerCase();
+        if (!['pending', 'delivering', 'completed'].includes(nextStatus)) {
+          return res.status(400).json({ message: 'Invalid order status' });
+        }
+        order.status = nextStatus;
+        if (nextStatus === 'completed') {
+          order.isDelivered = true;
+          order.deliveredAt = order.deliveredAt || Date.now();
+        }
+      }
+      // Support explicit order status updates (pending | delivering | completed)
+      if (req.body.status !== undefined) {
+        const nextStatus = String(req.body.status).toLowerCase();
+        if (!['pending', 'delivering', 'completed'].includes(nextStatus)) {
+          return res.status(400).json({ message: 'Invalid order status' });
+        }
+        order.status = nextStatus;
+
+        // Keep legacy flags roughly in sync for existing UI
+        if (nextStatus === 'completed') {
+          order.isDelivered = true;
+          order.deliveredAt = order.deliveredAt || Date.now();
+        }
+      }
+
       if (req.body.isPaid !== undefined) {
         order.isPaid = req.body.isPaid;
         if (req.body.isPaid) {
@@ -244,6 +275,38 @@ export const updateAdminOrder = async (req, res) => {
         order.isDelivered = req.body.isDelivered;
         if (req.body.isDelivered) {
           order.deliveredAt = Date.now();
+          if (!order.status || order.status !== 'completed') {
+            order.status = 'completed';
+          }
+        }
+      }
+
+      // When order is marked completed, create farmer income records (idempotent)
+      if (order.status === 'completed') {
+        const itemsByFarmer = new Map();
+        for (const item of order.orderItems || []) {
+          if (!item.farmer) continue;
+          const farmerId = item.farmer.toString();
+          const lineTotal = (Number(item.price) || 0) * (Number(item.quantity) || 0);
+          itemsByFarmer.set(farmerId, (itemsByFarmer.get(farmerId) || 0) + lineTotal);
+        }
+
+        for (const [farmerId, amount] of itemsByFarmer.entries()) {
+          if (amount <= 0) continue;
+          // unique index prevents duplicates; this also keeps safe on retries
+          await FarmerIncome.updateOne(
+            { farmer: farmerId, order: order._id },
+            {
+              $setOnInsert: {
+                farmer: farmerId,
+                order: order._id,
+                amount,
+                paymentStatus: 'paid',
+                paidAt: Date.now(),
+              },
+            },
+            { upsert: true }
+          );
         }
       }
 
@@ -282,9 +345,9 @@ export const updateUserRole = async (req, res) => {
     const { id } = req.params;
 
     // Validate role
-    if (!role || !['user', 'admin'].includes(role)) {
+    if (!role || !['user', 'farmer', 'admin'].includes(role)) {
       return res.status(400).json({ 
-        message: 'Invalid role. Role must be either "user" or "admin"' 
+        message: 'Invalid role. Role must be "user", "farmer", or "admin"' 
       });
     }
 
@@ -315,5 +378,53 @@ export const updateUserRole = async (req, res) => {
       message: 'Server error',
       error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
+  }
+};
+
+// ============ PRODUCT APPROVALS ============
+
+// @desc    Get pending farmer products
+// @route   GET /api/admin/product-approvals
+// @access  Private/Admin
+export const getProductApprovalRequests = async (req, res) => {
+  try {
+    const pending = await Product.find({ approvalStatus: 'pending' })
+      .populate('farmer', 'name email')
+      .sort({ createdAt: -1 });
+    res.json(pending);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// @desc    Approve or reject a farmer product
+// @route   PUT /api/admin/product-approvals/:id
+// @access  Private/Admin
+export const decideProductApproval = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+
+    const action = String(req.body.action || '').toLowerCase();
+    if (!['approve', 'reject'].includes(action)) {
+      return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    if (action === 'approve') {
+      product.approvalStatus = 'approved';
+      product.rejectionReason = '';
+      // keep availability as-is; farmer/admin can toggle later
+    } else {
+      product.approvalStatus = 'rejected';
+      product.isAvailable = false;
+      product.rejectionReason = req.body.rejectionReason ? String(req.body.rejectionReason) : '';
+    }
+
+    const saved = await product.save();
+    res.json(saved);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
   }
 };
