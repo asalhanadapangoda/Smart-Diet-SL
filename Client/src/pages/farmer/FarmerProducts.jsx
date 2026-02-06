@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import {
@@ -16,6 +16,14 @@ const badge = (status) => {
 const FarmerProducts = () => {
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((s) => s.farmer);
+  const [searchParams] = useSearchParams();
+  const statusFilter = searchParams.get('status');
+  const filteredProducts = statusFilter
+    ? products.filter((p) => p.approvalStatus === statusFilter)
+    : products;
+  const emptyLabel = statusFilter
+    ? `No ${statusFilter} products`
+    : 'No products yet';
 
   useEffect(() => {
     dispatch(fetchFarmerProducts());
@@ -52,9 +60,9 @@ const FarmerProducts = () => {
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
         </div>
-      ) : products.length === 0 ? (
+      ) : filteredProducts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-700 mb-4 text-glass text-xl">No products yet</p>
+          <p className="text-gray-700 mb-4 text-glass text-xl">{emptyLabel}</p>
           <Link
             to="/farmer/products/new"
             className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
@@ -64,7 +72,7 @@ const FarmerProducts = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((p) => (
+          {filteredProducts.map((p) => (
             <div key={p._id} className="glass-card rounded-2xl overflow-hidden backdrop-blur-xl">
               <div className="relative">
                 <img src={p.image} alt={p.name} className="w-full h-44 object-cover" />
