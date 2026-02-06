@@ -47,7 +47,7 @@ const UsersAdmin = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 relative">
+    <div className="relative">
       <div className="mb-6">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           Manage Users

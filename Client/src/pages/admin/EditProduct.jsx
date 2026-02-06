@@ -130,7 +130,7 @@ const EditProduct = () => {
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="relative">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
         </div>
@@ -139,7 +139,7 @@ const EditProduct = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl relative">
+    <div className="max-w-4xl relative">
       <div className="mb-6">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           Edit Product
