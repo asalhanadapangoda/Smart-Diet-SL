@@ -72,20 +72,6 @@ const FarmerDashboard = () => {
             ))}
           </div>
 
-          {pendingCount > 0 && (
-            <div className="glass-card rounded-2xl p-6 backdrop-blur-xl border border-yellow-300 bg-yellow-50 mb-8">
-              <h2 className="text-xl font-bold text-gray-800 text-glass mb-2">Pending Approval</h2>
-              <p className="text-gray-700 text-glass">
-                You have <span className="font-semibold">{pendingCount}</span> product(s) waiting for admin approval.
-              </p>
-              <Link
-                to="/farmer/products?status=pending"
-                className="inline-block mt-3 text-green-700 hover:text-green-800 font-medium"
-              >
-                View my products →
-              </Link>
-            </div>
-          )}
         </>
       )}
     </div>
