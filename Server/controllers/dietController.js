@@ -260,6 +260,8 @@ export const generateDietPlan = async (req, res) => {
     }
 
     const created = await DietPlan.create({
+      type: 'user',
+      isActive: false,
       user: userId,
       input,
       planText,

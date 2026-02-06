@@ -1,5 +1,24 @@
 import User from '../models/User.js';
 import { generateToken } from '../utils/generateToken.js';
+import cloudinary from '../config/cloudinary.js';
+
+const hasCloudinaryConfig =
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET;
+
+const uploadBufferToCloudinary = (file, folder) =>
+  new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: 'image' },
+      (error, result) => {
+        if (error) return reject(error);
+        return resolve(result?.secure_url || '');
+      }
+    );
+
+    uploadStream.end(file.buffer);
+  });
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -108,11 +127,22 @@ export const updateProfile = async (req, res) => {
     const user = await User.findById(req.user._id);
 
     if (user) {
+      let avatarUrl = req.body.avatar || user.avatar;
+
+      if (req.file) {
+        if (!hasCloudinaryConfig) {
+          return res.status(400).json({
+            message: 'Cloudinary not configured. Please add Cloudinary credentials to .env file',
+          });
+        }
+        avatarUrl = await uploadBufferToCloudinary(req.file, 'smart-diet-sl/avatars');
+      }
+
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
       user.phone = req.body.phone || user.phone;
       user.address = req.body.address || user.address;
-      user.avatar = req.body.avatar || user.avatar;
+      user.avatar = avatarUrl;
 
       const updatedUser = await user.save();
 

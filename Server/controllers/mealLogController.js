@@ -1,5 +1,38 @@
 import MealLog from '../models/MealLog.js';
 import TraditionalFood from '../models/TraditionalFood.js';
+import cloudinary from '../config/cloudinary.js';
+
+const hasCloudinaryConfig =
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET;
+
+const parseJsonArray = (value) => {
+  if (!value) return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === 'string') {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+      return [];
+    }
+  }
+  return [];
+};
+
+const uploadBufferToCloudinary = (file, folder) =>
+  new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: 'image' },
+      (error, result) => {
+        if (error) return reject(error);
+        return resolve(result?.secure_url || '');
+      }
+    );
+
+    uploadStream.end(file.buffer);
+  });
 
 // @desc    Create meal log
 // @route   POST /api/meal-logs
@@ -7,6 +40,18 @@ import TraditionalFood from '../models/TraditionalFood.js';
 export const createMealLog = async (req, res) => {
   try {
     const { mealType, image, recognizedItems, manualItems, notes } = req.body;
+    const parsedRecognizedItems = parseJsonArray(recognizedItems);
+    const parsedManualItems = parseJsonArray(manualItems);
+    let imageUrl = image || '';
+
+    if (req.file) {
+      if (!hasCloudinaryConfig) {
+        return res.status(400).json({
+          message: 'Cloudinary not configured. Please add Cloudinary credentials to .env file',
+        });
+      }
+      imageUrl = await uploadBufferToCloudinary(req.file, 'smart-diet-sl/meal-logs');
+    }
 
     // Calculate total nutrition from manual items
     let totalNutrition = {
@@ -17,8 +62,8 @@ export const createMealLog = async (req, res) => {
       fiber: 0,
     };
 
-    if (manualItems && manualItems.length > 0) {
-      for (const item of manualItems) {
+    if (parsedManualItems.length > 0) {
+      for (const item of parsedManualItems) {
         if (item.foodId) {
           const food = await TraditionalFood.findById(item.foodId);
           if (food) {
@@ -41,9 +86,9 @@ export const createMealLog = async (req, res) => {
     const mealLog = new MealLog({
       user: req.user.id,
       mealType,
-      image: req.file ? req.file.path : image,
-      recognizedItems,
-      manualItems,
+      image: imageUrl,
+      recognizedItems: parsedRecognizedItems,
+      manualItems: parsedManualItems,
       totalNutrition,
       notes,
     });

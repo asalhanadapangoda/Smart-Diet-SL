@@ -98,18 +98,18 @@ const DietPlans = () => {
                 <div className="border-t border-gray-200 pt-4">
                   <h4 className="font-semibold mb-2 text-gray-800 text-glass">{t('meals')}:</h4>
                   <div className="space-y-1 text-sm">
-                    {plan.meals.breakfast && (
+                    {plan.meals?.breakfast && (
                       <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('breakfast')}:</span>{' '}
                         {plan.meals.breakfast.name}
                       </div>
                     )}
-                    {plan.meals.lunch && (
+                    {plan.meals?.lunch && (
                       <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('lunch')}:</span> {plan.meals.lunch.name}
                       </div>
                     )}
-                    {plan.meals.dinner && (
+                    {plan.meals?.dinner && (
                       <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('dinner')}:</span> {plan.meals.dinner.name}
                       </div>

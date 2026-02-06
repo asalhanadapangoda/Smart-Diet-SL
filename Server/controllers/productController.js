@@ -1,4 +1,23 @@
 import Product from '../models/Product.js';
+import cloudinary from '../config/cloudinary.js';
+
+const hasCloudinaryConfig =
+  process.env.CLOUDINARY_CLOUD_NAME &&
+  process.env.CLOUDINARY_API_KEY &&
+  process.env.CLOUDINARY_API_SECRET;
+
+const uploadBufferToCloudinary = (file, folder) =>
+  new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      { folder, resource_type: 'image' },
+      (error, result) => {
+        if (error) return reject(error);
+        return resolve(result?.secure_url || '');
+      }
+    );
+
+    uploadStream.end(file.buffer);
+  });
 
 // @desc    Get all products
 // @route   GET /api/products
@@ -6,9 +25,11 @@ import Product from '../models/Product.js';
 export const getProducts = async (req, res) => {
   try {
     const { category, search } = req.query;
+    const approvalFilter = {
+      $or: [{ approvalStatus: 'approved' }, { approvalStatus: { $exists: false } }],
+    };
     const query = {
       isAvailable: true,
-      $or: [{ approvalStatus: 'approved' }, { approvalStatus: { $exists: false } }],
     };
 
     if (category) {
@@ -16,10 +37,17 @@ export const getProducts = async (req, res) => {
     }
 
     if (search) {
-      query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
+      query.$and = [
+        approvalFilter,
+        {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } },
+          ],
+        },
       ];
+    } else {
+      Object.assign(query, approvalFilter);
     }
 
     const products = await Product.find(query).sort({ createdAt: -1 });
@@ -57,9 +85,20 @@ export const getProductById = async (req, res) => {
 // @access  Private/Admin
 export const createProduct = async (req, res) => {
   try {
+    let imageUrl = req.body.image;
+
+    if (req.file) {
+      if (!hasCloudinaryConfig) {
+        return res.status(400).json({
+          message: 'Cloudinary not configured. Please add Cloudinary credentials to .env file',
+        });
+      }
+      imageUrl = await uploadBufferToCloudinary(req.file, 'smart-diet-sl/products');
+    }
+
     const product = new Product({
       ...req.body,
-      image: req.file ? req.file.path : req.body.image,
+      image: imageUrl,
     });
 
     const createdProduct = await product.save();
@@ -90,7 +129,12 @@ export const updateProduct = async (req, res) => {
       }
 
       if (req.file) {
-        product.image = req.file.path;
+        if (!hasCloudinaryConfig) {
+          return res.status(400).json({
+            message: 'Cloudinary not configured. Please add Cloudinary credentials to .env file',
+          });
+        }
+        product.image = await uploadBufferToCloudinary(req.file, 'smart-diet-sl/products');
       } else if (req.body.image) {
         product.image = req.body.image;
       }
