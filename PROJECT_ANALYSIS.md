@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-**Smart Diet SL** is a comprehensive MERN (MongoDB, Express.js, React, Node.js) stack web application designed specifically for Sri Lankan users to manage their nutrition, diet plans, and healthy eating habits. The application combines e-commerce functionality (product browsing, cart, checkout) with advanced nutrition tracking features and culturally-tailored diet recommendations.
+**Smart Diet SL** is a comprehensive MERN (MongoDB, Express.js, React, Node.js) stack web application designed specifically for Sri Lankan users to manage their nutrition, diet plans, and healthy eating habits. The application combines e-commerce functionality (product browsing, cart, checkout) with advanced nutrition tracking features, culturally-tailored diet recommendations, and a **marketplace platform** where farmers can sell their products directly to consumers.
 
 ---
 
@@ -12,14 +12,18 @@
 A full-stack nutrition advisory platform that:
 - Provides Sri Lankan-specific diet plans and traditional food information
 - Offers e-commerce functionality for healthy products
+- **Enables farmers to list and sell products through a marketplace**
 - Tracks nutrition through meal logging and calculators
 - Supports multiple languages (English, Sinhala, Tamil)
 - Generates personalized meal plates based on health goals
+- **AI-powered nutrition chatbot (LankaNutri Advisor)**
 
 ### Target Audience
 - Sri Lankan individuals seeking nutrition guidance
 - Users with specific health goals (weight loss, diabetes management, general health)
 - People interested in traditional Sri Lankan foods and their nutritional values
+- **Farmers looking to sell fresh produce and healthy products**
+- **Administrators managing the platform**
 
 ---
 
@@ -42,7 +46,9 @@ A full-stack nutrition advisory platform that:
 - **Authentication**: JWT (jsonwebtoken 9.0.2)
 - **Password Hashing**: Bcryptjs 3.0.3
 - **File Upload**: Multer 2.0.2 + Cloudinary 2.8.0
-- **AI Integration**: OpenAI 6.9.0 (prepared for diet plan generation)
+- **AI Integration**: 
+  - **Groq SDK 0.35.0** (for LankaNutri Advisor chatbot)
+  - OpenAI 6.9.0 (available for future use)
 - **Environment**: dotenv 17.2.3
 
 ### Development Tools
@@ -61,7 +67,7 @@ Smart-Diet-SL/
 │   │   ├── api/              # Axios instance configuration
 │   │   ├── assets/           # Static assets
 │   │   ├── components/       # Reusable components
-│   │   │   └── common/       # Header, Footer, DailyTip, ProtectedRoute, AdminRoute
+│   │   │   └── common/       # Header, Footer, DailyTip, ProtectedRoute, AdminRoute, FarmerRoute, Chatbot
 │   │   ├── contexts/         # React Context providers
 │   │   │   └── LanguageContext.jsx  # Multi-language support
 │   │   ├── features/         # Feature-based Redux slices
@@ -74,6 +80,7 @@ Smart-Diet-SL/
 │   │   │   ├── checkout/     # Checkout process
 │   │   │   ├── diet-planner/ # Diet planning tool
 │   │   │   ├── diet-plans/   # Browse diet plans
+│   │   │   ├── farmer/       # Farmer dashboard & product management
 │   │   │   ├── home/         # Homepage
 │   │   │   ├── meal-logging/ # Meal photo logging
 │   │   │   ├── products/     # Product listing & details
@@ -81,7 +88,7 @@ Smart-Diet-SL/
 │   │   │   └── sri-lankan-plates/  # Sri Lankan plate generator
 │   │   ├── services/         # API service functions
 │   │   ├── store/            # Redux store configuration
-│   │   │   └── slices/       # Redux slices (auth, cart, products, admin)
+│   │   │   └── slices/       # Redux slices (auth, cart, products, admin, farmer)
 │   │   ├── App.jsx           # Main App component with routing
 │   │   ├── main.jsx          # Application entry point
 │   │   └── index.css         # Global styles
@@ -92,13 +99,15 @@ Smart-Diet-SL/
 ├── Server/                    # Node.js Backend Application
 │   ├── config/               # Configuration files
 │   │   ├── database.js       # MongoDB connection setup
-│   │   └── cloudinary.js     # Cloudinary image upload config
+│   │   └── cloudinary.js      # Cloudinary image upload config
 │   ├── controllers/          # Route controllers (business logic)
 │   │   ├── adminController.js
 │   │   ├── authController.js
+│   │   ├── chatbotController.js  # LankaNutri Advisor chatbot
 │   │   ├── dailyTipController.js
 │   │   ├── dietController.js
 │   │   ├── dietPlanController.js
+│   │   ├── farmerController.js   # Farmer product & order management
 │   │   ├── mealLogController.js
 │   │   ├── orderController.js
 │   │   ├── productController.js
@@ -107,22 +116,25 @@ Smart-Diet-SL/
 │   ├── data/                 # Sample data files
 │   │   └── sampleTraditionalFoods.js
 │   ├── middlewares/          # Express middlewares
-│   │   └── auth.js           # JWT authentication middleware
+│   │   └── auth.js           # JWT authentication middleware (protect, admin, farmer)
 │   ├── models/               # Mongoose database models
 │   │   ├── User.js
-│   │   ├── Product.js
+│   │   ├── Product.js        # Includes farmer field & approval status
 │   │   ├── Order.js
 │   │   ├── DietPlan.js
 │   │   ├── DailyTip.js
 │   │   ├── MealLog.js
 │   │   ├── SriLankanPlate.js
-│   │   └── TraditionalFood.js
+│   │   ├── TraditionalFood.js
+│   │   └── FarmerIncome.js   # Farmer payout tracking
 │   ├── routes/               # API route definitions
 │   │   ├── adminRoutes.js
 │   │   ├── authRoutes.js
+│   │   ├── chatbotRoutes.js
 │   │   ├── dailyTipRoutes.js
 │   │   ├── diet.js
 │   │   ├── dietPlanRoutes.js
+│   │   ├── farmerRoutes.js   # Farmer-specific routes
 │   │   ├── mealLogRoutes.js
 │   │   ├── orderRoutes.js
 │   │   ├── productRoutes.js
@@ -130,7 +142,8 @@ Smart-Diet-SL/
 │   │   ├── traditionalFoodRoutes.js
 │   │   └── uploadRoutes.js
 │   ├── scripts/              # Utility scripts
-│   │   └── seedData.js       # Database seeding script
+│   │   ├── seedData.js       # Database seeding script
+│   │   └── checkEnv.js       # Environment variable validation
 │   ├── utils/                # Helper functions
 │   │   └── generateToken.js  # JWT token generation
 │   ├── server.js             # Server entry point
@@ -166,18 +179,20 @@ Smart-Diet-SL/
 - `phone` (String, optional)
 - `address` (String, optional)
 - `avatar` (String, URL to profile image)
-- `role` (Enum: 'user' | 'admin', default: 'user')
+- `role` (Enum: 'user' | 'farmer' | 'admin', default: 'user')
 - `timestamps` (createdAt, updatedAt)
 
 **Features**:
 - Password hashing with bcrypt (salt rounds: 10)
 - Password comparison method
 - Pre-save middleware for password hashing
+- **Three-tier role system: user, farmer, admin**
 
 ### 4.2 Product Model
 **File**: `Server/models/Product.js`
 
 **Schema Fields**:
+- `farmer` (ObjectId, ref: User, optional, indexed) - **Links product to farmer**
 - `name` (String, required)
 - `description` (String, required)
 - `price` (Number, required, min: 0)
@@ -186,14 +201,21 @@ Smart-Diet-SL/
 - `nutrition` (Object with calories, protein, carbs, fat, fiber)
 - `stock` (Number, default: 0, min: 0)
 - `isAvailable` (Boolean, default: true)
+- `approvalStatus` (Enum: 'pending' | 'approved' | 'rejected', default: 'approved', indexed) - **For farmer product approval**
+- `rejectionReason` (String, optional) - **Admin feedback for rejected products**
 - `timestamps`
+
+**Key Features**:
+- **Farmer-product relationship** for marketplace functionality
+- **Product approval workflow** for farmer-submitted products
+- Admin can approve/reject farmer products
 
 ### 4.3 Order Model
 **File**: `Server/models/Order.js`
 
 **Schema Fields**:
 - `user` (ObjectId, ref: User, required)
-- `orderItems` (Array of objects with product, name, quantity, price, image)
+- `orderItems` (Array of objects with product, name, quantity, price, image, **farmer**)
 - `shippingAddress` (Object with address, city, postalCode, country)
 - `paymentMethod` (Enum: 'cash' | 'card' | 'online', default: 'cash')
 - `paymentResult` (Object for payment gateway response)
@@ -202,7 +224,27 @@ Smart-Diet-SL/
 - `isDelivered`, `deliveredAt` (Boolean, Date)
 - `timestamps`
 
-### 4.4 DietPlan Model
+**Key Features**:
+- **Order items include farmer reference** for tracking which farmer sold what
+- Supports multiple payment methods
+
+### 4.4 FarmerIncome Model
+**File**: `Server/models/FarmerIncome.js`
+
+**Schema Fields**:
+- `farmer` (ObjectId, ref: User, required, indexed)
+- `order` (ObjectId, ref: Order, required, indexed)
+- `amount` (Number, required, min: 0)
+- `paymentStatus` (Enum: 'pending' | 'paid', default: 'paid', indexed)
+- `paidAt` (Date, default: now)
+- `timestamps`
+
+**Key Features**:
+- **Tracks farmer payouts per order**
+- **Unique index on (farmer, order)** to prevent duplicate payouts
+- Supports pending/paid status for payout management
+
+### 4.5 DietPlan Model
 **File**: `Server/models/DietPlan.js`
 
 **Schema Fields**:
@@ -212,7 +254,7 @@ Smart-Diet-SL/
 - `metadata` (Object for additional data)
 - `timestamps`
 
-### 4.5 TraditionalFood Model
+### 4.6 TraditionalFood Model
 **File**: `Server/models/TraditionalFood.js`
 
 **Schema Fields**:
@@ -228,7 +270,7 @@ Smart-Diet-SL/
 - `preparationMethods` (Array)
 - `timestamps`
 
-### 4.6 MealLog Model
+### 4.7 MealLog Model
 **File**: `Server/models/MealLog.js`
 
 **Schema Fields**:
@@ -246,7 +288,7 @@ Smart-Diet-SL/
 - `{ user: 1, date: -1 }` - for efficient user meal history queries
 - `{ user: 1, mealType: 1, date: -1 }` - for filtering by meal type
 
-### 4.7 DailyTip Model
+### 4.8 DailyTip Model
 **File**: `Server/models/DailyTip.js`
 
 **Schema Fields**:
@@ -262,7 +304,7 @@ Smart-Diet-SL/
 **Indexes**:
 - `{ date: 1, isActive: 1 }` - for efficient daily tip retrieval
 
-### 4.8 SriLankanPlate Model
+### 4.9 SriLankanPlate Model
 **File**: `Server/models/SriLankanPlate.js`
 
 **Schema Fields**:
@@ -288,7 +330,7 @@ Smart-Diet-SL/
 - `PUT /api/auth/profile` - Update user profile (Protected)
 
 ### 5.2 Product Routes (`/api/products`)
-- `GET /api/products` - Get all products (with category/search filters) (Public)
+- `GET /api/products` - Get all products (with category/search filters, only approved) (Public)
 - `GET /api/products/:id` - Get single product (Public)
 - `POST /api/products` - Create product (Admin)
 - `PUT /api/products/:id` - Update product (Admin)
@@ -330,9 +372,26 @@ Smart-Diet-SL/
 - `POST /api/upload` - Upload image to Cloudinary (Protected)
 
 ### 5.10 Admin Routes (`/api/admin`)
-- Admin-specific endpoints for managing users, products, orders
+- `GET /api/admin/stats` - Get admin dashboard statistics (Admin)
+- `GET /api/admin/users` - Get all users (Admin)
+- `PUT /api/admin/users/:id/role` - Update user role (Admin)
+- `GET /api/admin/product-approvals` - Get pending product approvals (Admin)
+- `PUT /api/admin/product-approvals/:id/approve` - Approve farmer product (Admin)
+- `PUT /api/admin/product-approvals/:id/reject` - Reject farmer product (Admin)
 
-### 5.11 Health Check Routes
+### 5.11 Farmer Routes (`/api/farmer`)
+- `GET /api/farmer/products` - Get my (farmer's) products (Farmer)
+- `POST /api/farmer/products` - Create product (pending approval) (Farmer)
+- `PUT /api/farmer/products/:id/availability` - Toggle product availability (Farmer)
+- `GET /api/farmer/orders` - Get orders containing my products (Farmer)
+- `GET /api/farmer/income` - Get income summary and payouts (Farmer)
+
+### 5.12 Chatbot Routes (`/api/chatbot`)
+- `POST /api/chatbot/new` - Start new conversation (Public)
+- `POST /api/chatbot/chat` - Send message to LankaNutri Advisor (Public)
+- `POST /api/chatbot/clear` - Clear conversation history (Public)
+
+### 5.13 Health Check Routes
 - `GET /api/health` - Server health check (Public)
 - `GET /api/health/db` - Database connection status (Public)
 
@@ -360,11 +419,15 @@ Located in: `Client/src/store/store.js`
 5. **admin** - Admin dashboard state
    - Users, orders, statistics
 
+6. **farmer** - Farmer dashboard state (NEW)
+   - Farmer products, orders, income
+
 ### Redux Slices Location
 - `Client/src/store/slices/authSlice.js`
 - `Client/src/store/slices/productSlice.js`
 - `Client/src/store/slices/cartSlice.js`
 - `Client/src/store/slices/adminSlice.js`
+- `Client/src/store/slices/farmerSlice.js`
 - `Client/src/features/diet/dietSlice.js`
 
 ---
@@ -379,16 +442,24 @@ Located in: `Client/src/store/store.js`
 5. Token sent in `Authorization: Bearer <token>` header for protected routes
 6. `protect` middleware verifies token on server
 7. `admin` middleware checks user role for admin routes
+8. **`farmer` middleware checks user role for farmer routes**
 
 ### Protected Routes (Frontend)
 - `ProtectedRoute` component wraps routes requiring authentication
 - `AdminRoute` component wraps admin-only routes
-- Both check authentication state from Redux store
+- **`FarmerRoute` component wraps farmer-only routes**
+- All check authentication state from Redux store
 
 ### Middleware (Backend)
 - **protect**: Verifies JWT token, attaches user to request
 - **admin**: Checks if user role is 'admin'
-- Both handle database connection errors gracefully
+- **farmer**: Checks if user role is 'farmer'
+- All handle database connection errors gracefully
+
+### Role System
+- **user**: Regular customers, can browse, purchase, track nutrition
+- **farmer**: Can list products, manage inventory, view orders, track income
+- **admin**: Full system access, manage users, approve products, view all orders
 
 ---
 
@@ -401,6 +472,8 @@ Located in: `Client/src/store/store.js`
 - ✅ Checkout process
 - ✅ Order management
 - ✅ Product management (Admin)
+- ✅ **Farmer marketplace** (Farmers can sell products)
+- ✅ **Product approval workflow** (Admin approves farmer products)
 
 ### 8.2 Nutrition Tracking
 - ✅ Nutrition calculator
@@ -426,14 +499,32 @@ Located in: `Client/src/store/store.js`
 - ✅ Profile management
 - ✅ Avatar upload
 - ✅ Order history
+- ✅ **Role-based access control** (user, farmer, admin)
 
 ### 8.6 Admin Features
 - ✅ Admin dashboard
-- ✅ User management
+- ✅ User management (including role updates)
 - ✅ Product CRUD operations
 - ✅ Order management
 - ✅ Daily tip management
 - ✅ Traditional food management
+- ✅ **Product approval system** (approve/reject farmer products)
+
+### 8.7 Farmer Features (NEW)
+- ✅ Farmer dashboard
+- ✅ Product listing (with approval workflow)
+- ✅ Product availability management
+- ✅ Order tracking (orders containing their products)
+- ✅ Income tracking and payout history
+- ✅ Product image upload via Cloudinary
+
+### 8.8 AI Chatbot (NEW)
+- ✅ **LankaNutri Advisor** - AI-powered nutrition chatbot
+- ✅ Uses Groq SDK for fast AI responses
+- ✅ Specialized in Sri Lankan foods and nutrition
+- ✅ Conversation history management
+- ✅ Multi-language support
+- ✅ Provides meal plans, nutrition analysis, and healthy tips
 
 ---
 
@@ -455,6 +546,15 @@ Located in: `Client/src/store/store.js`
 1. **Diet Planner** (`/diet-planner`) - Create personalized diet plans
 2. **Meal Logging** (`/meal-logging`) - Log meals with photos
 3. **Profile** (`/profile`) - User profile management
+4. **Orders** (`/orders`) - Order history
+5. **Order Detail** (`/orders/:id`) - Order details
+
+### Farmer Pages (NEW)
+1. **Farmer Dashboard** (`/farmer`) - Farmer overview
+2. **Farmer Products** (`/farmer/products`) - Manage products
+3. **Add Product** (`/farmer/products/new`) - Create product
+4. **Farmer Orders** (`/farmer/orders`) - View orders with their products
+5. **Farmer Income** (`/farmer/income`) - Income and payout tracking
 
 ### Admin Pages
 1. **Admin Dashboard** (`/admin`) - Admin overview
@@ -463,6 +563,7 @@ Located in: `Client/src/store/store.js`
 4. **Edit Product** (`/admin/products/:id/edit`) - Edit product
 5. **Orders Admin** (`/admin/orders`) - Manage orders
 6. **Users Admin** (`/admin/users`) - Manage users
+7. **Product Approvals** (`/admin/product-approvals`) - Approve/reject farmer products
 
 ### Common Components
 - **Header** - Navigation bar with language switcher
@@ -471,6 +572,9 @@ Located in: `Client/src/store/store.js`
 - **ImageUpload** - Image upload component
 - **ProtectedRoute** - Route guard for authenticated users
 - **AdminRoute** - Route guard for admin users
+- **FarmerRoute** - Route guard for farmer users
+- **Chatbot** - LankaNutri Advisor chatbot component
+- **AdminLayout** - Layout wrapper for admin pages
 
 ---
 
@@ -487,6 +591,9 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 CLIENT_URL=http://localhost:5173
+GROQ_API_KEY=your_groq_api_key_here  # For LankaNutri Advisor chatbot
+OPENAI_API_KEY=sk-your-openai-api-key-here  # Optional, for future use
+OPENAI_MODEL=gpt-4o-mini
 ```
 
 ### Client Environment Variables (`.env` in Client/)
@@ -503,8 +610,14 @@ VITE_API_URL=http://localhost:5000/api
 ### Cloudinary Configuration
 - Image upload middleware
 - Automatic URL generation
-- Support for avatar and product images
+- Support for avatar, product, and meal images
 - Meal photo storage
+
+### AI Chatbot Configuration
+- **Groq SDK** for fast AI responses
+- System prompt specialized for Sri Lankan nutrition
+- Conversation history stored in memory (Map)
+- **Note**: In production, use Redis or database for conversation storage
 
 ---
 
@@ -514,11 +627,12 @@ VITE_API_URL=http://localhost:5000/api
 - ✅ Password hashing with bcrypt (salt rounds: 10)
 - ✅ JWT token-based authentication
 - ✅ Protected API routes with middleware
-- ✅ Role-based access control (user/admin)
+- ✅ Role-based access control (user/farmer/admin)
 - ✅ CORS configuration
 - ✅ Input validation on models
 - ✅ Secure token storage in localStorage
 - ✅ Token expiration handling
+- ✅ **Product approval workflow** prevents unauthorized product listings
 
 ### Potential Improvements
 - Add rate limiting for API endpoints
@@ -528,6 +642,8 @@ VITE_API_URL=http://localhost:5000/api
 - Add email verification
 - Add two-factor authentication option
 - Implement session management improvements
+- **Store conversation history in database/Redis** instead of memory
+- **Add API rate limiting for chatbot** to prevent abuse
 
 ---
 
@@ -540,6 +656,7 @@ VITE_API_URL=http://localhost:5000/api
 - Uncaught exception handlers
 - Unhandled rejection handlers
 - Detailed error logging in development
+- **Graceful degradation** when Groq API is unavailable
 
 ### Frontend
 - Axios interceptors for error handling
@@ -547,6 +664,7 @@ VITE_API_URL=http://localhost:5000/api
 - Error messages displayed via React Hot Toast
 - Loading states for async operations
 - Redux error states
+- **Chatbot error handling** with user-friendly messages
 
 ---
 
@@ -561,6 +679,7 @@ VITE_API_URL=http://localhost:5000/api
 - ✅ Component-based React architecture
 - ✅ Database indexes for performance
 - ✅ Comprehensive documentation files
+- ✅ **Role-based feature separation** (farmer, admin, user)
 
 ### Areas for Improvement
 - Add unit tests (Jest, React Testing Library)
@@ -571,6 +690,7 @@ VITE_API_URL=http://localhost:5000/api
 - Add PropTypes or TypeScript for component props
 - Implement error boundary components
 - Add performance monitoring
+- **Add conversation persistence** for chatbot
 
 ---
 
@@ -581,16 +701,18 @@ VITE_API_URL=http://localhost:5000/api
 - **React 19.2.0** - Very recent version
 - **Mongoose 8.19.3** - Latest stable
 - **Redux Toolkit 2.10.1** - Modern Redux
+- **Groq SDK 0.35.0** - Fast AI inference for chatbot
 
 ### Potential Issues
 - **rolldown-vite@7.2.2** - Custom Vite build, may have compatibility issues
-- **openai@6.9.0** - Included but usage not clear in codebase
+- **openai@6.9.0** - Included but not actively used (chatbot uses Groq)
 - **uuid@13.0.0** - Latest version, may not be necessary if crypto.randomUUID is available
 
 ### Security Audit Recommendations
 - Regularly run `npm audit`
 - Update dependencies to latest secure versions
 - Monitor for security vulnerabilities
+- **Review Groq SDK usage** for API key security
 
 ---
 
@@ -602,6 +724,7 @@ VITE_API_URL=http://localhost:5000/api
 - ✅ Image optimization via Cloudinary
 - ✅ React lazy loading (can be added)
 - ✅ Redux state normalization
+- ✅ **Indexed fields** for farmer products, approval status
 
 ### Optimization Opportunities
 - Implement React lazy loading for route components
@@ -611,6 +734,8 @@ VITE_API_URL=http://localhost:5000/api
 - Implement image lazy loading
 - Add service worker for offline support
 - Optimize bundle size with code splitting
+- **Cache chatbot responses** for common queries
+- **Implement pagination** for farmer products and orders
 
 ---
 
@@ -622,6 +747,7 @@ VITE_API_URL=http://localhost:5000/api
 - ✅ Health check endpoints
 - ✅ Production build scripts
 - ✅ CORS configuration
+- ✅ **Role-based access control** implemented
 
 ### Pre-Deployment Checklist
 - [ ] Set `NODE_ENV=production`
@@ -636,6 +762,10 @@ VITE_API_URL=http://localhost:5000/api
 - [ ] Configure rate limiting
 - [ ] Set up CI/CD pipeline
 - [ ] Add API documentation
+- [ ] **Configure Groq API key** for production
+- [ ] **Set up conversation storage** (Redis/database) for chatbot
+- [ ] **Test farmer product approval workflow**
+- [ ] **Test farmer income tracking**
 
 ---
 
@@ -667,6 +797,19 @@ VITE_API_URL=http://localhost:5000/api
 - Multiple categories (weight loss, diabetes, general health)
 - Multi-language tips
 
+### LankaNutri Advisor Chatbot
+- **AI-powered nutrition assistant** specialized in Sri Lankan foods
+- Uses Groq SDK for fast, cost-effective AI responses
+- Provides meal plans, nutrition analysis, healthy substitutions
+- Culturally aware responses
+- Multi-language conversation support
+
+### Farmer Marketplace
+- **Direct-to-consumer marketplace** for farmers
+- Product approval workflow ensures quality
+- Income tracking for farmers
+- Order management per farmer
+
 ---
 
 ## 18. Testing Status
@@ -682,17 +825,23 @@ VITE_API_URL=http://localhost:5000/api
    - Utility functions
    - React components
    - API controllers
+   - **Farmer product approval logic**
+   - **Chatbot conversation handling**
 
 2. **Integration Tests**
    - API endpoint testing
    - Database operations
    - Authentication flows
+   - **Farmer product creation and approval**
+   - **Order processing with farmer products**
 
 3. **E2E Tests**
    - User registration/login
    - Product browsing and cart
    - Checkout process
    - Admin operations
+   - **Farmer product listing workflow**
+   - **Chatbot interactions**
 
 ---
 
@@ -713,6 +862,8 @@ VITE_API_URL=http://localhost:5000/api
 - Create API documentation
 - Add architecture diagrams
 - Create user guide
+- **Document farmer onboarding process**
+- **Document chatbot API usage**
 
 ---
 
@@ -721,24 +872,29 @@ VITE_API_URL=http://localhost:5000/api
 ### Immediate Improvements
 1. **Add Error Boundaries** - Catch React component errors gracefully
 2. **Implement Input Validation** - Use express-validator for API inputs
-3. **Add Rate Limiting** - Prevent API abuse
+3. **Add Rate Limiting** - Prevent API abuse, especially for chatbot
 4. **Add Logging** - Winston or similar for production logging
 5. **Environment Validation** - Validate required env vars on startup
+6. **Conversation Storage** - Move chatbot conversations to Redis/database
 
 ### Short-Term Enhancements
-1. **Add Unit Tests** - Start with critical paths (auth, orders)
-2. **Implement Pagination** - For products, orders, meal logs
+1. **Add Unit Tests** - Start with critical paths (auth, orders, farmer products)
+2. **Implement Pagination** - For products, orders, meal logs, farmer products
 3. **Add Search Functionality** - Enhanced product search
-4. **Email Notifications** - Order confirmations, password resets
+4. **Email Notifications** - Order confirmations, product approvals, password resets
 5. **Social Login** - Google/Facebook authentication
+6. **Farmer Onboarding** - Streamlined process for farmers to join
 
 ### Long-Term Improvements
 1. **TypeScript Migration** - Add type safety
 2. **Progressive Web App** - Offline support, app-like experience
-3. **Real-time Features** - WebSocket for order updates
-4. **Advanced Analytics** - User behavior tracking
+3. **Real-time Features** - WebSocket for order updates, notifications
+4. **Advanced Analytics** - User behavior tracking, farmer performance metrics
 5. **AI Integration** - Enhanced meal recognition, diet plan generation
 6. **Mobile App** - React Native version
+7. **Payment Gateway** - Online payment integration
+8. **Review System** - Product reviews and ratings
+9. **Farmer Verification** - KYC/verification process for farmers
 
 ---
 
@@ -754,6 +910,9 @@ VITE_API_URL=http://localhost:5000/api
 8. ✅ **Authentication** - Secure JWT-based auth system
 9. ✅ **Admin Panel** - Complete admin functionality
 10. ✅ **Image Upload** - Cloudinary integration for media handling
+11. ✅ **Marketplace** - Farmer-to-consumer platform
+12. ✅ **AI Chatbot** - LankaNutri Advisor for nutrition guidance
+13. ✅ **Role-Based Access** - Three-tier role system (user, farmer, admin)
 
 ---
 
@@ -768,6 +927,9 @@ VITE_API_URL=http://localhost:5000/api
 7. ⚠️ **Security Hardening** - Could add more security layers
 8. ⚠️ **Performance** - No pagination, caching, or optimization strategies
 9. ⚠️ **Monitoring** - No application monitoring or analytics
+10. ⚠️ **Chatbot Storage** - Conversations stored in memory (not persistent)
+11. ⚠️ **No Payment Gateway** - Only cash payment option
+12. ⚠️ **No Reviews** - Missing product review/rating system
 
 ---
 
@@ -780,12 +942,14 @@ VITE_API_URL=http://localhost:5000/api
 - Cultural localization
 - Comprehensive documentation
 - Scalable structure
+- **Marketplace functionality** for farmers
+- **AI-powered nutrition assistance**
 
-The application is **production-ready** with minor improvements, particularly around testing, security hardening, and monitoring. The codebase is maintainable and extensible, making it a solid foundation for a nutrition advisory platform.
+The application is **production-ready** with minor improvements, particularly around testing, security hardening, monitoring, and conversation persistence for the chatbot. The codebase is maintainable and extensible, making it a solid foundation for a nutrition advisory platform with marketplace capabilities.
 
 **Overall Assessment**: **8.5/10**
 - Architecture: 9/10
-- Features: 9/10
+- Features: 9.5/10 (enhanced with farmer marketplace and chatbot)
 - Code Quality: 8/10
 - Documentation: 9/10
 - Security: 7/10
@@ -794,7 +958,28 @@ The application is **production-ready** with minor improvements, particularly ar
 
 ---
 
+## 24. Recent Additions & Updates
+
+### Farmer Marketplace System
+- Complete farmer role implementation
+- Product approval workflow
+- Farmer income tracking
+- Order management per farmer
+
+### AI Chatbot Integration
+- LankaNutri Advisor using Groq SDK
+- Specialized in Sri Lankan nutrition
+- Conversation management
+- Multi-language support
+
+### Enhanced Product Model
+- Farmer-product relationship
+- Approval status workflow
+- Rejection reason tracking
+
+---
+
 *Analysis completed: 2024*
 *Project: Smart Diet SL*
 *Tech Stack: MERN (MongoDB, Express.js, React, Node.js)*
-
+*Latest Features: Farmer Marketplace, AI Chatbot (LankaNutri Advisor)*

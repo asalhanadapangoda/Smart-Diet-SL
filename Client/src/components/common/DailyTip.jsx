@@ -19,7 +19,10 @@ const DailyTip = () => {
       const { data } = await api.get(`/daily-tips/today${params}`);
       setTip(data);
     } catch (error) {
-      console.error('Failed to fetch tip:', error);
+      // Only log in development, suppress in production
+      if (import.meta.env.DEV) {
+        console.error('Failed to fetch tip:', error);
+      }
       // Set a default tip if API fails
       setTip({
         tip: {
