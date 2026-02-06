@@ -114,14 +114,6 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/farmer', farmerRoutes);
 
-// Root route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Smart Diet SL API is running',
-    health: '/api/health',
-  });
-});
-
 // Health check route
 app.get('/api/health', (req, res) => {
   res.json({ message: 'Server is running!' });

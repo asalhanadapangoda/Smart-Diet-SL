@@ -24,7 +24,7 @@ const FarmerDashboard = () => {
 
   const stats = [
     { name: 'My Products', value: products.length, icon: '📦', link: '/farmer/products' },
-    { name: 'Pending Approvals', value: pendingCount, icon: '⏳', link: '/farmer/products?status=pending' },
+    { name: 'Pending Approvals', value: pendingCount, icon: '⏳', link: '/farmer/products' },
     { name: 'My Orders', value: orders.length, icon: '🛒', link: '/farmer/orders' },
     { name: 'Total Income', value: `Rs. ${(income?.totalIncome || 0).toFixed(2)}`, icon: '💰', link: '/farmer/income' },
   ];
@@ -72,6 +72,20 @@ const FarmerDashboard = () => {
             ))}
           </div>
 
+          {pendingCount > 0 && (
+            <div className="glass-card rounded-2xl p-6 backdrop-blur-xl border border-yellow-300 bg-yellow-50 mb-8">
+              <h2 className="text-xl font-bold text-gray-800 text-glass mb-2">Pending Approval</h2>
+              <p className="text-gray-700 text-glass">
+                You have <span className="font-semibold">{pendingCount}</span> product(s) waiting for admin approval.
+              </p>
+              <Link
+                to="/farmer/products"
+                className="inline-block mt-3 text-green-700 hover:text-green-800 font-medium"
+              >
+                View my products →
+              </Link>
+            </div>
+          )}
         </>
       )}
     </div>

@@ -24,7 +24,6 @@ import OrderDetail from './pages/orders/OrderDetail';
 // Admin pages
 import AdminDashboard from './pages/admin/AdminDashboard';
 import ProductsAdmin from './pages/admin/ProductsAdmin';
-import AddProduct from './pages/admin/AddProduct';
 import EditProduct from './pages/admin/EditProduct';
 import OrdersAdmin from './pages/admin/OrdersAdmin';
 import UsersAdmin from './pages/admin/UsersAdmin';
@@ -116,14 +115,6 @@ function App() {
                 element={
                   <AdminRoute>
                     <ProductsAdmin />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/products/new"
-                element={
-                  <AdminRoute>
-                    <AddProduct />
                   </AdminRoute>
                 }
               />

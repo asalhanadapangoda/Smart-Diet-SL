@@ -30,12 +30,6 @@ const ProductsAdmin = () => {
         <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           Manage Products
         </h1>
-        <Link
-          to="/admin/products/new"
-          className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
-        >
-          ➕ Add New Product
-        </Link>
       </div>
 
       {loading ? (
@@ -45,12 +39,6 @@ const ProductsAdmin = () => {
       ) : products.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-700 mb-4 text-glass text-xl">No products found</p>
-          <Link
-            to="/admin/products/new"
-            className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
-          >
-            Add Your First Product
-          </Link>
         </div>
       ) : (
         <div className="glass-card rounded-2xl overflow-hidden backdrop-blur-xl">

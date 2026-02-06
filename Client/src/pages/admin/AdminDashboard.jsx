@@ -100,13 +100,7 @@ const AdminDashboard = () => {
           {/* Quick Actions */}
           <div className="glass-card rounded-2xl p-6 mb-8 backdrop-blur-xl">
             <h2 className="text-2xl font-bold text-gray-800 mb-4 text-glass">Quick Actions</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Link
-                to="/admin/products/new"
-                className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all text-center font-medium bg-green-500/40"
-              >
-                ➕ Add New Product
-              </Link>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Link
                 to="/admin/orders"
                 className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all text-center font-medium bg-blue-500/40"
