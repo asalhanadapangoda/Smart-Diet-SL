@@ -99,7 +99,7 @@ const AddProduct = () => {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl relative">
       <div className="mb-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           Add New Product
         </h1>
       </div>
@@ -108,7 +108,7 @@ const AddProduct = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Product Name *
             </label>
             <input
@@ -117,13 +117,13 @@ const AddProduct = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+              className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
             />
           </div>
 
           {/* Description */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Description *
             </label>
             <textarea
@@ -132,13 +132,13 @@ const AddProduct = () => {
               onChange={handleChange}
               required
               rows="4"
-              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
+              className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass resize-none"
             />
           </div>
 
           {/* Price */}
           <div>
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Price (Rs.) *
             </label>
             <input
@@ -149,13 +149,13 @@ const AddProduct = () => {
               required
               min="0"
               step="0.01"
-              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+              className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
             />
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Category *
             </label>
             <select
@@ -163,10 +163,10 @@ const AddProduct = () => {
               value={formData.category}
               onChange={handleChange}
               required
-              className="glass-input w-full px-4 py-3 rounded-xl text-white focus:outline-none text-glass"
+              className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 focus:outline-none text-glass"
             >
               {categories.map((cat) => (
-                <option key={cat} value={cat} className="bg-gray-800">
+                <option key={cat} value={cat} className="bg-white">
                   {cat.charAt(0).toUpperCase() + cat.slice(1)}
                 </option>
               ))}
@@ -175,7 +175,7 @@ const AddProduct = () => {
 
           {/* Stock */}
           <div>
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Stock *
             </label>
             <input
@@ -185,7 +185,7 @@ const AddProduct = () => {
               onChange={handleChange}
               required
               min="0"
-              className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+              className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
             />
           </div>
 
@@ -198,14 +198,14 @@ const AddProduct = () => {
               onChange={handleChange}
               className="h-5 w-5 glass-input rounded text-green-500 focus:ring-green-500"
             />
-            <label className="ml-2 block text-sm text-white/90 text-glass">
+            <label className="ml-2 block text-sm text-gray-800 text-glass">
               Product Available
             </label>
           </div>
 
           {/* Image Upload */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+            <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
               Product Image *
             </label>
             {imageUrl && (
@@ -213,9 +213,9 @@ const AddProduct = () => {
                 <img
                   src={imageUrl}
                   alt="Product preview"
-                  className="w-32 h-32 object-cover rounded-xl border-2 border-white/30"
+                  className="w-32 h-32 object-cover rounded-xl border-2 border-gray-200"
                 />
-                <p className="text-sm text-white/80 mt-2 text-glass">Image uploaded successfully!</p>
+                <p className="text-sm text-gray-700 mt-2 text-glass">Image uploaded successfully!</p>
               </div>
             )}
             <ImageUpload
@@ -226,12 +226,12 @@ const AddProduct = () => {
 
           {/* Nutrition Info */}
           <div className="md:col-span-2">
-            <h3 className="text-lg font-medium text-white mb-4 text-glass">
+            <h3 className="text-lg font-medium text-gray-800 mb-4 text-glass">
               Nutrition Information (per 100g)
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               <div>
-                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+                <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
                   Calories
                 </label>
                 <input
@@ -240,11 +240,11 @@ const AddProduct = () => {
                   value={formData.nutrition.calories}
                   onChange={handleChange}
                   min="0"
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+                <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
                   Protein (g)
                 </label>
                 <input
@@ -253,11 +253,11 @@ const AddProduct = () => {
                   value={formData.nutrition.protein}
                   onChange={handleChange}
                   min="0"
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+                <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
                   Carbs (g)
                 </label>
                 <input
@@ -266,11 +266,11 @@ const AddProduct = () => {
                   value={formData.nutrition.carbs}
                   onChange={handleChange}
                   min="0"
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+                <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
                   Fat (g)
                 </label>
                 <input
@@ -279,11 +279,11 @@ const AddProduct = () => {
                   value={formData.nutrition.fat}
                   onChange={handleChange}
                   min="0"
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-white/90 mb-2 text-glass">
+                <label className="block text-sm font-medium text-gray-800 mb-2 text-glass">
                   Fiber (g)
                 </label>
                 <input
@@ -292,7 +292,7 @@ const AddProduct = () => {
                   value={formData.nutrition.fiber}
                   onChange={handleChange}
                   min="0"
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
             </div>

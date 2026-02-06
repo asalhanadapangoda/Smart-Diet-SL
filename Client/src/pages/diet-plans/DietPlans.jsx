@@ -39,7 +39,7 @@ const DietPlans = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass text-center">
+      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800 text-glass text-center">
         {t('recommendedDietPlans')}
       </h1>
 
@@ -48,10 +48,10 @@ const DietPlans = () => {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value === 'all' ? '' : e.target.value)}
-          className="glass-input px-6 py-3 rounded-xl text-white focus:outline-none text-glass"
+          className="glass-input px-6 py-3 rounded-xl text-gray-800 focus:outline-none text-glass"
         >
           {categories.map((cat) => (
-            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-gray-800">
+            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-white">
               {t(cat.labelKey)}
             </option>
           ))}
@@ -59,7 +59,7 @@ const DietPlans = () => {
       </div>
 
       {loading ? (
-        <div className="text-center py-12 text-white text-glass text-xl">{t('loadingDietPlans')}</div>
+        <div className="text-center py-12 text-gray-700 text-glass text-xl">{t('loadingDietPlans')}</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dietPlans.map((plan) => (
@@ -79,38 +79,38 @@ const DietPlans = () => {
               )}
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-semibold text-white text-glass">{plan.title}</h3>
-                  <span className="glass-button bg-green-400/30 text-green-200 text-xs px-3 py-1 rounded-full">
+                  <h3 className="text-xl font-semibold text-gray-800 text-glass">{plan.title}</h3>
+                  <span className="glass-button bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full border border-green-300">
                     {plan.category}
                   </span>
                 </div>
-                <p className="text-white/80 mb-4 line-clamp-3 text-glass">{plan.description}</p>
+                <p className="text-gray-600 mb-4 line-clamp-3 text-glass">{plan.description}</p>
                 <div className="space-y-2 mb-4">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/70 text-glass">{t('duration')}:</span>
-                    <span className="font-semibold text-white text-glass">{plan.duration} {t('days')}</span>
+                    <span className="text-gray-600 text-glass">{t('duration')}:</span>
+                    <span className="font-semibold text-gray-800 text-glass">{plan.duration} {t('days')}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/70 text-glass">{t('totalCalories')}:</span>
-                    <span className="font-semibold text-white text-glass">{plan.totalCalories} cal</span>
+                    <span className="text-gray-600 text-glass">{t('totalCalories')}:</span>
+                    <span className="font-semibold text-gray-800 text-glass">{plan.totalCalories} cal</span>
                   </div>
                 </div>
-                <div className="border-t border-white/20 pt-4">
-                  <h4 className="font-semibold mb-2 text-white text-glass">{t('meals')}:</h4>
+                <div className="border-t border-gray-200 pt-4">
+                  <h4 className="font-semibold mb-2 text-gray-800 text-glass">{t('meals')}:</h4>
                   <div className="space-y-1 text-sm">
                     {plan.meals.breakfast && (
-                      <div className="text-white/80 text-glass">
+                      <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('breakfast')}:</span>{' '}
                         {plan.meals.breakfast.name}
                       </div>
                     )}
                     {plan.meals.lunch && (
-                      <div className="text-white/80 text-glass">
+                      <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('lunch')}:</span> {plan.meals.lunch.name}
                       </div>
                     )}
                     {plan.meals.dinner && (
-                      <div className="text-white/80 text-glass">
+                      <div className="text-gray-600 text-glass">
                         <span className="font-medium">{t('dinner')}:</span> {plan.meals.dinner.name}
                       </div>
                     )}
@@ -123,7 +123,7 @@ const DietPlans = () => {
       )}
 
       {!loading && dietPlans.length === 0 && (
-        <p className="text-center text-white/80 py-12 text-glass text-xl">{t('noDietPlansAvailable')}</p>
+        <p className="text-center text-gray-600 py-12 text-glass text-xl">{t('noDietPlansAvailable')}</p>
       )}
     </div>
   );

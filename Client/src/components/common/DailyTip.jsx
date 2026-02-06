@@ -40,8 +40,8 @@ const DailyTip = () => {
 
   if (loading) {
     return (
-      <div className="glass-card border-l-4 border-green-300/50 p-4 rounded-xl backdrop-blur-xl">
-        <div className="animate-pulse text-white/80 text-glass">Loading tip...</div>
+      <div className="glass-card border-l-4 border-green-500 p-4 rounded-xl backdrop-blur-xl bg-green-50/80">
+        <div className="animate-pulse text-gray-600 text-glass">Loading tip...</div>
       </div>
     );
   }
@@ -53,20 +53,20 @@ const DailyTip = () => {
   const displayTip = tip.displayTip || tip.tip?.en || tip.tip;
 
   return (
-    <div className="glass-card border-l-4 border-green-300/50 p-4 rounded-xl shadow-sm backdrop-blur-xl">
+    <div className="glass-card border-l-4 border-green-500 p-5 rounded-xl shadow-lg backdrop-blur-xl bg-green-50/90">
       <div className="flex items-start">
         <div className="flex-shrink-0">
-          <span className="text-2xl">💡</span>
+          <span className="text-3xl">💡</span>
         </div>
-        <div className="ml-3 flex-1">
-          <h3 className="text-sm font-semibold text-white mb-1 text-glass">
+        <div className="ml-4 flex-1">
+          <h3 className="text-base font-bold text-green-800 mb-2 text-glass">
             {t('oneChange')}
           </h3>
-          <p className="text-sm text-white/90 text-glass">{displayTip}</p>
+          <p className="text-sm md:text-base text-gray-800 leading-relaxed text-glass font-medium">{displayTip}</p>
         </div>
         <button
           onClick={fetchTodayTip}
-          className="ml-2 text-white/80 hover:text-white text-sm transition-colors text-glass"
+          className="ml-3 text-green-600 hover:text-green-700 text-lg transition-colors text-glass font-bold"
           title="Get another tip"
         >
           ↻

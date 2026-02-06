@@ -228,10 +228,10 @@ const Chatbot = () => {
           </div>
 
           {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/10">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/70">
             {messages.length === 0 && (
-              <div className="text-center text-white/80 mt-8 text-glass">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto"></div>
+              <div className="text-center text-gray-700 mt-8 text-glass">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
                 <p className="mt-2">Starting conversation...</p>
               </div>
             )}
@@ -244,12 +244,12 @@ const Chatbot = () => {
                 <div
                   className={`max-w-[80%] rounded-xl p-3 text-glass ${
                     msg.role === 'user'
-                      ? 'glass-button bg-green-500/40 text-white'
-                      : 'glass-card bg-white/20 text-white'
+                      ? 'glass-button bg-green-600 text-white'
+                      : 'glass-card bg-white/95 text-gray-800 border border-gray-200'
                   }`}
                 >
                   {msg.role === 'assistant' ? (
-                    <div className="prose prose-sm max-w-none">
+                    <div className="prose prose-sm max-w-none text-gray-800 prose-headings:text-gray-900 prose-strong:text-gray-900 prose-li:text-gray-800">
                       {formatMessage(msg.content)}
                     </div>
                   ) : (
@@ -261,11 +261,11 @@ const Chatbot = () => {
             
             {loading && (
               <div className="flex justify-start">
-                <div className="glass-card bg-white/20 rounded-xl p-3">
+                <div className="glass-card bg-white/95 rounded-xl p-3 border border-gray-200">
                   <div className="flex gap-2">
-                    <div className="w-2 h-2 bg-white/80 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-white/80 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-white/80 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                    <div className="w-2 h-2 bg-green-600 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-green-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-green-600 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@ const Chatbot = () => {
           </div>
 
           {/* Input Area */}
-          <form onSubmit={handleSendMessage} className="border-t border-white/20 p-4 bg-white/10 rounded-b-2xl">
+          <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-4 bg-white/80 rounded-b-2xl">
             <div className="flex gap-2">
               <input
                 ref={inputRef}
@@ -283,7 +283,7 @@ const Chatbot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="glass-input flex-1 px-4 py-2 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                className="glass-input flex-1 px-4 py-2 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 disabled={loading}
               />
               <button

@@ -27,7 +27,7 @@ const ProductsAdmin = () => {
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-4xl md:text-5xl font-bold text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           Manage Products
         </h1>
         <Link
@@ -40,11 +40,11 @@ const ProductsAdmin = () => {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
         </div>
       ) : products.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-white/80 mb-4 text-glass text-xl">No products found</p>
+          <p className="text-gray-700 mb-4 text-glass text-xl">No products found</p>
           <Link
             to="/admin/products/new"
             className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
@@ -55,64 +55,64 @@ const ProductsAdmin = () => {
       ) : (
         <div className="glass-card rounded-2xl overflow-hidden backdrop-blur-xl">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-white/20">
-              <thead className="glass-card bg-white/10">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="glass-card bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Image
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Category
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Price
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Stock
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-white/90 uppercase text-glass">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-800 uppercase text-glass">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/20">
+              <tbody className="divide-y divide-gray-200">
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-white/5 transition-colors">
+                  <tr key={product._id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="h-16 w-16 object-cover rounded-xl border-2 border-white/30"
+                        className="h-16 w-16 object-cover rounded-xl border-2 border-gray-200"
                       />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-white text-glass">
+                      <div className="text-sm font-medium text-gray-800 text-glass">
                         {product.name}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="glass-button px-3 py-1 text-xs rounded-full bg-blue-500/30 text-blue-200">
+                      <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-700 border border-blue-300">
                         {product.category}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-white/90 text-glass">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-glass">
                       Rs. {product.price?.toFixed(2)}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-white/90 text-glass">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-glass">
                       {product.stock}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-3 py-1 text-xs rounded-full text-glass ${
                           product.isAvailable
-                            ? 'glass-button bg-green-500/30 text-green-200'
-                            : 'glass-button bg-red-500/30 text-red-200'
+                            ? 'bg-green-100 text-green-700 border border-green-300'
+                            : 'bg-red-100 text-red-700 border border-red-300'
                         }`}
                       >
                         {product.isAvailable ? 'Available' : 'Unavailable'}
@@ -121,13 +121,13 @@ const ProductsAdmin = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <Link
                         to={`/admin/products/${product._id}/edit`}
-                        className="text-blue-300 hover:text-blue-200 mr-4 transition-colors text-glass"
+                        className="text-blue-600 hover:text-blue-700 mr-4 transition-colors text-glass font-medium"
                       >
                         Edit
                       </Link>
                       <button
                         onClick={() => handleDelete(product._id)}
-                        className="text-red-300 hover:text-red-200 transition-colors text-glass"
+                        className="text-red-600 hover:text-red-700 transition-colors text-glass font-medium"
                       >
                         Delete
                       </button>

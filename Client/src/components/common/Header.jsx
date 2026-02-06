@@ -51,7 +51,7 @@ const Header = () => {
             {isAuthenticated && (
               <Link
                 to="/diet-planner"
-                className="px-3 py-2 rounded-lg glass-button text-sm font-semibold text-white hover:scale-105 bg-gradient-to-r from-green-400 to-emerald-500"
+                className="px-3 py-2 rounded-lg glass-button text-sm font-semibold text-white hover:scale-105 bg-gradient-to-r from-green-500 to-emerald-600"
               >
                 {t('aiDietPlanner')}
               </Link>
@@ -65,18 +65,18 @@ const Header = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+              <div className="absolute left-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 bg-white/95">
                 <div className="py-2">
                   <Link
                     to="/calculator"
-                    className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('calculator')}
                   </Link>
                   <Link
                     to="/sri-lankan-plates"
-                    className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('generatePlate')}
@@ -144,7 +144,7 @@ const Header = () => {
                     />
                   </svg>
                   {cartItems.length > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
+                    <span className="absolute -top-1 -right-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                       {cartItems.length}
                     </span>
                   )}
@@ -170,42 +170,42 @@ const Header = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2">
+                  <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 bg-white/95">
                     <div className="py-2">
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                       >
                         {t('profile')}
                       </Link>
                       <Link
                         to="/meal-logging"
-                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                       >
                         {t('logMeal')}
                       </Link>
                       <Link
                         to="/orders"
-                        className="block px-4 py-2 text-sm text-white hover:bg-white/20 rounded-lg mx-2 transition-all"
+                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
                       >
                         {t('myOrders')}
                       </Link>
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
                         <>
-                          <hr className="my-2 border-white/20 mx-2" />
+                          <hr className="my-2 border-gray-200 mx-2" />
                           <Link
                             to="/admin"
-                            className="block px-4 py-2 text-sm text-yellow-300 hover:bg-white/20 rounded-lg mx-2 font-semibold transition-all"
+                            className="block px-4 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg mx-2 font-semibold transition-all"
                           >
                             {t('adminDashboard')}
                           </Link>
                         </>
                       )}
-                      <hr className="my-2 border-white/20 mx-2" />
+                      <hr className="my-2 border-gray-200 mx-2" />
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-300 hover:bg-white/20 rounded-lg mx-2 transition-all"
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg mx-2 transition-all"
                       >
                         {t('logout')}
                       </button>
@@ -290,7 +290,7 @@ const Header = () => {
               {isAuthenticated && (
                 <Link
                   to="/diet-planner"
-                  className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition font-semibold bg-gradient-to-r from-green-400 to-emerald-500"
+                  className="px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition font-semibold bg-gradient-to-r from-green-500 to-emerald-600"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {t('aiDietPlanner')}
@@ -391,7 +391,7 @@ const Header = () => {
                   >
                     <span>{t('cart')}</span>
                     {cartItems.length > 0 && (
-                      <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
+                      <span className="bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-lg animate-pulse">
                         {cartItems.length}
                       </span>
                     )}
@@ -420,7 +420,7 @@ const Header = () => {
                   {user?.role === 'admin' && (
                     <Link
                       to="/admin"
-                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition bg-gradient-to-r from-yellow-400 to-orange-500 font-semibold"
+                      className="block px-3 py-2 rounded-lg glass-button text-white hover:scale-105 transition bg-gradient-to-r from-green-500 to-emerald-600 font-semibold"
                       onClick={() => setMobileMenuOpen(false)}
                     >
                       {t('adminDashboard')}

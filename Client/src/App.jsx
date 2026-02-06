@@ -110,43 +110,43 @@ function App() {
             toastOptions={{
               duration: 4000,
               style: {
-                background: 'rgba(5, 150, 105, 0.5)',
+                background: 'rgba(16, 185, 129, 0.9)',
                 backdropFilter: 'blur(20px) saturate(180%)',
                 WebkitBackdropFilter: 'blur(20px) saturate(180%)',
                 color: 'white',
-                border: '1px solid rgba(16, 185, 129, 0.5)',
+                border: '1px solid rgba(5, 150, 105, 0.3)',
                 borderRadius: '12px',
-                boxShadow: '0 8px 32px 0 rgba(4, 120, 87, 0.4), inset 0 1px 0 rgba(34, 197, 94, 0.3)',
+                boxShadow: '0 8px 32px 0 rgba(5, 150, 105, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3)',
                 padding: '12px 16px',
               },
               success: {
                 iconTheme: {
-                  primary: 'rgba(74, 222, 128, 1)',
+                  primary: 'rgba(167, 243, 208, 1)',
                   secondary: 'white',
                 },
                 style: {
-                  background: 'rgba(5, 150, 105, 0.5)',
-                  borderColor: 'rgba(34, 197, 94, 0.6)',
+                  background: 'rgba(16, 185, 129, 0.9)',
+                  borderColor: 'rgba(5, 150, 105, 0.5)',
                 },
               },
               error: {
                 iconTheme: {
-                  primary: 'rgba(248, 113, 113, 1)',
+                  primary: 'rgba(254, 202, 202, 1)',
                   secondary: 'white',
                 },
                 style: {
-                  background: 'rgba(220, 38, 38, 0.5)',
-                  borderColor: 'rgba(248, 113, 113, 0.6)',
+                  background: 'rgba(239, 68, 68, 0.9)',
+                  borderColor: 'rgba(220, 38, 38, 0.5)',
                 },
               },
               loading: {
                 iconTheme: {
-                  primary: 'rgba(74, 222, 128, 1)',
+                  primary: 'rgba(167, 243, 208, 1)',
                   secondary: 'white',
                 },
                 style: {
-                  background: 'rgba(5, 150, 105, 0.5)',
-                  borderColor: 'rgba(34, 197, 94, 0.6)',
+                  background: 'rgba(16, 185, 129, 0.9)',
+                  borderColor: 'rgba(5, 150, 105, 0.5)',
                 },
               },
             }}

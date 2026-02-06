@@ -91,15 +91,15 @@ const Products = () => {
               </Link>
               <div className="p-5">
                 <Link to={`/products/${product._id}`}>
-                  <h3 className="font-semibold text-lg mb-2 text-white text-glass hover:text-green-300 transition-colors">
+                  <h3 className="font-semibold text-lg mb-2 text-gray-800 text-glass hover:text-green-600 transition-colors">
                     {product.name}
                   </h3>
                 </Link>
-                <p className="text-white/80 text-sm mb-4 line-clamp-2 text-glass">
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2 text-glass">
                   {product.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <p className="text-green-300 font-bold text-lg text-glass">Rs. {product.price}</p>
+                  <p className="text-green-600 font-bold text-lg text-glass">Rs. {product.price}</p>
                   <button
                     onClick={() => handleAddToCart(product)}
                     className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium"

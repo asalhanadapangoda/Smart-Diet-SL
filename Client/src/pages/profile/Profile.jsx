@@ -63,7 +63,7 @@ const Profile = () => {
   return (
     <ProtectedRoute>
       <div className="container mx-auto px-4 py-8 relative">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-white text-glass bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
           {t('myProfile')}
         </h1>
 
@@ -72,13 +72,13 @@ const Profile = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Avatar */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('profilePicture')}</label>
+                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('profilePicture')}</label>
                 <div className="flex items-center gap-4">
                   {user?.avatar && (
                     <img
                       src={user.avatar}
                       alt="Profile"
-                      className="w-20 h-20 rounded-full object-cover border-2 border-white/30"
+                      className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                     />
                   )}
                   <input
@@ -86,58 +86,58 @@ const Profile = () => {
                     name="avatar"
                     accept="image/*"
                     onChange={handleChange}
-                    className="block w-full text-sm text-white/80 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:glass-button file:text-white hover:file:scale-105 cursor-pointer"
+                    className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:glass-button file:text-white hover:file:scale-105 cursor-pointer"
                   />
                 </div>
               </div>
 
               {/* Name */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('fullName')}</label>
+                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('fullName')}</label>
                 <input
                   type="text"
                   name="name"
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('email')}</label>
+                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('email')}</label>
                 <input
                   type="email"
                   name="email"
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
 
               {/* Phone */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('phone')}</label>
+                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('phone')}</label>
                 <input
                   type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 />
               </div>
 
               {/* Address */}
               <div>
-                <label className="block text-sm font-medium mb-2 text-white/90 text-glass">{t('address')}</label>
+                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('address')}</label>
                 <textarea
                   name="address"
                   rows="4"
                   value={formData.address}
                   onChange={handleChange}
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass resize-none"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass resize-none"
                 />
               </div>
 

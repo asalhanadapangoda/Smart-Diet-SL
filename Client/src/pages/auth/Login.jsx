@@ -43,14 +43,14 @@ const Login = () => {
       <div className="max-w-md w-full space-y-8 relative z-10">
         <div className="glass-card rounded-3xl p-8 backdrop-blur-xl">
           <div>
-            <h2 className="mt-6 text-center text-4xl font-extrabold text-white text-glass bg-gradient-to-r from-white to-green-100 bg-clip-text text-transparent">
+            <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
               {t('signInToAccount')}
             </h2>
-            <p className="mt-2 text-center text-sm text-white/80 text-glass">
+            <p className="mt-2 text-center text-sm text-gray-600 text-glass">
               {t('or')}{' '}
               <Link
                 to="/register"
-                className="font-medium text-green-300 hover:text-green-200 transition-colors"
+                className="font-medium text-green-600 hover:text-green-700 transition-colors"
               >
                 {t('createNewAccount')}
               </Link>
@@ -68,7 +68,7 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                   placeholder={t('emailAddress')}
                   value={formData.email}
                   onChange={handleChange}
@@ -84,7 +84,7 @@ const Login = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="glass-input w-full px-4 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+                  className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                   placeholder={t('password')}
                   value={formData.password}
                   onChange={handleChange}
