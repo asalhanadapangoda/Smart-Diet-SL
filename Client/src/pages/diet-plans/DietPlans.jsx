@@ -39,7 +39,7 @@ const DietPlans = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 relative">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800 text-glass text-center">
+      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-black text-glass text-center">
         {t('recommendedDietPlans')}
       </h1>
 
