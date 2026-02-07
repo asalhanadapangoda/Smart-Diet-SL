@@ -29,6 +29,8 @@ const Products = () => {
   ];
 
   const handleAddToCart = (product) => {
+    const stock = typeof product.stock === 'number' ? product.stock : null;
+    if (stock !== null && stock < 1) return;
     dispatch(
       addToCart({
         product: product._id,
@@ -36,6 +38,7 @@ const Products = () => {
         image: product.image,
         price: product.price,
         quantity: 1,
+        stock: product.stock,
       })
     );
     toast.success(t('productAddedToCart'));
@@ -48,21 +51,21 @@ const Products = () => {
       </h1>
 
       {/* Filters */}
-      <div className="mb-8 flex flex-col md:flex-row gap-4">
+      <div className="mb-8 flex flex-col md:flex-row gap-4 md:items-center">
         <input
           type="text"
           placeholder={t('searchProducts')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 glass-input px-6 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+          className="flex-1 glass-input px-6 py-3 rounded-xl text-black placeholder-gray-500 focus:outline-none text-glass h-12"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value === 'all' ? '' : e.target.value)}
-          className="glass-input px-6 py-3 rounded-xl text-white focus:outline-none text-glass"
+          className="glass-input px-6 py-3 rounded-xl text-black focus:outline-none text-glass h-12 pl-4 pr-10"
         >
           {categories.map((cat) => (
-            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-gray-800">
+            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-white text-black">
               {t(cat.labelKey)}
             </option>
           ))}
@@ -102,7 +105,8 @@ const Products = () => {
                   <p className="text-green-600 font-bold text-lg text-glass">Rs. {product.price}</p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium"
+                    disabled={typeof product.stock === 'number' && product.stock < 1}
+                    className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {t('addToCart')}
                   </button>

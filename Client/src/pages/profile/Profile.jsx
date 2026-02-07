@@ -14,7 +14,6 @@ const Profile = () => {
     email: '',
     phone: '',
     address: '',
-    avatar: null,
   });
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +24,6 @@ const Profile = () => {
         email: user.email || '',
         phone: user.phone || '',
         address: user.address || '',
-        avatar: null,
       });
     } else {
       dispatch(getProfile());
@@ -33,17 +31,10 @@ const Profile = () => {
   }, [user, dispatch]);
 
   const handleChange = (e) => {
-    if (e.target.name === 'avatar') {
-      setFormData({
-        ...formData,
-        avatar: e.target.files[0],
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
-      });
-    }
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -70,27 +61,6 @@ const Profile = () => {
         <div className="max-w-2xl mx-auto">
           <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Avatar */}
-              <div>
-                <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('profilePicture')}</label>
-                <div className="flex items-center gap-4">
-                  {user?.avatar && (
-                    <img
-                      src={user.avatar}
-                      alt="Profile"
-                      className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
-                    />
-                  )}
-                  <input
-                    type="file"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={handleChange}
-                    className="block w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:glass-button file:text-white hover:file:scale-105 cursor-pointer"
-                  />
-                </div>
-              </div>
-
               {/* Name */}
               <div>
                 <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('fullName')}</label>

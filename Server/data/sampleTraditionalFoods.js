@@ -217,9 +217,6 @@ export const sampleTraditionalFoods = [
     preparationMethods: ['Brewed'],
   },
 ];
-
-// Sample Daily Tips
-export const sampleDailyTips = [
   {
     tip: {
       en: 'Substitute half your white rice with a portion of boiled Manioc for lower calories',

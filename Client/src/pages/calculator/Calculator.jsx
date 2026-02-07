@@ -105,7 +105,7 @@ const Calculator = () => {
                   return (
                     <div
                       key={food._id}
-                      className="glass-card flex items-center justify-between p-3 rounded-xl hover:scale-105 transition-all"
+                      className="glass-card no-hover flex items-center justify-between p-3 rounded-xl"
                     >
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-800 text-glass">{foodName}</h3>
@@ -116,7 +116,7 @@ const Calculator = () => {
                       <button
                         onClick={() => addFood(food)}
                         disabled={selectedFoods.find((f) => f._id === food._id)}
-                        className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="glass-button text-white px-4 py-2 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {selectedFoods.find((f) => f._id === food._id)
                           ? t('added')
@@ -142,7 +142,7 @@ const Calculator = () => {
                   return (
                     <div
                       key={food._id}
-                      className="glass-card flex items-center justify-between p-4 rounded-xl hover:scale-105 transition-all"
+                      className="glass-card no-hover flex items-center justify-between p-4 rounded-xl"
                     >
                       <div className="flex-1">
                         <h3 className="font-semibold text-gray-800 text-glass">{foodName}</h3>
@@ -160,7 +160,7 @@ const Calculator = () => {
                         </div>
                         <button
                           onClick={() => removeFood(food._id)}
-                          className="text-red-600 hover:text-red-700 transition-colors text-glass font-medium"
+                          className="text-red-600 text-glass font-medium"
                         >
                           {t('remove')}
                         </button>

@@ -1,56 +1,48 @@
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
+import { fetchFarmerProducts } from '../../store/slices/farmerSlice';
 
-const AdminSidebar = () => {
+const FarmerSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { products = [] } = useSelector((state) => state.farmer) || {};
+  const pendingCount = (products || []).filter((p) => p.approvalStatus === 'pending').length;
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
+  useEffect(() => {
+    dispatch(fetchFarmerProducts());
+  }, [dispatch]);
+
   const menuItems = [
-    {
-      name: 'Dashboard',
-      icon: '🏠',
-      path: '/admin',
-      color: 'bg-green-500',
-    },
-    {
-      name: 'Total Products',
-      icon: '📦',
-      path: '/admin/products',
-      color: 'bg-blue-500',
-    },
-    {
-      name: 'Product Approvals',
-      icon: '✅',
-      path: '/admin/product-approvals',
-      color: 'bg-emerald-500',
-    },
-    {
-      name: 'View All Orders',
-      icon: '📋',
-      path: '/admin/orders',
-      color: 'bg-blue-500',
-    },
-    {
-      name: 'Manage Users',
-      icon: '👥',
-      path: '/admin/users',
-      color: 'bg-purple-500',
-    },
+    { name: 'Dashboard', icon: '🏠', path: '/farmer' },
+    { name: 'My Products', icon: '📦', path: '/farmer/products' },
+    { name: 'Pending Approvals', icon: '⏳', path: '/farmer/products?status=pending', badge: pendingCount },
+    { name: 'My Orders', icon: '🛒', path: '/farmer/orders' },
+    { name: 'Total Income', icon: '💰', path: '/farmer/income' },
+    { name: 'Add New Product', icon: '➕', path: '/farmer/products/new' },
   ];
 
   const isActive = (path) => {
-    if (path === '/admin') {
-      return location.pathname === '/admin';
+    if (path === '/farmer') {
+      return location.pathname === '/farmer';
     }
     if (path.includes('?')) {
       const basePath = path.split('?')[0];
-      return location.pathname === basePath;
+      return location.pathname === basePath && location.search.includes('status=pending');
+    }
+    // /farmer/products: active only when NOT on Add New Product or Pending Approvals
+    if (path === '/farmer/products') {
+      return (
+        location.pathname === '/farmer/products' &&
+        !location.pathname.startsWith('/farmer/products/new') &&
+        !location.search.includes('status=pending')
+      );
     }
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
@@ -59,13 +51,13 @@ const AdminSidebar = () => {
     <div className="fixed left-0 top-0 h-full w-64 glass-card backdrop-blur-xl z-50 flex flex-col border-r border-gray-200">
       {/* Logo and Brand */}
       <div className="p-6 border-b border-gray-200">
-        <Link to="/admin" className="flex items-center hover:scale-105 transition-transform duration-300">
+        <Link to="/farmer" className="flex items-center hover:scale-105 transition-transform duration-300">
           <span className="text-3xl">🥗</span>
           <div className="ml-3">
             <h1 className="text-xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
               Smart Diet SL
             </h1>
-            <p className="text-xs text-gray-600 text-glass">Admin Panel</p>
+            <p className="text-xs text-gray-600 text-glass">Farmer Panel</p>
           </div>
         </Link>
       </div>
@@ -85,7 +77,12 @@ const AdminSidebar = () => {
               }`}
             >
               <span className="text-2xl mr-3">{item.icon}</span>
-              <span className="font-medium">{item.name}</span>
+              <span className="font-medium flex-1">{item.name}</span>
+              {item.badge > 0 && (
+                <span className="bg-yellow-500 text-white text-xs rounded-full px-2 py-0.5 font-semibold">
+                  {item.badge}
+                </span>
+              )}
             </Link>
           );
         })}
@@ -95,7 +92,7 @@ const AdminSidebar = () => {
       <div className="p-4 border-t border-gray-200">
         <div className="mb-4 px-4 py-3 glass-card rounded-xl text-center">
           <p className="text-xs text-gray-500 text-glass mb-1">Logged in as</p>
-          <p className="text-sm font-semibold text-gray-800 text-glass">{user?.name || 'Admin'}</p>
+          <p className="text-sm font-semibold text-gray-800 text-glass">{user?.name || 'Farmer'}</p>
         </div>
         <Link
           to="/"
@@ -114,5 +111,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
-
+export default FarmerSidebar;

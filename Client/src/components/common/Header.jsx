@@ -69,14 +69,14 @@ const Header = () => {
                 <div className="py-2">
                   <Link
                     to="/calculator"
-                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
+                    className="block px-3 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('calculator')}
                   </Link>
                   <Link
                     to="/sri-lankan-plates"
-                    className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
+                    className="block px-3 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg transition-all"
                     onClick={() => setToolsMenuOpen(false)}
                   >
                     {t('generatePlate')}
@@ -170,24 +170,24 @@ const Header = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 bg-white/95">
-                    <div className="py-2">
+                  <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 bg-white overflow-hidden">
+                    <div className="py-2 px-2">
                       <Link
                         to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
+                        className="block px-3 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg transition-all"
                       >
                         {t('profile')}
                       </Link>
                       <Link
                         to="/orders"
-                        className="block px-4 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg mx-2 transition-all"
+                        className="block px-3 py-2 text-sm text-gray-800 hover:bg-green-50 rounded-lg transition-all"
                       >
                         {t('myOrders')}
                       </Link>
                       {user?.role === 'farmer' && (
                         <Link
                           to="/farmer"
-                          className="block px-4 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg mx-2 font-semibold transition-all"
+                          className="block px-3 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg font-semibold transition-all"
                         >
                           Farmer Dashboard
                         </Link>
@@ -195,19 +195,19 @@ const Header = () => {
                       {/* Admin Link - Only show if user is admin */}
                       {user?.role === 'admin' && (
                         <>
-                          <hr className="my-2 border-gray-200 mx-2" />
+                          <hr className="my-2 border-gray-200" />
                           <Link
                             to="/admin"
-                            className="block px-4 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg mx-2 font-semibold transition-all"
+                            className="block px-3 py-2 text-sm text-green-700 hover:bg-green-50 rounded-lg font-semibold transition-all"
                           >
                             {t('adminDashboard')}
                           </Link>
                         </>
                       )}
-                      <hr className="my-2 border-gray-200 mx-2" />
+                      <hr className="my-2 border-gray-200" />
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg mx-2 transition-all"
+                        className="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all"
                       >
                         {t('logout')}
                       </button>

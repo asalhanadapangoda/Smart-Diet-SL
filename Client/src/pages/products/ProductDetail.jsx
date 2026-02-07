@@ -21,6 +21,14 @@ const ProductDetail = () => {
     };
   }, [id, dispatch]);
 
+  const maxQty = typeof product?.stock === 'number' ? product.stock : null;
+
+  useEffect(() => {
+    if (product && maxQty !== null && quantity > maxQty) {
+      setQuantity(maxQty);
+    }
+  }, [product, maxQty]);
+
   const handleAddToCart = () => {
     if (product) {
       dispatch(
@@ -30,6 +38,7 @@ const ProductDetail = () => {
           image: product.image,
           price: product.price,
           quantity: quantity,
+          stock: product.stock,
         })
       );
       toast.success(t('productAddedToCart'));
@@ -110,7 +119,12 @@ const ProductDetail = () => {
           )}
 
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">{t('quantity')}</label>
+            <label className="block text-sm font-medium mb-2 text-gray-800 text-glass">
+              {t('quantity')}
+              {maxQty !== null && (
+                <span className="text-gray-500 font-normal ml-2">({t('available')}: {maxQty})</span>
+              )}
+            </label>
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -120,8 +134,9 @@ const ProductDetail = () => {
               </button>
               <span className="text-lg font-semibold w-12 text-center text-gray-800 text-glass">{quantity}</span>
               <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all"
+                onClick={() => setQuantity(maxQty !== null ? Math.min(maxQty, quantity + 1) : quantity + 1)}
+                disabled={maxQty !== null && quantity >= maxQty}
+                className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 +
               </button>
