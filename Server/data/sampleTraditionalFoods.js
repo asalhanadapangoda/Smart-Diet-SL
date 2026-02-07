@@ -217,6 +217,8 @@ export const sampleTraditionalFoods = [
     preparationMethods: ['Brewed'],
   },
 ];
+
+export const sampleDailyTips = [
   {
     tip: {
       en: 'Substitute half your white rice with a portion of boiled Manioc for lower calories',
@@ -249,6 +251,127 @@ export const sampleTraditionalFoods = [
     difficulty: 'easy',
     culturalRelevance: 'high',
     relatedFoods: ['Gotukola'],
+  },
+  {
+    tip: {
+      en: 'Choose Suwandel or Kekulu rice over white rice for better blood sugar control',
+      si: 'සුවඳැල් හෝ කෙකුළු අරිසි රුධිර සීනි පාලනයට සුදු අරිසිට වඩා හොඳයි',
+      ta: 'சிறந்த இரத்த சர்க்கரை கட்டுப்பாட்டிற்கு வெள்ளை அரிசிக்கு பதிலாக சுவண்டல் அல்லது கேகுலு அரிசியை தேர்ந்தெடுங்கள்',
+    },
+    category: 'diabetes',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: ['Suwandel Rice', 'Kekulu Rice'],
+  },
+  {
+    tip: {
+      en: 'Start your meal with a small bowl of salad or mallung to feel full sooner',
+      si: 'ඉක්මනින් පිරී යැමට කුඩා සැලඩ් බෝල් එකක් හෝ මල්ලුං එකක් සමඟ ඔබේ ආහාර වේල ආරම්භ කරන්න',
+      ta: 'விரைவில் நிரம்புவதற்கு சிறிய சாலட் அல்லது மல்லுங் பாத்திரத்துடன் உங்கள் உணவைத் தொடங்குங்கள்',
+    },
+    category: 'portion-control',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: ['Gotukola', 'Mallung'],
+  },
+  {
+    tip: {
+      en: 'Drink a glass of water before meals to help control portion sizes',
+      si: 'ආහාර වේලට පෙර වතුර වීදුරුවක් පානය කරන්න - පරිමා පාලනයට උදව් කරයි',
+      ta: 'பாகங்களை கட்டுப்படுத்த உணவிற்கு முன் ஒரு கிளாஸ் தண்ணீர் குடியுங்கள்',
+    },
+    category: 'hydration',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
+  },
+  {
+    tip: {
+      en: 'Swap coconut milk for thin coconut milk or light coconut cream in curries',
+      si: 'කරියෙහි සාම්ප්‍රදායික පොල් කිරිට වඩා තුනී පොල් කිරි හෝ සැහැල්ලු පොල් ක්‍රීම් භාවිතා කරන්න',
+      ta: 'கறிகளில் தேங்காய் பாலுக்கு பதிலாக மெல்லிய தேங்காய் பால் அல்லது இலகுவான தேங்காய் கிரீம் பயன்படுத்துங்கள்',
+    },
+    category: 'cooking-tip',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
+  },
+  {
+    tip: {
+      en: 'Enjoy Kurakkan rotti for breakfast - high fiber keeps you full longer',
+      si: 'උදෑසන කුරක්කන් රොට්ටියක් අනුභව කරන්න - ඉහළ තන්තු ඔබව වැඩි කලක් පිරවෙයි',
+      ta: 'காலை உணவிற்கு கைராக்கன் ரொட்டி சாப்பிடுங்கள் - உயர் நார்ச்சத்து நீங்கள் நீண்ட நேரம் நிரம்பியிருக்க வைக்கும்',
+    },
+    category: 'general-health',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: ['Kurakkan'],
+  },
+  {
+    tip: {
+      en: 'Add a squeeze of lime to your rice - helps slow sugar absorption',
+      si: 'ඔබේ අරිසිට දෙහි කොළයක් යුෂ සමඟ එකතු කරන්න - සීනි අවශෝෂණය අඩු කරයි',
+      ta: 'உங்கள் அரிசிக்கு எலுமிச்சை சாறு சேர்க்கவும் - சர்க்கரை உறிஞ்சுதலை மெதுவாக்குகிறது',
+    },
+    category: 'diabetes',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
+  },
+  {
+    tip: {
+      en: 'Have Beli Mal tea instead of sweet drinks - zero calories, full of benefits',
+      si: 'සීය විතරක් පානය වෙනුවට බෙලි මල් තේ පානය කරන්න - කැලරි නැත, ප්‍රතිලාභ පිරි',
+      ta: 'இனிப்பு பானங்களுக்கு பதிலாக பெலி மால் தேநீர் குடியுங்கள் - பூஜ்ஜிய கலோரிகள், நிறைய நன்மைகள்',
+    },
+    category: 'hydration',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: ['Beli Mal Tea'],
+  },
+  {
+    tip: {
+      en: 'Fill half your plate with vegetables before adding rice and curry',
+      si: 'අරිසි සහ කරි එකතු කිරීමට පෙර ඔබේ තහඩුවෙන් අඩක් එළවළු වලින් පුරවන්න',
+      ta: 'அரிசி மற்றும் கறி சேர்க்கும் முன் உங்கள் தட்டில் பாதியை காய்கறிகளால் நிரப்புங்கள்',
+    },
+    category: 'portion-control',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
+  },
+  {
+    tip: {
+      en: 'Add green leaves like Murunga or Mukunuwenna to your dhal for extra nutrients',
+      si: 'අමතර පෝෂක සඳහා ඔබේ පරිප්පුවට මුරුංගා හෝ මුකුණුවැන්න වගේ කොළ කෑලි එකතු කරන්න',
+      ta: 'கூடுதல் ஊட்டச்சத்துக்கு உங்கள் பருப்பில் முருங்கை அல்லது முகுனுவென்னா போன்ற பச்சை இலைகளை சேர்க்கவும்',
+    },
+    category: 'general-health',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: ['Dhal'],
+  },
+  {
+    tip: {
+      en: 'Eat slowly and chew well - you will feel full with less food',
+      si: 'මන්දගාමීව අනුභව කර ඉතා හොඳින් මැළි කරන්න - අඩු ආහාරයක් සමඟ පිරී යයි',
+      ta: 'மெதுவாக சாப்பிட்டு நன்றாக மென்று தின்னுங்கள் - குறைந்த உணவுடன் நிரம்பியிருப்பீர்கள்',
+    },
+    category: 'portion-control',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
+  },
+  {
+    tip: {
+      en: 'Try pol sambol with less coconut - use more onions and lime for flavor',
+      si: 'අඩු පොල් සමඟ පොල් සම්බෝල් උත්සාහ කරන්න - රසයට වඩා ලූණු සහ දෙහි භාවිතා කරන්න',
+      ta: 'குறைந்த தேங்காயுடன் பொல் சாம்போல் முயற்சிக்கவும் - சுவைக்கு அதிக வெங்காயம் மற்றும் எலுமிச்சை பயன்படுத்துங்கள்',
+    },
+    category: 'cooking-tip',
+    difficulty: 'easy',
+    culturalRelevance: 'high',
+    relatedFoods: [],
   },
 ];
 
