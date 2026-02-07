@@ -29,6 +29,8 @@ const Products = () => {
   ];
 
   const handleAddToCart = (product) => {
+    const stock = typeof product.stock === 'number' ? product.stock : null;
+    if (stock !== null && stock < 1) return;
     dispatch(
       addToCart({
         product: product._id,
@@ -36,6 +38,7 @@ const Products = () => {
         image: product.image,
         price: product.price,
         quantity: 1,
+        stock: product.stock,
       })
     );
     toast.success(t('productAddedToCart'));
@@ -102,7 +105,8 @@ const Products = () => {
                   <p className="text-green-600 font-bold text-lg text-glass">Rs. {product.price}</p>
                   <button
                     onClick={() => handleAddToCart(product)}
-                    className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium"
+                    disabled={typeof product.stock === 'number' && product.stock < 1}
+                    className="glass-button text-white px-4 py-2 rounded-xl hover:scale-110 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {t('addToCart')}
                   </button>

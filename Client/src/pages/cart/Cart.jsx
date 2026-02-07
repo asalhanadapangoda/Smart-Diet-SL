@@ -11,10 +11,12 @@ const Cart = () => {
     if (qty <= 0) {
       dispatch(removeFromCart(item.product));
     } else {
+      const maxQty = typeof item.stock === 'number' ? item.stock : null;
+      const clampedQty = maxQty !== null ? Math.min(maxQty, qty) : qty;
       dispatch(
         addToCart({
           ...item,
-          quantity: qty,
+          quantity: clampedQty,
         })
       );
     }
@@ -68,7 +70,8 @@ const Cart = () => {
                     <span className="px-4 text-gray-800 text-glass font-medium">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item, item.quantity + 1)}
-                      className="glass-button px-3 py-1 rounded-xl hover:scale-105 transition-all text-white text-glass font-medium"
+                      disabled={typeof item.stock === 'number' && item.quantity >= item.stock}
+                      className="glass-button px-3 py-1 rounded-xl hover:scale-105 transition-all text-white text-glass font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       +
                     </button>
