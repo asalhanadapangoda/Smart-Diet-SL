@@ -34,6 +34,7 @@ export const LanguageProvider = ({ children }) => {
       login: 'Login',
       register: 'Register',
       logout: 'Logout',
+      sessionExpired: 'You have been logged out due to inactivity. Please sign in again.',
       // Auth Pages
       signInToAccount: 'Sign in to your account',
       createAccount: 'Create your account',
@@ -233,6 +234,7 @@ export const LanguageProvider = ({ children }) => {
       login: 'පිවිසීම',
       register: 'ලියාපදිංචි වන්න',
       logout: 'පිටවීම',
+      sessionExpired: 'නිෂ්ක්‍රීයතාවය හේතුවෙන් ඔබ පිටවී ඇත. නැවත පුරන්න.',
       // Auth Pages
       signInToAccount: 'ඔබේ ගිණුමට පිවිසීම',
       createAccount: 'ඔබේ ගිණුම සාදන්න',
@@ -432,6 +434,7 @@ export const LanguageProvider = ({ children }) => {
       login: 'உள்நுழைய',
       register: 'பதிவு செய்',
       logout: 'வெளியேறு',
+      sessionExpired: 'செயலற்ற தன்மை காரணமாக நீங்கள் வெளியேற்றப்பட்டுள்ளீர்கள். மீண்டும் உள்நுழையவும்.',
       // Auth Pages
       signInToAccount: 'உங்கள் கணக்கில் உள்நுழைய',
       createAccount: 'உங்கள் கணக்கை உருவாக்கவும்',

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { LanguageProvider } from './contexts/LanguageContext';
+import InactivityLogout from './components/common/InactivityLogout';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AdminRoute from './components/common/AdminRoute';
@@ -176,6 +177,7 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
+        <InactivityLogout />
         <AppContent />
         <Toaster 
             position="top-right"

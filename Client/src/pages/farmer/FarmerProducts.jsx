@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import {
@@ -15,7 +15,16 @@ const badge = (status) => {
 
 const FarmerProducts = () => {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const statusFilter = searchParams.get('status');
   const { products, loading, error } = useSelector((s) => s.farmer);
+
+  const filteredProducts = useMemo(() => {
+    if (statusFilter === 'pending') {
+      return products.filter((p) => p.approvalStatus === 'pending');
+    }
+    return products;
+  }, [products, statusFilter]);
 
   useEffect(() => {
     dispatch(fetchFarmerProducts());
@@ -37,9 +46,11 @@ const FarmerProducts = () => {
   return (
     <div className="container mx-auto px-4 py-8 relative">
       <div className="flex justify-between items-center mb-6 flex-wrap gap-3">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
-          My Products
-        </h1>
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 text-glass bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
+            {statusFilter === 'pending' ? 'Pending Approvals' : 'My Products'}
+          </h1>
+        </div>
         <Link
           to="/farmer/products/new"
           className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
@@ -52,19 +63,27 @@ const FarmerProducts = () => {
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
         </div>
-      ) : products.length === 0 ? (
+      ) : filteredProducts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-700 mb-4 text-glass text-xl">No products yet</p>
-          <Link
-            to="/farmer/products/new"
-            className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
-          >
-            Add Your First Product
-          </Link>
+          <p className="text-gray-700 mb-4 text-glass text-xl">
+            {statusFilter === 'pending' ? 'No pending approval products' : 'No products yet'}
+          </p>
+          {statusFilter === 'pending' ? (
+            <Link to="/farmer/products" className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium">
+              View all products
+            </Link>
+          ) : (
+            <Link
+              to="/farmer/products/new"
+              className="glass-button text-white px-6 py-3 rounded-xl hover:scale-105 transition-all font-medium"
+            >
+              Add Your First Product
+            </Link>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((p) => (
+          {filteredProducts.map((p) => (
             <div key={p._id} className="glass-card rounded-2xl overflow-hidden backdrop-blur-xl">
               <div className="relative">
                 <img src={p.image} alt={p.name} className="w-full h-44 object-cover" />
