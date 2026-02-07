@@ -60,23 +60,27 @@ const DailyTip = () => {
 
   return (
     <div className="glass-card border-l-4 border-green-500 p-5 rounded-xl shadow-lg backdrop-blur-xl bg-green-50/90">
-      <div className="flex items-start">
+      <div className="flex gap-4 items-start">
         <div className="flex-shrink-0">
-          <span className="text-3xl">💡</span>
+          <span className="text-3xl" aria-hidden="true">💡</span>
         </div>
-        <div className="ml-4 flex-1">
-          <h3 className="text-base font-bold text-green-800 mb-2 text-glass">
-            {t('oneChange')}
-          </h3>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-3 mb-2">
+            <div className="w-8 flex-shrink-0" />
+            <h3 className="text-base font-bold text-green-800 text-glass text-center flex-1">
+              {t('oneChange')}
+            </h3>
+            <button
+              onClick={() => fetchTodayTip(true)}
+              className="w-8 flex-shrink-0 text-green-600 hover:text-green-700 text-lg transition-colors text-glass font-bold p-1 rounded hover:bg-green-100"
+              title="Get another tip"
+              type="button"
+            >
+              ↻
+            </button>
+          </div>
           <p className="text-sm md:text-base text-gray-800 leading-relaxed text-glass font-medium">{displayTip}</p>
         </div>
-        <button
-          onClick={fetchTodayTip}
-          className="ml-3 text-green-600 hover:text-green-700 text-lg transition-colors text-glass font-bold"
-          title="Get another tip"
-        >
-          ↻
-        </button>
       </div>
     </div>
   );
