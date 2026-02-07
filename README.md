@@ -1,273 +1,279 @@
-# Smart Diet SL - MERN Stack Nutrition Advisor
+# Smart Diet SL
 
-A comprehensive MERN stack application for managing nutrition and diet plans specifically designed for Sri Lankan diets.
+A comprehensive MERN stack application for managing nutrition and diet plans designed specifically for Sri Lankan diets. Combines e-commerce, nutrition tracking tools, AI-powered advice, and a farmer marketplace.
+
+---
 
 ## Features
 
-- ✅ User Registration & Login with JWT Authentication
-- ✅ Product Management (Browse, Search, Filter)
-- ✅ Shopping Cart & Checkout
-- ✅ Nutrition Calculator
-- ✅ Recommended Diet Plans
-- ✅ User Profile Management
-- ✅ **AI LankaNutri Advisor Chatbot** (OpenAI-powered)
-- ✅ Image Upload with Cloudinary
-- ✅ Responsive Design with Tailwind CSS
-- ✅ State Management with Redux Toolkit
+### Core Features
+- **User Authentication** – Register & login with JWT (user, farmer, admin roles)
+- **E-Commerce** – Browse products, search, filter by category, cart, checkout
+- **Nutrition Calculator** – 154+ traditional Sri Lankan foods with calories, protein, carbs, fat, fiber
+- **Sri Lankan Plate Generator** – Generate meal ideas by goal, calories, BMI
+- **Diet Planner** – Personalized diet plans (login required)
+- **Diet Plans** – Browse recommended diet plans
+- **Meal Logging** – Log meals with photos and manual entries
+- **User Profile** – Update name, email, phone, address
+
+### Sri Lankan Specific
+- **Traditional Food Database** – Rice, grains, vegetables, fruits, proteins, spices, dishes (EN/SI/TA names)
+- **AI LankaNutri Advisor Chatbot** – Nutrition advice powered by Groq (Llama)
+- **Multi-Language** – English, Sinhala, Tamil
+- **Daily Tips** – Culturally relevant nutrition tips in 3 languages
+
+### Marketplace
+- **Farmer Dashboard** – Add products, manage listings, view orders, track income
+- **Product Approval** – Admin approves/rejects farmer products
+- **Farmer Income Tracking** – Per-order payout tracking
+
+### Admin
+- **Dashboard** – User stats, farmer stats, product/order overview
+- **Products** – CRUD, categories
+- **Product Approvals** – Approve/reject farmer submissions
+- **Orders** – View, mark delivered
+- **Users** – Manage users and farmers
+
+### UX
+- **Responsive Design** – Tailwind CSS, mobile-friendly
+- **Inactivity Logout** – Auto-logout after 15 minutes
+- **Image Upload** – Cloudinary for product images
+- **Toast Notifications** – React Hot Toast
+
+---
 
 ## Tech Stack
 
-### Frontend
-- React 19
-- Redux Toolkit
-- React Router DOM
-- Axios
-- Tailwind CSS
-- React Hot Toast
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | React 19, Vite, Redux Toolkit, React Router DOM, Axios, Tailwind CSS, React Hot Toast |
+| **Backend** | Node.js, Express 5, MongoDB (Mongoose), JWT, Bcrypt, Multer |
+| **Database** | MongoDB Atlas |
+| **Storage** | Cloudinary (images) |
+| **AI** | Groq SDK (LankaNutri Advisor chatbot) |
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB with Mongoose
-- JWT Authentication
-- Cloudinary (Image Upload)
-- OpenAI (AI Chatbot)
-- Bcrypt (Password Hashing)
+---
 
 ## Project Structure
 
 ```
 Smart-Diet-SL/
-├── Client/                 # React Frontend
+├── Client/                    # React Frontend
 │   ├── src/
-│   │   ├── components/     # Reusable components
-│   │   │   └── common/    # Header, Footer, etc.
-│   │   ├── pages/         # Page components
-│   │   │   ├── auth/      # Login, Register
-│   │   │   ├── home/      # Home page
-│   │   │   ├── products/  # Products listing & detail
-│   │   │   ├── cart/      # Shopping cart
-│   │   │   ├── checkout/  # Checkout page
-│   │   │   ├── calculator/# Nutrition calculator
-│   │   │   ├── diet-plans/# Diet plans
-│   │   │   └── profile/   # User profile
-│   │   ├── store/         # Redux store
-│   │   │   └── slices/    # Redux slices
-│   │   ├── services/      # API services
-│   │   └── App.jsx        # Main App component
+│   │   ├── api/              # Axios configuration
+│   │   ├── components/common/ # Header, Footer, Chatbot, AdminSidebar, FarmerSidebar, etc.
+│   │   ├── contexts/         # LanguageContext (EN/SI/TA)
+│   │   ├── hooks/            # useInactivityLogout
+│   │   ├── pages/
+│   │   │   ├── admin/        # Admin dashboard, products, orders, users, approvals
+│   │   │   ├── auth/         # Login, Register
+│   │   │   ├── calculator/   # Nutrition Calculator
+│   │   │   ├── cart/         # Shopping cart
+│   │   │   ├── checkout/     # Checkout
+│   │   │   ├── diet-planner/ # Diet Planner
+│   │   │   ├── diet-plans/   # Diet Plans
+│   │   │   ├── farmer/       # Farmer dashboard, products, orders, income
+│   │   │   ├── home/         # Homepage
+│   │   │   ├── meal-logging/ # Meal Logging
+│   │   │   ├── products/     # Products listing & detail
+│   │   │   ├── profile/      # Profile
+│   │   │   ├── sri-lankan-plates/ # Plate Generator
+│   │   │   └── orders/       # Orders & Order Detail
+│   │   ├── services/         # API services
+│   │   └── store/slices/     # Redux (auth, cart, products, admin, farmer)
 │   └── package.json
 │
-└── Server/                # Node.js Backend
-    ├── config/           # Database & Cloudinary config
-    ├── controllers/      # Route controllers
-    ├── middlewares/      # Auth middleware
-    ├── models/          # Mongoose models
-    ├── routes/          # API routes
-    ├── utils/           # Utility functions
-    └── server.js        # Entry point
+├── Server/                    # Node.js Backend
+│   ├── config/               # database.js, cloudinary.js
+│   ├── controllers/          # auth, products, orders, chatbot, diet, farmer, admin, etc.
+│   ├── data/                 # sampleTraditionalFoods.js (154+ foods, daily tips)
+│   ├── middlewares/          # auth.js (protect, admin, farmer)
+│   ├── models/               # User, Product, Order, TraditionalFood, DailyTip, etc.
+│   ├── routes/               # API route definitions
+│   ├── scripts/              # seedData.js, checkEnv.js
+│   └── server.js
+│
+├── package.json              # Root scripts (install:all, dev, build, start)
+└── README.md
 ```
 
-## Setup Instructions
+---
+
+## Quick Start
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB (local or MongoDB Atlas)
-- Cloudinary account
-- Git
+- Node.js v18+
+- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas))
+- [Cloudinary](https://cloudinary.com) account (images)
+- [Groq](https://console.groq.com) API key (chatbot)
 
-### Step 1: Clone the Repository
+### 1. Clone & Install
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/YasiruUpananda/Smart-Diet-SL.git
 cd Smart-Diet-SL
+npm run install:all
 ```
 
-### Step 2: Server Setup
+### 2. Environment Setup
 
-1. Navigate to Server directory:
-```bash
-cd Server
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Create `.env` file in the `Server` directory:
+**Server** – Create `Server/.env`:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/smart-diet-sl
-JWT_SECRET=your_super_secret_jwt_key_change_this
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/dbname
+JWT_SECRET=your_jwt_secret
 JWT_EXPIRE=7d
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-OPENAI_API_KEY=sk-your-openai-api-key-here
-OPENAI_MODEL=gpt-4o-mini
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=llama-3.3-70b-versatile
 CLIENT_URL=http://localhost:5173
 ```
 
-4. Start the server:
-```bash
-npm run dev
-```
-
-Server will run on http://localhost:5000
-
-### Step 3: Client Setup
-
-1. Navigate to Client directory (in a new terminal):
-```bash
-cd Client
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Create `.env` file in the `Client` directory (optional):
+**Client** – Create `Client/.env` (optional):
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-4. Start the client:
+### 3. Seed Database (Traditional Foods & Daily Tips)
 ```bash
+cd Server
+npm run seed
+```
+
+### 4. Run Development
+```bash
+# From project root – runs both Client & Server
 npm run dev
 ```
 
-Client will run on http://localhost:5173
+- **Frontend:** http://localhost:5173  
+- **Backend API:** http://localhost:5000/api  
+
+---
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run install:all` | Install Client + Server dependencies |
+| `npm run dev` | Run Client & Server concurrently |
+| `npm run build` | Build Client for production |
+| `npm start` | Start Server (production) |
+| `npm run seed` | Seed traditional foods & tips (run from `Server/`) |
+
+---
 
 ## Environment Variables
 
-### Server (.env)
-- `PORT` - Server port (default: 5000)
-- `MONGODB_URI` - MongoDB connection string
-- `JWT_SECRET` - Secret key for JWT tokens
-- `JWT_EXPIRE` - JWT expiration time
-- `CLOUDINARY_CLOUD_NAME` - Your Cloudinary cloud name
-- `CLOUDINARY_API_KEY` - Your Cloudinary API key
-- `CLOUDINARY_API_SECRET` - Your Cloudinary API secret
-- `CLIENT_URL` - Frontend URL for CORS
+### Server (`.env`)
 
-### Client (.env)
-- `VITE_API_URL` - Backend API URL (default: http://localhost:5000/api)
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `PORT` | No | Port (default: 5000) |
+| `MONGODB_URI` | Yes | MongoDB connection string |
+| `JWT_SECRET` | Yes | Secret for JWT tokens |
+| `JWT_EXPIRE` | No | Token expiry (default: 7d) |
+| `CLOUDINARY_*` | Yes | Cloud name, API key, API secret |
+| `GROQ_API_KEY` | Yes | Groq API key for chatbot |
+| `GROQ_MODEL` | No | Model (default: llama-3.3-70b-versatile) |
+| `CLIENT_URL` | Yes | Frontend URL for CORS |
 
-### Optional Environment Variables
-- `OPENAI_API_KEY` - OpenAI API key for LankaNutri Advisor chatbot (get from https://platform.openai.com/api-keys)
-- `OPENAI_MODEL` - OpenAI model to use (default: gpt-4o-mini, alternatives: gpt-3.5-turbo)
+### Client (`.env`)
 
-## API Endpoints
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VITE_API_URL` | No | API URL (default: http://localhost:5000/api) |
 
-### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login user
-- `GET /api/auth/profile` - Get user profile (Protected)
-- `PUT /api/auth/profile` - Update user profile (Protected)
+---
 
-### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get single product
-- `POST /api/products` - Create product (Admin)
-- `PUT /api/products/:id` - Update product (Admin)
-- `DELETE /api/products/:id` - Delete product (Admin)
+## API Overview
 
-### Orders
-- `POST /api/orders` - Create order (Protected)
-- `GET /api/orders/myorders` - Get user orders (Protected)
-- `GET /api/orders/:id` - Get order by ID (Protected)
-- `PUT /api/orders/:id/pay` - Update order to paid (Protected)
-- `PUT /api/orders/:id/deliver` - Update order to delivered (Admin)
+| Endpoint | Description |
+|----------|-------------|
+| `POST /api/auth/register` | Register user |
+| `POST /api/auth/login` | Login |
+| `GET /api/auth/profile` | Get profile (Protected) |
+| `GET /api/products` | List products (public) |
+| `GET /api/products/:id` | Product detail (public) |
+| `GET /api/traditional-foods` | List 154+ traditional foods (public) |
+| `POST /api/orders` | Create order (Protected) |
+| `GET /api/orders/myorders` | User orders (Protected) |
+| `POST /api/chatbot/chat` | Chat with LankaNutri Advisor (public) |
+| `GET /api/daily-tips` | Daily tips (public) |
+| `GET /api/diet-plans` | Diet plans (public) |
+| `GET /api/sri-lankan-plates` | Plate suggestions (public) |
+| Farmer & Admin routes | See `Server/routes/` |
 
-### Diet Plans
-- `GET /api/diet-plans` - Get all diet plans
-- `GET /api/diet-plans/:id` - Get single diet plan
-- `POST /api/diet-plans` - Create diet plan (Admin)
-- `PUT /api/diet-plans/:id` - Update diet plan (Admin)
-- `DELETE /api/diet-plans/:id` - Delete diet plan (Admin)
+---
 
-### LankaNutri Advisor Chatbot
-- `POST /api/chatbot/new` - Start new conversation (Public)
-- `POST /api/chatbot/chat` - Send message to chatbot (Public)
-- `POST /api/chatbot/clear` - Clear conversation history (Public)
+## User Roles
 
-## Getting Cloudinary Credentials
+| Role | Access |
+|------|--------|
+| **User** | Products, cart, checkout, calculator, diet plans, meal logging, profile, orders |
+| **Farmer** | Farmer dashboard, add products, orders, income |
+| **Admin** | Admin dashboard, products, approvals, orders, users |
 
-1. Go to https://cloudinary.com
-2. Sign up or log in
-3. Go to Dashboard
-4. Copy your:
-   - Cloud Name
-   - API Key
-   - API Secret
+---
 
-## Getting MongoDB Connection String
+## Pages & Routes
 
-### Local MongoDB
-```
-mongodb://localhost:27017/smart-diet-sl
-```
+| Route | Page | Access |
+|-------|------|--------|
+| `/` | Home | Public |
+| `/login`, `/register` | Auth | Public |
+| `/products`, `/products/:id` | Products | Public |
+| `/cart`, `/checkout` | Cart & Checkout | Public |
+| `/calculator` | Nutrition Calculator | Public |
+| `/diet-plans` | Diet Plans | Public |
+| `/sri-lankan-plates` | Plate Generator | Public |
+| `/diet-planner` | Diet Planner | Protected |
+| `/meal-logging` | Meal Logging | Protected |
+| `/profile` | Profile | Protected |
+| `/orders`, `/orders/:id` | Orders | Protected |
+| `/farmer/*` | Farmer dashboard | Farmer |
+| `/admin/*` | Admin panel | Admin |
 
-### MongoDB Atlas (Cloud)
-1. Go to https://www.mongodb.com/cloud/atlas
-2. Create a free account
-3. Create a new cluster
-4. Create a database user
-5. Whitelist your IP (0.0.0.0/0 for development)
-6. Get connection string:
-```
-mongodb+srv://username:password@cluster.mongodb.net/smart-diet-sl
-```
+---
 
-## Usage
+## Seed Data
 
-1. Start both server and client
-2. Register a new account or login
-3. Browse products and add to cart
-4. Use the nutrition calculator to track your intake
-5. View recommended diet plans
-6. Update your profile
+Traditional foods and daily tips are seeded from `Server/data/sampleTraditionalFoods.js`.
 
-## Development
+To update or re-seed:
+1. Edit `Server/data/sampleTraditionalFoods.js`
+2. Run: `cd Server && npm run seed`
 
-### Server Scripts
-- `npm start` - Start production server
-- `npm run dev` - Start development server with nodemon
+---
 
-### Client Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
+## Deployment
 
-## Notes for Beginners
+- **Vercel** – Frontend & API (see `VERCEL_SETUP.md`, `VERCEL_ROUTING_FIX.md`)
+- **MongoDB Atlas** – Database
+- **Cloudinary** – Image storage
 
-1. **Always set up environment variables** before running the application
-2. **Make sure MongoDB is running** (local) or connection string is correct (Atlas)
-3. **Cloudinary credentials are required** for image uploads
-4. **JWT_SECRET should be a strong random string** in production
-5. **CORS is configured** to allow requests from the client URL
+---
 
-## Troubleshooting
+## Documentation
 
-### MongoDB Connection Issues
-- Check if MongoDB is running (local)
-- Verify connection string in `.env`
-- Check network access (Atlas)
+- `SETUP_GUIDE.md` – Setup
+- `ENV_GUIDE.md` – Environment variables
+- `SEED_DATA_GUIDE.md` – Seeding data
+- `SRI_LANKAN_FEATURES.md` – Sri Lankan features
+- `TROUBLESHOOTING.md` – Common issues
+- `DEPLOYMENT_GUIDE.md` – Deployment
 
-### CORS Errors
-- Verify `CLIENT_URL` in server `.env` matches your client URL
-- Check server CORS configuration
-
-### Image Upload Issues
-- Verify Cloudinary credentials
-- Check file size limits
-- Ensure correct file formats (jpg, png, etc.)
+---
 
 ## License
 
 ISC
 
+---
+
 ## Author
 
-Smart Diet SL Development Team
+Smart Diet SL Development Team  
+Repository: [github.com/YasiruUpananda/Smart-Diet-SL](https://github.com/YasiruUpananda/Smart-Diet-SL)
