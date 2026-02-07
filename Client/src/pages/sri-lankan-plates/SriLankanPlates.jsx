@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const SriLankanPlates = () => {
   const { language, t } = useLanguage();
   const [goal, setGoal] = useState('general-health');
-  const [calories, setCalories] = useState(2000);
+  const [caloriesInput, setCaloriesInput] = useState('2000');
   const [plate, setPlate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [busyLifeOnly, setBusyLifeOnly] = useState(false);
@@ -17,6 +17,7 @@ const SriLankanPlates = () => {
       setPlate(null); // Clear previous plate - generate fresh based on current input
       const params = new URLSearchParams();
       params.append('goal', goal);
+      const calories = parseInt(caloriesInput, 10) || 2000;
       params.append('calories', calories);
       if (busyLifeOnly) params.append('busyLife', 'true');
       if (language !== 'en') params.append('language', language);
@@ -72,12 +73,14 @@ const SriLankanPlates = () => {
             </label>
             <input
               type="number"
-              value={calories}
-              onChange={(e) => setCalories(parseInt(e.target.value) || 2000)}
+              value={caloriesInput}
+              onChange={(e) => setCaloriesInput(e.target.value)}
+              placeholder="e.g. 2000"
               className="glass-input w-full px-4 py-3 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
-              min="1000"
-              max="4000"
-              step="100"
+              min="100"
+              max="10000"
+              step="1"
+              inputMode="numeric"
             />
           </div>
 
