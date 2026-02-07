@@ -1,23 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import api from '../../services/api';
 import { useLanguage } from '../../contexts/LanguageContext';
 import toast from 'react-hot-toast';
 
 const SriLankanPlates = () => {
   const { language, t } = useLanguage();
-  const [goal, setGoal] = useState('weight-loss');
+  const [goal, setGoal] = useState('general-health');
   const [calories, setCalories] = useState(2000);
   const [plate, setPlate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [busyLifeOnly, setBusyLifeOnly] = useState(false);
 
-  const generatePlate = useCallback(async () => {
+  const generatePlate = async () => {
     try {
       setLoading(true);
+      setPlate(null); // Clear previous plate - generate fresh based on current input
       const params = new URLSearchParams();
       params.append('goal', goal);
       params.append('calories', calories);
+      if (busyLifeOnly) params.append('busyLife', 'true');
       if (language !== 'en') params.append('language', language);
+      params.append('_t', Date.now()); // Prevent caching
 
       const { data } = await api.get(`/sri-lankan-plates/generate?${params.toString()}`);
       setPlate(data);
@@ -26,11 +29,7 @@ const SriLankanPlates = () => {
     } finally {
       setLoading(false);
     }
-  }, [goal, calories, language]);
-
-  useEffect(() => {
-    generatePlate();
-  }, [generatePlate]);
+  };
 
   const goals = [
     { value: 'weight-loss', labelKey: 'weightLoss' },
@@ -102,6 +101,9 @@ const SriLankanPlates = () => {
         >
           {loading ? t('generating') : t('generateNewPlate')}
         </button>
+        <p className="text-sm text-gray-500 mt-2 text-glass">
+          Select your options above, then click to generate a new plate.
+        </p>
       </div>
 
       {plate && (

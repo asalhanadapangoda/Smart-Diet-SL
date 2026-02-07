@@ -6,25 +6,26 @@ import TraditionalFood from '../models/TraditionalFood.js';
 // @access  Public
 export const generatePlate = async (req, res) => {
   try {
-    const { goal, calories, language } = req.query;
+    const { goal, calories, language, busyLife } = req.query;
     const targetCalories = parseInt(calories) || 2000;
+    const busyLifeOnly = busyLife === 'true';
 
-    // Get existing plates for the goal
-    let plates = await SriLankanPlate.find({ goal }).sort({ createdAt: -1 });
+    // Always generate fresh plate based on user's goal, calories, and busyLife preference
+    const plates = await generateNewPlate(goal || 'general-health', targetCalories, busyLifeOnly);
+    const selectedPlate = plates[0];
 
-    if (plates.length === 0) {
-      // Generate a new plate based on goal
-      plates = await generateNewPlate(goal, targetCalories);
+    if (!selectedPlate) {
+      return res.status(500).json({ message: 'Could not generate plate' });
     }
 
-    // Select a plate (could be random or based on user preferences)
-    const selectedPlate = plates[Math.floor(Math.random() * plates.length)];
+    // Prevent caching - ensure fresh plate on each request
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate');
 
     if (language && (language === 'si' || language === 'ta')) {
       const localized = {
-        ...selectedPlate.toObject(),
-        displayName: selectedPlate.name[language] || selectedPlate.name.en,
-        displayDescription: selectedPlate.description[language] || selectedPlate.description.en,
+        ...selectedPlate,
+        displayName: selectedPlate.name?.[language] || selectedPlate.name?.en || selectedPlate.name,
+        displayDescription: selectedPlate.description?.[language] || selectedPlate.description?.en || selectedPlate.description || '',
       };
       return res.json(localized);
     }
@@ -36,25 +37,77 @@ export const generatePlate = async (req, res) => {
   }
 };
 
-// Helper function to generate a new plate
-const generateNewPlate = async (goal, targetCalories) => {
-  const plates = [];
+// Quick prep methods for Busy Life Hack
+const QUICK_PREP_METHODS = ['Raw', 'Raw salad', 'Boiled', 'Steamed', 'Mallung', 'Brewed', 'Fresh', 'Grated', 'Juice'];
 
-  // Get foods based on goal
-  let foodQuery = {};
+// Helper function to generate a new plate
+const generateNewPlate = async (goal, targetCalories, busyLifeOnly = false) => {
+  // Build goal-specific food query
+  const baseQuery = { isCommon: true, isAffordable: true };
+  let foodQuery = { ...baseQuery };
+
   if (goal === 'diabetes') {
-    foodQuery = { 'nutrition.glycemicIndex': { $lt: 55 } }; // Low GI foods
+    // Strict: Low GI foods only (≤55)
+    foodQuery = {
+      ...baseQuery,
+      $or: [
+        { 'nutrition.glycemicIndex': { $lte: 55 } },
+        { 'nutrition.glycemicIndex': { $exists: false } },
+        { 'nutrition.glycemicIndex': 0 },
+      ],
+    };
   } else if (goal === 'weight-loss') {
-    foodQuery = { 'nutrition.calories': { $lt: 200 } }; // Lower calorie foods
+    // Lower calorie: under 200 cal per 100g
+    foodQuery['nutrition.calories'] = { $lte: 200 };
+  } else if (goal === 'weight-gain') {
+    // Calorie-dense: over 150 cal per 100g
+    foodQuery['nutrition.calories'] = { $gte: 150 };
+  }
+  // general-health: no extra filters
+
+  if (busyLifeOnly) {
+    foodQuery.preparationMethods = { $in: QUICK_PREP_METHODS };
   }
 
-  const availableFoods = await TraditionalFood.find(foodQuery).limit(20);
+  // Use aggregate with $sample for random selection - ensures different plates each time
+  let foodsToUse = await TraditionalFood.aggregate([
+    { $match: foodQuery },
+    { $sample: { size: 50 } },
+  ]);
 
-  // Simple plate generation logic
-  // This is a basic implementation - can be enhanced with ML/AI
+  // Fallback: if no foods match strict filters, broaden the query
+  if (foodsToUse.length < 5) {
+    const fallbackQuery = { isCommon: true, isAffordable: true };
+    if (busyLifeOnly) {
+      fallbackQuery.preparationMethods = { $in: QUICK_PREP_METHODS };
+    }
+    foodsToUse = await TraditionalFood.aggregate([
+      { $match: fallbackQuery },
+      { $sample: { size: 50 } },
+    ]);
+  }
+
+  const goalLabels = {
+    diabetes: 'Diabetes-Friendly',
+    'weight-loss': 'Weight Loss',
+    'weight-gain': 'Weight Gain',
+    'general-health': 'General Health',
+  };
+  const goalDesc = {
+    diabetes: 'Plate with low glycemic index foods to help manage blood sugar.',
+    'weight-loss': 'Lower calorie plate with high-fiber traditional foods.',
+    'weight-gain': 'Calorie-dense plate for healthy weight gain.',
+    'general-health': 'Balanced Sri Lankan plate for overall wellness.',
+  };
+
   const plate = {
     name: {
-      en: `${goal.charAt(0).toUpperCase() + goal.slice(1)} Friendly Plate`,
+      en: `${goalLabels[goal] || goal} Friendly Plate`,
+      si: '',
+      ta: '',
+    },
+    description: {
+      en: goalDesc[goal] || 'Personalized Sri Lankan meal plate.',
       si: '',
       ta: '',
     },
@@ -67,26 +120,24 @@ const generateNewPlate = async (goal, targetCalories) => {
       fat: 0,
       fiber: 0,
     },
-    isBusyLifeFriendly: goal === 'weight-loss', // Example
-    prepTime: 30,
+    isBusyLifeFriendly: busyLifeOnly,
+    prepTime: busyLifeOnly ? 20 : 35,
+    substitutions: [],
   };
 
-  // Add items until we reach target calories
   let currentCalories = 0;
   const selectedFoods = [];
 
-  // Prioritize common, affordable foods
-  const commonFoods = availableFoods.filter((f) => f.isCommon && f.isAffordable);
+  for (const food of foodsToUse) {
+    if (currentCalories >= targetCalories * 0.95) break;
 
-  for (const food of commonFoods) {
-    if (currentCalories >= targetCalories * 0.9) break; // 90% of target
-
-    const portion = calculatePortion(food, targetCalories - currentCalories);
+    const remainingCal = targetCalories - currentCalories;
+    const portion = calculatePortion(food, remainingCal);
     const nutrition = calculateNutrition(food, portion);
 
     selectedFoods.push({
       foodId: food._id,
-      name: food.name.en,
+      name: food.name?.en || food.name,
       portion,
       nutrition,
     });
@@ -100,9 +151,8 @@ const generateNewPlate = async (goal, targetCalories) => {
   }
 
   plate.items = selectedFoods;
-  plates.push(plate);
 
-  return plates;
+  return [plate];
 };
 
 const calculatePortion = (food, remainingCalories) => {
