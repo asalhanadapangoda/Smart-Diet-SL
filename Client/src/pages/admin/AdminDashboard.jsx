@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAdminProducts,
@@ -12,6 +12,15 @@ import {
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const { products, orders, users, approvalRequests, loading } = useSelector((state) => state.admin);
+
+  const totalUsers = useMemo(
+    () => users.filter((u) => u.role === 'user').length,
+    [users]
+  );
+  const totalFarmers = useMemo(
+    () => users.filter((u) => u.role === 'farmer').length,
+    [users]
+  );
 
   useEffect(() => {
     document.title = 'Smart Diet SL-Admin';
@@ -38,9 +47,16 @@ const AdminDashboard = () => {
     },
     {
       name: 'Total Users',
-      value: users.length,
-      icon: '👥',
+      value: totalUsers,
+      icon: '👤',
       color: 'bg-purple-500',
+      link: '/admin/users',
+    },
+    {
+      name: 'Total Farmers',
+      value: totalFarmers,
+      icon: '🌾',
+      color: 'bg-amber-500',
       link: '/admin/users',
     },
     {
