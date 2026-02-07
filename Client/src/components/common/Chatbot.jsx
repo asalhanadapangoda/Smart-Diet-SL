@@ -131,16 +131,16 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Chat Button - Fixed position bottom right */}
+      {/* Chat Button - Fixed position bottom right, responsive */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 glass-button text-white rounded-full p-4 shadow-lg hover:scale-110 transition-all duration-300 z-50 flex items-center gap-2 group"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 glass-button text-white rounded-full p-3 sm:p-4 shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 z-50 flex items-center gap-2 group"
           aria-label="Open chatbot"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
+            className="h-5 w-5 sm:h-6 sm:w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -152,16 +152,16 @@ const Chatbot = () => {
               d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
             />
           </svg>
-          <span className="hidden md:block font-medium text-glass">LankaNutri Advisor</span>
+          <span className="hidden sm:block font-medium text-glass">LankaNutri Advisor</span>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat Window - Responsive: full screen on mobile, card on desktop */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-96 h-[600px] glass-card rounded-2xl shadow-2xl flex flex-col z-50 backdrop-blur-xl">
-          {/* Chat Header */}
-          <div className="glass-dark text-white p-4 rounded-t-2xl flex items-center justify-between">
-            <div className="flex items-center gap-2">
+        <div className="fixed inset-4 sm:inset-auto sm:top-auto sm:left-auto sm:bottom-6 sm:right-6 sm:w-96 sm:max-w-[calc(100vw-2rem)] sm:h-[600px] sm:max-h-[calc(100vh-5rem)] glass-card rounded-2xl shadow-2xl flex flex-col z-50 backdrop-blur-xl">
+          {/* Chat Header - Compact on mobile */}
+          <div className="glass-dark text-white p-3 sm:p-4 rounded-t-2xl flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2 min-w-0">
               <div className="bg-green-500 rounded-full p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,15 +178,15 @@ const Chatbot = () => {
                   />
                 </svg>
               </div>
-              <div>
-                <h3 className="font-semibold text-glass">LankaNutri Advisor</h3>
-                <p className="text-xs text-white/80 text-glass">Your nutrition assistant</p>
+              <div className="min-w-0">
+                <h3 className="font-semibold text-glass truncate">LankaNutri Advisor</h3>
+                <p className="text-xs text-white/80 text-glass hidden sm:block">Your nutrition assistant</p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
               <button
                 onClick={handleClearConversation}
-                className="p-1 hover:bg-white/20 rounded-xl transition text-white/80 hover:text-white"
+                className="p-2 sm:p-1 hover:bg-white/20 rounded-xl transition text-white/80 hover:text-white touch-manipulation"
                 title="Clear conversation"
               >
                 <svg
@@ -206,7 +206,7 @@ const Chatbot = () => {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-white/20 rounded-xl transition text-white/80 hover:text-white"
+                className="p-2 sm:p-1 hover:bg-white/20 rounded-xl transition text-white/80 hover:text-white touch-manipulation"
                 aria-label="Close chatbot"
               >
                 <svg
@@ -227,8 +227,8 @@ const Chatbot = () => {
             </div>
           </div>
 
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/70">
+          {/* Messages Area - Scrollable, responsive padding */}
+          <div className="flex-1 min-h-0 overflow-y-auto p-3 sm:p-4 space-y-4 bg-white/70 overscroll-contain">
             {messages.length === 0 && (
               <div className="text-center text-gray-700 mt-8 text-glass">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
@@ -242,7 +242,7 @@ const Chatbot = () => {
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-xl p-3 text-glass ${
+                  className={`max-w-[85%] sm:max-w-[80%] rounded-xl p-3 text-glass ${
                     msg.role === 'user'
                       ? 'glass-button bg-green-600 text-white'
                       : 'glass-card bg-white/95 text-gray-800 border border-gray-200'
@@ -274,8 +274,8 @@ const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
-          <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-4 bg-white/80 rounded-b-2xl">
+          {/* Input Area - Touch-friendly on mobile */}
+          <form onSubmit={handleSendMessage} className="border-t border-gray-200 p-3 sm:p-4 bg-white/80 rounded-b-2xl shrink-0">
             <div className="flex gap-2">
               <input
                 ref={inputRef}
@@ -283,13 +283,13 @@ const Chatbot = () => {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="glass-input flex-1 px-4 py-2 rounded-xl text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
+                className="glass-input flex-1 min-w-0 px-4 py-3 sm:py-2 rounded-xl text-base sm:text-sm text-gray-800 placeholder-gray-500 focus:outline-none text-glass"
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !inputMessage.trim()}
-                className="glass-button text-white px-4 py-2 rounded-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="glass-button text-white px-4 py-3 sm:py-2 rounded-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation shrink-0"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
