@@ -12,10 +12,13 @@ const DailyTip = () => {
     fetchTodayTip();
   }, [language]);
 
-  const fetchTodayTip = async () => {
+  const fetchTodayTip = async (random = true) => {
     try {
       setLoading(true);
-      const params = language !== 'en' ? `?language=${language}` : '';
+      const search = new URLSearchParams();
+      if (language !== 'en') search.set('language', language);
+      if (random) search.set('random', '1');
+      const params = search.toString() ? `?${search}` : '';
       const { data } = await api.get(`/daily-tips/today${params}`);
       setTip(data);
     } catch (error) {

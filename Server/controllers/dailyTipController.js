@@ -44,9 +44,11 @@ export const getTodayTip = async (req, res) => {
       return res.json(defaultTip);
     }
 
-    // Get a tip based on day of year for variety
-    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
-    const selectedTip = tips[dayOfYear % tips.length];
+    // Random tip when ?random=1 (e.g. refresh button), otherwise day-of-year for consistency
+    const wantRandom = req.query.random === '1' || req.query.random === 'true';
+    const selectedTip = wantRandom
+      ? tips[Math.floor(Math.random() * tips.length)]
+      : tips[Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24) % tips.length];
 
     if (language && (language === 'si' || language === 'ta')) {
       const localized = {
