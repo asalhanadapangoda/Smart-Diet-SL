@@ -48,21 +48,21 @@ const Products = () => {
       </h1>
 
       {/* Filters */}
-      <div className="mb-8 flex flex-col md:flex-row gap-4">
+      <div className="mb-8 flex flex-col md:flex-row gap-4 md:items-center">
         <input
           type="text"
           placeholder={t('searchProducts')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 glass-input px-6 py-3 rounded-xl text-white placeholder-white/60 focus:outline-none text-glass"
+          className="flex-1 glass-input px-6 py-3 rounded-xl text-black placeholder-gray-500 focus:outline-none text-glass h-12"
         />
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value === 'all' ? '' : e.target.value)}
-          className="glass-input px-6 py-3 rounded-xl text-white focus:outline-none text-glass"
+          className="glass-input px-6 py-3 rounded-xl text-black focus:outline-none text-glass h-12 pl-4 pr-10"
         >
           {categories.map((cat) => (
-            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-gray-800">
+            <option key={cat.value} value={cat.value === 'all' ? '' : cat.value} className="bg-white text-black">
               {t(cat.labelKey)}
             </option>
           ))}
