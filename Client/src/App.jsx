@@ -8,6 +8,7 @@ import AdminRoute from './components/common/AdminRoute';
 import AdminLayout from './components/common/AdminLayout';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import FarmerRoute from './components/common/FarmerRoute';
+import FarmerLayout from './components/common/FarmerLayout';
 import Home from './pages/home/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -40,11 +41,13 @@ import FarmerIncome from './pages/farmer/FarmerIncome';
 function AppContent() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const isFarmerRoute = location.pathname.startsWith('/farmer');
+  const hideNav = isAdminRoute || isFarmerRoute;
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      {!isAdminRoute && <Header />}
-      <main className={isAdminRoute ? '' : 'flex-grow relative z-10'}>
+      {!hideNav && <Header />}
+      <main className={hideNav ? '' : 'flex-grow relative z-10'}>
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
@@ -68,7 +71,9 @@ function AppContent() {
             path="/farmer"
             element={
               <FarmerRoute>
-                <FarmerDashboard />
+                <FarmerLayout>
+                  <FarmerDashboard />
+                </FarmerLayout>
               </FarmerRoute>
             }
           />
@@ -76,7 +81,9 @@ function AppContent() {
             path="/farmer/products"
             element={
               <FarmerRoute>
-                <FarmerProducts />
+                <FarmerLayout>
+                  <FarmerProducts />
+                </FarmerLayout>
               </FarmerRoute>
             }
           />
@@ -84,7 +91,9 @@ function AppContent() {
             path="/farmer/products/new"
             element={
               <FarmerRoute>
-                <FarmerAddProduct />
+                <FarmerLayout>
+                  <FarmerAddProduct />
+                </FarmerLayout>
               </FarmerRoute>
             }
           />
@@ -92,7 +101,9 @@ function AppContent() {
             path="/farmer/orders"
             element={
               <FarmerRoute>
-                <FarmerOrders />
+                <FarmerLayout>
+                  <FarmerOrders />
+                </FarmerLayout>
               </FarmerRoute>
             }
           />
@@ -100,7 +111,9 @@ function AppContent() {
             path="/farmer/income"
             element={
               <FarmerRoute>
-                <FarmerIncome />
+                <FarmerLayout>
+                  <FarmerIncome />
+                </FarmerLayout>
               </FarmerRoute>
             }
           />
@@ -168,7 +181,7 @@ function AppContent() {
           />
         </Routes>
       </main>
-      {!isAdminRoute && <Footer />}
+      {!hideNav && <Footer />}
     </div>
   );
 }
