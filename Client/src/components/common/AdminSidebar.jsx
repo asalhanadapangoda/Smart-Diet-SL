@@ -13,6 +13,12 @@ const AdminSidebar = () => {
 
   const menuItems = [
     {
+      name: 'Dashboard',
+      icon: '🏠',
+      path: '/admin',
+      color: 'bg-green-500',
+    },
+    {
       name: 'Total Products',
       icon: '📦',
       path: '/admin/products',
