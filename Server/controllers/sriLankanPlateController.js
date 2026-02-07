@@ -84,31 +84,34 @@ const generatePlateWithGroq = async (goal, targetCalories, busyLifeOnly) => {
       const name = f.name?.en || f.name || 'Unknown';
       const cal = f.nutrition?.calories || 100;
       const cat = f.category || '';
-      return `"${name}" (${cat}, ${cal} cal/100g)`;
+      return `"${name}" | ${cat} | ${cal} cal/100g (formula: grams×${cal}/100 = calories)`;
     })
     .join('\n');
 
   const goalContext = {
-    diabetes: 'Diabetes management: choose only low-GI foods (glycemic index ≤55). Prioritize vegetables, dhal, fish.',
-    'weight-loss': 'Weight loss: prioritize lower-calorie vegetables, lean proteins, smaller rice portions, high-fiber foods.',
-    'weight-gain': 'Weight gain: include calorie-dense items like rice, coconut, fish/chicken curry, dhal.',
-    'general-health': 'General health: balanced Sri Lankan meal with rice, dhal, 1-2 vegetables, protein, and a sambol or side.',
+    diabetes: 'Diabetes: choose only low-GI foods. Prioritize vegetables, dhal, fish.',
+    'weight-loss': 'Weight loss: lower-calorie vegetables, lean proteins, high-fiber foods.',
+    'weight-gain': 'Weight gain: calorie-dense items like rice, coconut, curry, dhal.',
+    'general-health': 'Balanced meal: rice, dhal, 1-2 vegetables, protein, sambol.',
   };
 
-  const prompt = `You are a Sri Lankan nutrition expert. Create a complete Sri Lankan meal plate.
+  const prompt = `You are a Sri Lankan nutrition expert. Create a meal plate based on user input.
 
-GOAL: ${goal}
-TARGET CALORIES: ${targetCalories}
+USER INPUT:
+- Health Goal: ${goal}
+- Target Calories: ${targetCalories} (TOTAL for entire plate - must match exactly)
+- Busy Life: ${busyLifeOnly ? 'Yes - quick prep foods only' : 'No'}
 ${goalContext[goal] || goalContext['general-health']}
-${busyLifeOnly ? 'BUSY LIFE: Prefer quick-prep foods (boiled, steamed, raw, mallung).' : ''}
 
-AVAILABLE FOODS (use EXACT names only):
+AVAILABLE FOODS (use EXACT name from first column):
 ${foodList}
 
-Select exactly 4-5 foods that go well together as a traditional Sri Lankan meal. Include: 1 rice/staple, 1 protein (dhal or curry), 1-2 vegetables, optionally a sambol. Distribute portions so total ≈ ${targetCalories} calories.
+TASK: Select exactly 4-5 foods that go together as a Sri Lankan meal. Calculate portionGrams for EACH food so the TOTAL calories = ${targetCalories}.
+Formula: calories from food = (portionGrams / 100) × cal_per_100g
+Ensure: sum of all calories from your portions = ${targetCalories}.
 
-Respond with ONLY a valid JSON array, no other text:
-[{"name": "Exact Food Name", "portionGrams": 100}, ...]`;
+Respond with ONLY a valid JSON array:
+[{"name": "Exact Food Name", "portionGrams": 150}, ...]`;
 
   const completion = await groqClient.chat.completions.create({
     model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',

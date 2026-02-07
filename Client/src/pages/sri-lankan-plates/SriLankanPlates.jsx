@@ -112,9 +112,14 @@ const SriLankanPlates = () => {
       {plate && (
         <div className="glass-card rounded-2xl p-6 backdrop-blur-xl">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-semibold text-gray-800 text-glass">
-              {plate.displayName || plate.name?.en || plate.name}
-            </h2>
+            <div>
+              <h2 className="text-2xl font-semibold text-gray-800 text-glass">
+                {plate.displayName || plate.name?.en || plate.name}
+              </h2>
+              <p className="text-sm text-gray-600 mt-1 text-glass">
+                Gram amounts per food match your target of {plate.totalNutrition?.calories || caloriesInput} calories
+              </p>
+            </div>
             {plate.isBusyLifeFriendly && (
               <span className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full border border-blue-300">
                 {t('busyLifeHack')}
@@ -134,14 +139,13 @@ const SriLankanPlates = () => {
                 {plate.items?.map((item, index) => (
                   <div
                     key={index}
-                    className="glass-card bg-gray-50 p-3 rounded-xl flex justify-between items-center hover:scale-105 transition-all"
+                    className="glass-card bg-gray-50 p-3 rounded-xl flex justify-between items-center"
                   >
                     <div>
                       <div className="font-medium text-gray-800 text-glass">{item.name}</div>
-                      <div className="text-sm text-gray-600 text-glass">{item.portion}</div>
-                    </div>
-                    <div className="text-sm text-gray-800 text-glass font-semibold">
-                      {Math.round(item.nutrition?.calories || 0)} cal
+                      <div className="text-sm font-semibold text-green-700 text-glass">
+                        {item.portion} • {Math.round(item.nutrition?.calories || 0)} cal
+                      </div>
                     </div>
                   </div>
                 ))}
