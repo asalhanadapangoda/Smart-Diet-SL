@@ -36,6 +36,14 @@ const FarmerSidebar = () => {
       const basePath = path.split('?')[0];
       return location.pathname === basePath && location.search.includes('status=pending');
     }
+    // /farmer/products: active only when NOT on Add New Product or Pending Approvals
+    if (path === '/farmer/products') {
+      return (
+        location.pathname === '/farmer/products' &&
+        !location.pathname.startsWith('/farmer/products/new') &&
+        !location.search.includes('status=pending')
+      );
+    }
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
